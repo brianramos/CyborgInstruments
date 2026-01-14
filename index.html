@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+    <title>🌈 Rainbow Unicorn Bunny Fluffcore 🐰</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .app-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .scene-container {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scene {
+            width: 33.333%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scene-1 {
+            background: linear-gradient(180deg, #ff9a9e 0%, #fecfef 50%, #a8edea 100%);
+        }
+
+        .scene-2 {
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+
+        .scene-3 {
+            background: linear-gradient(180deg, #a1c4fd 0%, #c2e9fb 50%, #fff1eb 100%);
+        }
+
+        .header {
+            padding: 8px 15px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .scene-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.5);
+            margin-bottom: 3px;
+        }
+
+        .scene-subtitle {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            padding: 6px 10px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 6px 10px;
+            border: 2px solid transparent;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            opacity: 0.6;
+        }
+
+        .mode-btn:active {
+            transform: scale(0.95);
+        }
+
+        .mode-btn.active {
+            opacity: 1;
+            transform: scale(1.05);
+            border-color: white;
+            box-shadow: 0 0 15px rgba(255,255,255,0.6);
+        }
+
+        .beat-btn {
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            color: white;
+        }
+
+        .melody-btn {
+            background: linear-gradient(135deg, #5f27cd, #48dbfb);
+            color: white;
+        }
+
+        .touch-pad {
+            flex: 1;
+            margin: 8px;
+            border-radius: 25px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.1), 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .scene-1 .touch-pad {
+            background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,182,193,0.3));
+            border: 3px solid rgba(255,255,255,0.5);
+        }
+
+        .scene-2 .touch-pad {
+            background: linear-gradient(135deg, rgba(138,43,226,0.3), rgba(75,0,130,0.3));
+            border: 3px solid rgba(200,150,255,0.5);
+        }
+
+        .scene-3 .touch-pad {
+            background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(200,230,255,0.3));
+            border: 3px solid rgba(255,255,255,0.6);
+        }
+
+        .xy-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            opacity: 0.15;
+        }
+
+        .xy-label {
+            position: absolute;
+            color: white;
+            font-size: 0.6rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            pointer-events: none;
+        }
+
+        .xy-label.pitch { top: 5px; left: 50%; transform: translateX(-50%); }
+        .xy-label.pitch-low { bottom: 5px; left: 50%; transform: translateX(-50%); }
+        .xy-label.tone { left: 5px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
+        .xy-label.tone-bright { right: 5px; top: 50%; transform: translateY(-50%) rotate(90deg); }
+
+        .touch-indicator {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+
+        .touch-ring {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            border: 3px solid rgba(255,255,255,0.5);
+            animation: ringPulse 1s ease-out infinite;
+        }
+
+        @keyframes ringPulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+        }
+
+        .layer-display {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px;
+        }
+
+        .layer-indicator {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.2s;
+            opacity: 0.3;
+            transform: scale(0.7);
+        }
+
+        .layer-indicator.active {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        .scene-dots {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: white;
+            transform: scale(1.3);
+            box-shadow: 0 0 10px white;
+        }
+
+        .floating-element {
+            position: absolute;
+            pointer-events: none;
+            animation: float 3s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 0.8s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+        }
+
+        .mode-label {
+            text-align: center;
+            color: white;
+            font-size: 0.65rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            margin-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .active-modes-display {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            flex-wrap: wrap;
+            pointer-events: none;
+        }
+
+        .active-mode-tag {
+            padding: 3px 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            font-size: 0.6rem;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .swipe-hint {
+            position: fixed;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.6);
+            font-size: 0.7rem;
+            animation: fadeInOut 3s ease-in-out infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        .controls-row {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="scene-container" id="sceneContainer">
+            <!-- Scene 1: Rainbow Meadow -->
+            <div class="scene scene-1" data-scene="0">
+                <div class="floating-element" style="font-size: 2rem; top: 5%; left: 8%;">🦄</div>
+                <div class="floating-element" style="font-size: 1.8rem; top: 8%; right: 12%; animation-delay: 0.5s;">🐰</div>
+                <div class="floating-element" style="font-size: 1.5rem; top: 3%; right: 40%; animation-delay: 1s;">🌈</div>
+                
+                <div class="header">
+                    <div class="scene-title">🌈 Rainbow Meadow 🌸</div>
+                    <div class="scene-subtitle">X: Tone Filter | Y: Pitch Control</div>
+                </div>
+                
+                <div class="controls-row">
+                    <div class="controls">
+                        <div class="mode-label">Beats (stackable)</div>
+                    </div>
+                    <div class="controls">
+                        <button class="mode-btn beat-btn" data-beat="0">Hop</button>
+                        <button class="mode-btn beat-btn" data-beat="1">Skip</button>
+                        <button class="mode-btn beat-btn" data-beat="2">Bounce</button>
+                        <button class="mode-btn beat-btn" data-beat="3">Flutter</button>
+                        <button class="mode-btn beat-btn" data-beat="4">Gallop</button>
+                    </div>
+                </div>
+                
+                <div class="controls-row">
+                    <div class="controls">
+                        <div class="mode-label">Melodies (stackable)</div>
+                    </div>
+                    <div class="controls">
+                        <button class="mode-btn melody-btn" data-melody="0">Sparkle</button>
+                        <button class="mode-btn melody-btn" data-melody="1">Dream</button>
+                        <button class="mode-btn melody-btn" data-melody="2">Magic</button>
+                        <button class="mode-btn melody-btn" data-melody="3">Wish</button>
+                        <button class="mode-btn melody-btn" data-melody="4">Glow</button>
+                    </div>
+                </div>
+                
+                <div class="touch-pad" data-scene-index="0">
+                    <div class="xy-label pitch">↑ HIGH</div>
+                    <div class="xy-label pitch-low">↓ LOW</div>
+                    <div class="xy-label tone">WARM</div>
+                    <div class="xy-label tone-bright">BRIGHT</div>
+                    <div class="active-modes-display"></div>
+                </div>
+                
+                <div class="layer-display">
+                    <div class="layer-indicator" style="background: #ff6b6b; color: #ff6b6b;">🎵</div>
+                    <div class="layer-indicator" style="background: #feca57; color: #feca57;">🎶</div>
+                    <div class="layer-indicator" style="background: #48dbfb; color: #48dbfb;">✨</div>
+                    <div class="layer-indicator" style="background: #ff9ff3; color: #ff9ff3;">💫</div>
+                    <div class="layer-indicator" style="background: #a55eea; color: #a55eea;">🌟</div>
+                </div>
+            </div>
+
+            <!-- Scene 2: Crystal Cave -->
+            <div class="scene scene-2" data-scene="1">
+                <div class="floating-element" style="font-size: 2rem; top: 5%; left: 10%;">💎</div>
+                <div class="floating-element" style="font-size: 1.5rem; top: 8%; right: 15%; animation-delay: 0.7s;">🔮</div>
+                <div class="floating-element" style="font-size: 1.8rem; top: 3%; right: 45%; animation-delay: 1.2s;">✨</div>
+                
+                <div class="header">
+                    <div class="scene-title">💎 Crystal Cave 🔮</div>
+                    <div class="scene-subtitle">X: Resonance | Y: Frequency</div>
+                </div>
+                
+                <div class="controls-row">
+                    <div class="controls">
+                        <div class="mode-label">Beats (stackable)</div>
+                    </div>
+                    <div class="controls">
+                        <button class="mode-btn beat-btn" data-beat="0">Echo</button>
+                        <button class="mode-btn beat-btn" data-beat="1">Pulse</button>
+                        <button class="mode-btn beat-btn" data-beat="2">Crystal</button>
+                        <button class="mode-btn beat-btn" data-beat="3">Cave</button>
+                        <button class="mode-btn beat-btn" data-beat="4">Deep</button>
+                    </div>
+                </div>
+                
+                <div class="controls-row">
+                    <div class="controls">
+                        <div class="mode-label">Melodies (stackable)</div>
+                    </div>
+                    <div class="controls">
+                        <button class="mode-btn melody-btn" data-melody="0">Mystic</button>
+                        <button class="mode-btn melody-btn" data-melody="1">Aura</button>
+                        <button class="mode-btn melody-btn" data-melody="2">Spirit</button>
+                        <button class="mode-btn melody-btn" data-melody="3">Ethereal</button>
+                        <button class="mode-btn melody-btn" data-melody="4">Cosmic</button>
+                    </div>
+                </div>
+                
+                <div class="touch-pad" data-scene-index="1">
+                    <div class="xy-label pitch">↑ HIGH</div>
+                    <div class="xy-label pitch-low">↓ LOW</div>
+                    <div class="xy-label tone">DEEP</div>
+                    <div class="xy-label tone-bright">CRYSTAL</div>
+                    <div class="active-modes-display"></div>
+                </div>
+                
+                <div class="layer-display">
+                    <div class="layer-indicator" style="background: #a55eea; color: #a55eea;">🎹</div>
+                    <div class="layer-indicator" style="background: #5f27cd; color: #5f27cd;">🎸</div>
+                    <div class="layer-indicator" style="background: #341f97; color: #341f97;">🎺</div>
+                    <div class="layer-indicator" style="background: #48dbfb; color: #48dbfb;">🎻</div>
+                    <div class="layer-indicator" style="background: #0abde3; color: #0abde3;">🪈</div>
+                </div>
+            </div>
+
+            <!-- Scene 3: Cloud Kingdom -->
+            <div class="scene scene-3" data-scene="2">
+                <div class="floating-element" style="font-size: 2rem; top: 5%; left: 8%;">☁️</div>
+                <div class="floating-element" style="font-size: 1.5rem; top: 8%; right: 12%; animation-delay: 0.3s;">⭐</div>
+                <div class="floating-element" style="font-size: 1.8rem; top: 3%; right: 40%; animation-delay: 0.8s;">🌙</div>
+                
+                <div class="header">
+                    <div class="scene-title">☁️ Cloud Kingdom 🌙</div>
+                    <div class="scene-subtitle">X: Softness | Y: Dreaminess</div>
+                </div>
+                
+                <div class="controls-row">
+                    <div class="controls">
+                        <div class="mode-label">Beats (stackable)</div>
+                    </div>
+                    <div class="controls">
+                        <button class="mode-btn beat-btn" data-beat="0">Float</button>
+                        <button class="mode-btn beat-btn" data-beat="1">Drift</button>
+                        <button class="mode-btn beat-btn" data-beat="2">Breeze</button>
+                        <button class="mode-btn beat-btn" data-beat="3">Whisper</button>
+                        <button class="mode-btn beat-btn" data-beat="4">Lullaby</button>
+                    </div>
+                </div>
+                
+                <div class="controls-row">
+                    <div class="controls">
+                        <div class="mode-label">Melodies (stackable)</div>
+                    </div>
+                    <div class="controls">
+                        <button class="mode-btn melody-btn" data-melody="0">Sleepy</button>
+                        <button class="mode-btn melody-btn" data-melody="1">Dreamy</button>
+                        <button class="mode-btn melody-btn" data-melody="2">Fluffy</button>
+                        <button class="mode-btn melody-btn" data-melody="3">Soft</button>
+                        <button class="mode-btn melody-btn" data-melody="4">Gentle</button>
+                    </div>
+                </div>
+                
+                <div class="touch-pad" data-scene-index="2">
+                    <div class="xy-label pitch">↑ AIRY</div>
+                    <div class="xy-label pitch-low">↓ COZY</div>
+                    <div class="xy-label tone">SOFT</div>
+                    <div class="xy-label tone-bright">SHIMMER</div>
+                    <div class="active-modes-display"></div>
+                </div>
+                
+                <div class="layer-display">
+                    <div class="layer-indicator" style="background: #74b9ff; color: #74b9ff;">🌸</div>
+                    <div class="layer-indicator" style="background: #a29bfe; color: #a29bfe;">🦋</div>
+                    <div class="layer-indicator" style="background: #fd79a8; color: #fd79a8;">🌺</div>
+                    <div class="layer-indicator" style="background: #fdcb6e; color: #fdcb6e;">🌻</div>
+                    <div class="layer-indicator" style="background: #81ecec; color: #81ecec;">🍀</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scene-dots">
+            <div class="dot active" data-scene="0"></div>
+            <div class="dot" data-scene="1"></div>
+            <div class="dot" data-scene="2"></div>
+        </div>
+        
+        <div class="swipe-hint">← Swipe to change scenes →</div>
+    </div>
+
+    <script>
+        // Audio Context
+        let audioContext;
+        let masterGain;
+        
+        // Scene management
+        let currentScene = 0;
+        
+        // Stackable mode settings per scene - now arrays for multi-select
+        const sceneSettings = [
+            { beatModes: new Set(), melodyModes: new Set() },
+            { beatModes: new Set(), melodyModes: new Set() },
+            { beatModes: new Set(), melodyModes: new Set() }
+        ];
+        
+        // Active oscillators per touch
+        const activeTouchSounds = new Map();
+        
+        // Beat loop management
+        const beatLoops = [
+            { intervals: [], active: false },
+            { intervals: [], active: false },
+            { intervals: [], active: false }
+        ];
+        
+        // Scales for each melody mode
+        const melodyScales = [
+            [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25], // C major - Sparkle/Mystic/Sleepy
+            [293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25, 587.33], // D dorian - Dream/Aura/Dreamy
+            [329.63, 369.99, 415.30, 466.16, 523.25, 587.33, 659.25, 739.99], // E phrygian - Magic/Spirit/Fluffy
+            [349.23, 392.00, 440.00, 466.16, 523.25, 587.33, 622.25, 698.46], // F lydian - Wish/Ethereal/Soft
+            [392.00, 440.00, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99]  // G mixolydian - Glow/Cosmic/Gentle
+        ];
+        
+        // Beat patterns with different rhythms
+        const beatPatterns = [
+            { intervals: [250, 250, 250, 250], accents: [1, 0.5, 0.7, 0.5] },
+            { intervals: [200, 400, 200, 400], accents: [1, 0.3, 0.8, 0.4] },
+            { intervals: [150, 150, 300, 150, 150], accents: [1, 0.6, 0.4, 0.8, 0.5] },
+            { intervals: [300, 150, 150, 300], accents: [0.8, 0.5, 0.5, 1] },
+            { intervals: [400, 200, 200, 400, 200], accents: [1, 0.4, 0.6, 0.8, 0.3] }
+        ];
+        
+        // Layer colors for visual feedback
+        const layerColors = [
+            ['#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#a55eea'],
+            ['#a55eea', '#5f27cd', '#341f97', '#48dbfb', '#0abde3'],
+            ['#74b9ff', '#a29bfe', '#fd79a8', '#fdcb6e', '#81ecec']
+        ];
+        
+        // Synth types per scene
+        const synthConfigs = [
+            { types: ['sine', 'triangle', 'sine', 'triangle', 'sine'], filterBase: 2000 },
+            { types: ['sawtooth', 'square', 'triangle', 'sine', 'sawtooth'], filterBase: 1500 },
+            { types: ['sine', 'sine', 'triangle', 'sine', 'triangle'], filterBase: 3000 }
+        ];
+
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                masterGain = audioContext.createGain();
+                masterGain.gain.value = 0.25;
+                masterGain.connect(audioContext.destination);
+            }
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+        }
+
+        function createContinuousTone(sceneIndex, layerIndex, x, y, padWidth, padHeight) {
+            if (!audioContext) return null;
+            
+            const settings = sceneSettings[sceneIndex];
+            const activeMelodies = Array.from(settings.melodyModes);
+            if (activeMelodies.length === 0) return null;
+            
+            const config = synthConfigs[sceneIndex];
+            const oscillators = [];
+            const gainNodes = [];
+            const filters = [];
+            
+            // Normalize x and y to 0-1 range
+            const normX = Math.max(0, Math.min(1, x / padWidth));
+            const normY = Math.max(0, Math.min(1, 1 - (y / padHeight))); // Invert Y so top is high
+            
+            // Create a sound for each active melody mode
+            activeMelodies.forEach((melodyMode, idx) => {
+                const scale = melodyScales[melodyMode];
+                
+                // Y controls pitch within the scale
+                const scaleIndex = Math.floor(normY * (scale.length - 1));
+                const baseFreq = scale[scaleIndex];
+                
+                // Add slight variation based on layer
+                const freq = baseFreq * (1 + (layerIndex * 0.01));
+                
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                const filter = audioContext.createBiquadFilter();
+                
+                oscillator.type = config.types[layerIndex % 5];
+                oscillator.frequency.value = freq;
+                oscillator.detune.value = (Math.random() - 0.5) * 15;
+                
+                // X controls filter (tone)
+                filter.type = 'lowpass';
+                filter.frequency.value = config.filterBase + (normX * 4000);
+                filter.Q.value = 2 + (normX * 8);
+                
+                const layerVolume = 0.15 / Math.max(1, activeMelodies.length);
+                gainNode.gain.value = layerVolume;
+                
+                oscillator.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(masterGain);
+                
+                oscillator.start();
+                
+                oscillators.push(oscillator);
+                gainNodes.push(gainNode);
+                filters.push(filter);
+            });
+            
+            return { oscillators, gainNodes, filters, sceneIndex };
+        }
+
+        function updateTonePosition(soundData, x, y, padWidth, padHeight) {
+            if (!soundData || !soundData.oscillators) return;
+            
+            const settings = sceneSettings[soundData.sceneIndex];
+            const activeMelodies = Array.from(settings.melodyModes);
+            
+            const normX = Math.max(0, Math.min(1, x / padWidth));
+            const normY = Math.max(0, Math.min(1, 1 - (y / padHeight)));
+            
+            soundData.oscillators.forEach((osc, idx) => {
+                const melodyMode = activeMelodies[idx];
+                if (melodyMode === undefined) return;
+                
+                const scale = melodyScales[melodyMode];
+                const scaleIndex = Math.floor(normY * (scale.length - 1));
+                const freq = scale[scaleIndex];
+                
+                osc.frequency.setTargetAtTime(freq, audioContext.currentTime, 0.05);
+            });
+            
+            soundData.filters.forEach(filter => {
+                const config = synthConfigs[soundData.sceneIndex];
+                filter.frequency.setTargetAtTime(
+                    config.filterBase + (normX * 4000),
+                    audioContext.currentTime,
+                    0.05
+                );
+            });
+        }
+
+        function stopTone(soundData) {
+            if (!soundData) return;
+            
+            const fadeTime = 0.1;
+            soundData.gainNodes.forEach(gain => {
+                gain.gain.setTargetAtTime(0, audioContext.currentTime, fadeTime);
+            });
+            
+            setTimeout(() => {
+                soundData.oscillators.forEach(osc => {
+                    try { osc.stop(); } catch(e) {}
+                });
+            }, fadeTime * 3 * 1000);
+        }
+
+        function createBeatSound(beatMode, sceneIndex, accent = 1) {
+            if (!audioContext) return;
+            
+            const baseFreqs = [60, 80, 50, 100, 70];
+            const freq = baseFreqs[beatMode];
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            const filter = audioContext.createBiquadFilter();
+            
+            const types = ['sine', 'triangle', 'square', 'sawtooth', 'sine'];
+            oscillator.type = types[beatMode];
+            oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(freq * 0.4, audioContext.currentTime + 0.15);
+            
+            filter.type = 'lowpass';
+            filter.frequency.value = 200 + (beatMode * 100);
+            
+            const volume = 0.2 * accent;
+            gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.2);
+            
+            oscillator.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(masterGain);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.25);
+        }
+
+        function startBeatLoops(sceneIndex) {
+            stopBeatLoops(sceneIndex);
+            
+            const settings = sceneSettings[sceneIndex];
+            if (settings.beatModes.size === 0) return;
+            
+            settings.beatModes.forEach(beatMode => {
+                const pattern = beatPatterns[beatMode];
+                let stepIndex = 0;
+                
+                function playStep() {
+                    if (!beatLoops[sceneIndex].active) return;
+                    
+                    createBeatSound(beatMode, sceneIndex, pattern.accents[stepIndex]);
+                    
+                    const interval = pattern.intervals[stepIndex];
+                    stepIndex = (stepIndex + 1) % pattern.intervals.length;
+                    
+                    const timeoutId = setTimeout(playStep, interval);
+                    beatLoops[sceneIndex].intervals.push(timeoutId);
+                }
+                
+                beatLoops[sceneIndex].active = true;
+                playStep();
+            });
+        }
+
+        function stopBeatLoops(sceneIndex) {
+            beatLoops[sceneIndex].intervals.forEach(id => clearTimeout(id));
+            beatLoops[sceneIndex].intervals = [];
+            beatLoops[sceneIndex].active = false;
+        }
+
+        function updateLayerIndicators(sceneIndex, count) {
+            const scene = document.querySelectorAll('.scene')[sceneIndex];
+            const indicators = scene.querySelectorAll('.layer-indicator');
+            indicators.forEach((ind, i) => {
+                ind.classList.toggle('active', i < count);
+            });
+        }
+
+        function updateActiveModeDisplay(sceneIndex) {
+            const scene = document.querySelectorAll('.scene')[sceneIndex];
+            const display = scene.querySelector('.active-modes-display');
+            const settings = sceneSettings[sceneIndex];
+            
+            display.innerHTML = '';
+            
+            const beatNames = [
+                ['Hop', 'Skip', 'Bounce', 'Flutter', 'Gallop'],
+                ['Echo', 'Pulse', 'Crystal', 'Cave', 'Deep'],
+                ['Float', 'Drift', 'Breeze', 'Whisper', 'Lullaby']
+            ];
+            
+            const melodyNames = [
+                ['Sparkle', 'Dream', 'Magic', 'Wish', 'Glow'],
+                ['Mystic', 'Aura', 'Spirit', 'Ethereal', 'Cosmic'],
+                ['Sleepy', 'Dreamy', 'Fluffy', 'Soft', 'Gentle']
+            ];
+            
+            settings.beatModes.forEach(mode => {
+                const tag = document.createElement('div');
+                tag.className = 'active-mode-tag';
+                tag.textContent = '🥁 ' + beatNames[sceneIndex][mode];
+                display.appendChild(tag);
+            });
+            
+            settings.melodyModes.forEach(mode => {
+                const tag = document.createElement('div');
+                tag.className = 'active-mode-tag';
+                tag.textContent = '🎵 ' + melodyNames[sceneIndex][mode];
+                display.appendChild(tag);
+            });
+        }
+
+        function createTouchVisual(x, y, touchPad, layerIndex, sceneIndex) {
+            const color = layerColors[sceneIndex][layerIndex % 5];
+            
+            const indicator = document.createElement('div');
+            indicator.className = 'touch-indicator';
+            indicator.style.left = x + 'px';
+            indicator.style.top = y + 'px';
+            indicator.style.width = '60px';
+            indicator.style.height = '60px';
+            indicator.style.background = `radial-gradient(circle, ${color} 0%, transparent 70%)`;
+            indicator.style.boxShadow = `0 0 25px ${color}`;
+            touchPad.appendChild(indicator);
+            
+            const ring = document.createElement('div');
+            ring.className = 'touch-ring';
+            ring.style.left = x + 'px';
+            ring.style.top = y + 'px';
+            ring.style.width = '60px';
+            ring.style.height = '60px';
+            ring.style.borderColor = color;
+            touchPad.appendChild(ring);
+            
+            return { indicator, ring };
+        }
+
+        function createSparkle(x, y, touchPad, sceneIndex) {
+            const colors = layerColors[sceneIndex];
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = (x + (Math.random() - 0.5) * 40) + 'px';
+            sparkle.style.top = (y + (Math.random() - 0.5) * 40) + 'px';
+            sparkle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            touchPad.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 800);
+        }
+
+        // Touch pad handling
+        const touchPads = document.querySelectorAll('.touch-pad');
+        
+        touchPads.forEach((pad) => {
+            const sceneIndex = parseInt(pad.dataset.sceneIndex);
+            const padTouches = new Map();
+            
+            function handleTouchStart(e) {
+                e.preventDefault();
+                initAudio();
+                
+                const rect = pad.getBoundingClientRect();
+                
+                for (let touch of e.changedTouches) {
+                    const x = touch.clientX - rect.left;
+                    const y = touch.clientY - rect.top;
+                    const layerIndex = padTouches.size;
+                    
+                    if (layerIndex < 5) {
+                        const visual = createTouchVisual(x, y, pad, layerIndex, sceneIndex);
+                        const sound = createContinuousTone(sceneIndex, layerIndex, x, y, rect.width, rect.height);
+                        
+                        padTouches.set(touch.identifier, {
+                            x, y, visual, sound, layerIndex
+                        });
+                        
+                        createSparkle(x, y, pad, sceneIndex);
+                    }
+                }
+                
+                const count = Math.min(padTouches.size, 5);
+                updateLayerIndicators(sceneIndex, count);
+                
+                if (count > 0 && !beatLoops[sceneIndex].active) {
+                    startBeatLoops(sceneIndex);
+                }
+            }
+            
+            function handleTouchMove(e) {
+                e.preventDefault();
+                const rect = pad.getBoundingClientRect();
+                
+                for (let touch of e.changedTouches) {
+                    const data = padTouches.get(touch.identifier);
+                    if (data) {
+                        const x = touch.clientX - rect.left;
+                        const y = touch.clientY - rect.top;
+                        
+                        data.x = x;
+                        data.y = y;
+                        
+                        if (data.visual) {
+                            data.visual.indicator.style.left = x + 'px';
+                            data.visual.indicator.style.top = y + 'px';
+                            data.visual.ring.style.left = x + 'px';
+                            data.visual.ring.style.top = y + 'px';
+                        }
+                        
+                        if (data.sound) {
+                            updateTonePosition(data.sound, x, y, rect.width, rect.height);
+                        }
+                        
+                        if (Math.random() < 0.1) {
+                            createSparkle(x, y, pad, sceneIndex);
+                        }
+                    }
+                }
+            }
+            
+            function handleTouchEnd(e) {
+                e.preventDefault();
+                
+                for (let touch of e.changedTouches) {
+                    const data = padTouches.get(touch.identifier);
+                    if (data) {
+                        if (data.visual) {
+                            data.visual.indicator.style.opacity = '0';
+                            data.visual.indicator.style.transform = 'translate(-50%, -50%) scale(2)';
+                            data.visual.indicator.style.transition = 'all 0.3s';
+                            data.visual.ring.remove();
+                            setTimeout(() => data.visual.indicator.remove(), 300);
+                        }
+                        if (data.sound) {
+                            stopTone(data.sound);
+                        }
+                        padTouches.delete(touch.identifier);
+                    }
+                }
+                
+                const count = padTouches.size;
+                updateLayerIndicators(sceneIndex, count);
+                
+                if (count === 0) {
+                    stopBeatLoops(sceneIndex);
+                }
+            }
+            
+            pad.addEventListener('touchstart', handleTouchStart);
+            pad.addEventListener('touchmove', handleTouchMove);
+            pad.addEventListener('touchend', handleTouchEnd);
+            pad.addEventListener('touchcancel', handleTouchEnd);
+            
+            // Mouse support
+            let mouseData = null;
+            
+            pad.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                initAudio();
+                
+                const rect = pad.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const visual = createTouchVisual(x, y, pad, 0, sceneIndex);
+                const sound = createContinuousTone(sceneIndex, 0, x, y, rect.width, rect.height);
+                
+                mouseData = { x, y, visual, sound };
+                
+                updateLayerIndicators(sceneIndex, 1);
+                startBeatLoops(sceneIndex);
+                createSparkle(x, y, pad, sceneIndex);
+            });
+            
+            pad.addEventListener('mousemove', (e) => {
+                if (!mouseData) return;
+                
+                const rect = pad.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                mouseData.visual.indicator.style.left = x + 'px';
+                mouseData.visual.indicator.style.top = y + 'px';
+                mouseData.visual.ring.style.left = x + 'px';
+                mouseData.visual.ring.style.top = y + 'px';
+                
+                if (mouseData.sound) {
+                    updateTonePosition(mouseData.sound, x, y, rect.width, rect.height);
+                }
+                
+                if (Math.random() < 0.1) {
+                    createSparkle(x, y, pad, sceneIndex);
+                }
+            });
+            
+            function endMouse() {
+                if (mouseData) {
+                    mouseData.visual.indicator.remove();
+                    mouseData.visual.ring.remove();
+                    if (mouseData.sound) stopTone(mouseData.sound);
+                    mouseData = null;
+                    updateLayerIndicators(sceneIndex, 0);
+                    stopBeatLoops(sceneIndex);
+                }
+            }
+            
+            pad.addEventListener('mouseup', endMouse);
+            pad.addEventListener('mouseleave', endMouse);
+        });
+
+        // Mode button handling - now stackable with toggle
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                initAudio();
+                
+                const sceneEl = btn.closest('.scene');
+                const sceneIndex = parseInt(sceneEl.dataset.scene);
+                const settings = sceneSettings[sceneIndex];
+                
+                if (btn.classList.contains('beat-btn')) {
+                    const beatMode = parseInt(btn.dataset.beat);
+                    
+                    if (settings.beatModes.has(beatMode)) {
+                        settings.beatModes.delete(beatMode);
+                        btn.classList.remove('active');
+                    } else {
+                        settings.beatModes.add(beatMode);
+                        btn.classList.add('active');
+                        createBeatSound(beatMode, sceneIndex, 1);
+                    }
+                    
+                    // Restart beat loops if active
+                    if (beatLoops[sceneIndex].active) {
+                        startBeatLoops(sceneIndex);
+                    }
+                } else if (btn.classList.contains('melody-btn')) {
+                    const melodyMode = parseInt(btn.dataset.melody);
+                    
+                    if (settings.melodyModes.has(melodyMode)) {
+                        settings.melodyModes.delete(melodyMode);
+                        btn.classList.remove('active');
+                    } else {
+                        settings.melodyModes.add(melodyMode);
+                        btn.classList.add('active');
+                        
+                        // Preview the melody
+                        const scale = melodyScales[melodyMode];
+                        const osc = audioContext.createOscillator();
+                        const gain = audioContext.createGain();
+                        osc.frequency.value = scale[4];
+                        osc.type = 'sine';
+                        gain.gain.setValueAtTime(0.1, audioContext.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3);
+                        osc.connect(gain);
+                        gain.connect(masterGain);
+                        osc.start();
+                        osc.stop(audioContext.currentTime + 0.3);
+                    }
+                }
+                
+                updateActiveModeDisplay(sceneIndex);
+            });
+            
+            btn.addEventListener('touchstart', (e) => {
+                e.stopPropagation();
+            });
+        });
+
+        // Scene navigation
+        const sceneContainer = document.getElementById('sceneContainer');
+        const dots = document.querySelectorAll('.dot');
+        
+        function updateScene(index) {
+            currentScene = Math.max(0, Math.min(2, index));
+            sceneContainer.style.transform = `translateX(-${currentScene * 33.333}%)`;
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === currentScene));
+        }
+        
+        // Swipe detection
+        let swipeStartX = 0;
+        let isSwiping = false;
+        
+        document.querySelector('.app-container').addEventListener('touchstart', (e) => {
+            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn')) return;
+            swipeStartX = e.touches[0].clientX;
+            isSwiping = false;
+        });
+        
+        document.querySelector('.app-container').addEventListener('touchmove', (e) => {
+            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn')) return;
+            const deltaX = e.touches[0].clientX - swipeStartX;
+            if (Math.abs(deltaX) > 30) isSwiping = true;
+        });
+        
+        document.querySelector('.app-container').addEventListener('touchend', (e) => {
+            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn')) return;
+            if (isSwiping) {
+                const deltaX = e.changedTouches[0].clientX - swipeStartX;
+                if (deltaX > 50) updateScene(currentScene - 1);
+                else if (deltaX < -50) updateScene(currentScene + 1);
+            }
+        });
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => updateScene(index));
+        });
+        
+        // Initialize
+        updateScene(0);
+        [0, 1, 2].forEach(i => updateActiveModeDisplay(i));
+    </script>
+</body>
+</html>
