@@ -336,6 +336,7 @@
             display: flex;
             flex-direction: column;
             padding: 6px;
+            padding-bottom: 140px;
             gap: 6px;
             overflow-y: auto;
         }
@@ -375,6 +376,18 @@
             border-radius: 8px;
             padding: 6px;
             border: 1px solid rgba(255,255,255,0.2);
+            cursor: grab;
+            transition: all 0.2s;
+        }
+
+        .track-item.dragging {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+
+        .track-item.drag-over {
+            border-color: #a29bfe;
+            box-shadow: 0 0 10px rgba(162, 155, 254, 0.5);
         }
 
         .track-header {
@@ -414,15 +427,35 @@
 
         .track-play { background: #00b894; color: white; }
         .track-delete { background: #d63031; color: white; }
+        .track-add-master { background: #6c5ce7; color: white; }
+
+        .channel-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-bottom: 4px;
+        }
+
+        .channel-row {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .channel-label {
+            width: 20px;
+            font-size: 0.45rem;
+            color: rgba(255,255,255,0.7);
+        }
 
         .step-grid {
             display: flex;
             gap: 1px;
-            height: 30px;
+            height: 12px;
             background: rgba(0,0,0,0.3);
-            border-radius: 4px;
+            border-radius: 2px;
             overflow: hidden;
-            margin-bottom: 4px;
+            flex: 1;
         }
 
         .step-cell {
@@ -433,6 +466,10 @@
 
         .step-cell.has-event {
             background: linear-gradient(135deg, #74b9ff, #0984e3);
+        }
+
+        .step-cell.has-sustain {
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
         }
 
         .step-cell.beat-marker {
@@ -514,6 +551,178 @@
             transform: translateX(-50%);
             color: rgba(255,255,255,0.4);
             font-size: 0.5rem;
+        }
+
+        /* Master Channel Panel */
+        .master-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, rgba(30,30,50,0.98), rgba(20,20,40,0.98));
+            border-top: 2px solid rgba(162,155,254,0.5);
+            padding: 8px;
+            z-index: 150;
+            display: none;
+        }
+
+        .master-panel.visible {
+            display: block;
+        }
+
+        .master-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .master-title {
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .master-buttons {
+            display: flex;
+            gap: 4px;
+        }
+
+        .master-btn {
+            padding: 4px 8px;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+        }
+
+        .master-play-btn { background: linear-gradient(135deg, #00b894, #55efc4); }
+        .master-download-btn { background: linear-gradient(135deg, #f39c12, #e74c3c); }
+        .master-clear-btn { background: linear-gradient(135deg, #636e72, #b2bec3); }
+
+        .master-timeline {
+            background: rgba(0,0,0,0.4);
+            border-radius: 6px;
+            padding: 6px;
+            min-height: 60px;
+            position: relative;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+
+        .master-timeline-inner {
+            display: flex;
+            gap: 4px;
+            min-height: 48px;
+            align-items: center;
+            padding: 4px;
+        }
+
+        .master-clip {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            border-radius: 4px;
+            padding: 4px 8px;
+            min-width: 60px;
+            position: relative;
+            cursor: grab;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .master-clip:active {
+            cursor: grabbing;
+        }
+
+        .master-clip.selected {
+            border-color: #fff;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .master-clip.dragging {
+            opacity: 0.6;
+            transform: scale(0.95);
+        }
+
+        .master-clip-name {
+            color: white;
+            font-size: 0.5rem;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .master-clip-duration {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.4rem;
+        }
+
+        .master-clip-remove {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 14px;
+            height: 14px;
+            background: #d63031;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .crop-handles {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .crop-handle {
+            width: 8px;
+            height: 100%;
+            background: rgba(255,255,255,0.6);
+            cursor: ew-resize;
+            border-radius: 2px;
+        }
+
+        .crop-handle:hover {
+            background: white;
+        }
+
+        .master-empty {
+            color: rgba(255,255,255,0.4);
+            font-size: 0.6rem;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .drop-zone-indicator {
+            position: absolute;
+            width: 3px;
+            height: 40px;
+            background: #fff;
+            border-radius: 2px;
+            pointer-events: none;
+            display: none;
+        }
+
+        .license-info {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.4rem;
+            text-align: center;
+            margin-top: 4px;
         }
     </style>
 </head>
@@ -692,6 +901,27 @@
             </div>
         </div>
 
+        <!-- Master Channel Panel -->
+        <div class="master-panel" id="masterPanel">
+            <div class="master-header">
+                <div class="master-title">🎹 Master Channel ✨</div>
+                <div class="master-buttons">
+                    <button class="master-btn master-play-btn" id="masterPlayBtn">▶️ Play</button>
+                    <button class="master-btn master-download-btn" id="masterDownloadBtn">💾 CC0</button>
+                    <button class="master-btn master-clear-btn" id="masterClearBtn">🗑️</button>
+                </div>
+            </div>
+            <div class="master-timeline" id="masterTimeline">
+                <div class="master-timeline-inner" id="masterTimelineInner">
+                    <div class="master-empty" id="masterEmpty">
+                        Drag tracks here or tap ➕ to add clips 🎵
+                    </div>
+                </div>
+                <div class="drop-zone-indicator" id="dropIndicator"></div>
+            </div>
+            <div class="license-info">📜 CC0 1.0 Universal - Public Domain Dedication</div>
+        </div>
+
         <div class="scene-dots">
             <div class="dot active" data-scene="0"></div>
             <div class="dot" data-scene="1"></div>
@@ -707,9 +937,10 @@
     <script>
         // Configuration
         const BPM = 120;
-        const STEP_DURATION = (60000 / BPM) / 4; // 1/16th note in ms
+        const STEP_DURATION = (60000 / BPM) / 4;
         const STEPS_PER_BAR = 16;
-        const TOTAL_STEPS = 64; // 4 bars
+        const TOTAL_STEPS = 64;
+        const MAX_HARMONY_CHANNELS = 5;
         
         // Audio Context
         let audioContext;
@@ -722,6 +953,9 @@
         let autoTuneLock = false;
         let currentRecording = null;
         
+        // Active sustained notes for playback
+        let activeSustainedNotes = new Map();
+        
         // Playback state
         let isPlaying = false;
         let playbackTimeouts = [];
@@ -729,8 +963,17 @@
         // Mixer tracks
         let mixerTracks = [];
         
+        // Master channel clips
+        let masterClips = [];
+        let selectedClipIndex = -1;
+        
         // Scene management
         let currentScene = 0;
+        
+        // Drag state
+        let draggedTrackIndex = null;
+        let draggedClipIndex = null;
+        let cropDragData = null;
         
         // Stackable mode settings per scene
         const sceneSettings = [
@@ -806,16 +1049,11 @@
         }
 
         function timeToStep(time) {
-            return Math.round(time / STEP_DURATION);
+            return time / STEP_DURATION;
         }
 
         function stepToTime(step) {
             return step * STEP_DURATION;
-        }
-
-        function quantizeToStep(time) {
-            const step = timeToStep(time);
-            return stepToTime(step);
         }
 
         function quantizeToScale(freq, scaleIndex = 0) {
@@ -835,7 +1073,7 @@
 
         function createNewRecording() {
             return {
-                version: "2.0",
+                version: "3.0",
                 name: `Recording ${new Date().toLocaleTimeString()}`,
                 bpm: BPM,
                 stepsPerBar: STEPS_PER_BAR,
@@ -843,8 +1081,10 @@
                 duration: 0,
                 autoBeat: autoBeatLock,
                 autoTune: autoTuneLock,
-                drums: [], // { step, drumIndex }
-                pads: []   // { sceneIndex, fingerIndex, steps: [{ step, x, y, freq, filter }] }
+                channels: {
+                    beats: { type: "beats", events: [] },
+                    harmony: []
+                }
             };
         }
 
@@ -854,14 +1094,26 @@
             let time = getRecordingTime();
             let step = timeToStep(time);
             
-            if (autoBeatLock) {
-                step = Math.round(step);
-                time = stepToTime(step);
-            }
+            if (autoBeatLock) step = Math.round(step);
             
             if (step < TOTAL_STEPS) {
-                currentRecording.drums.push({ step, drumIndex, time });
+                currentRecording.channels.beats.events.push({ step, drumIndex });
             }
+        }
+
+        function getOrCreateHarmonyChannel(channelIndex, sceneIndex) {
+            if (!currentRecording) return null;
+            
+            let channel = currentRecording.channels.harmony.find(
+                c => c.channelIndex === channelIndex && c.sceneIndex === sceneIndex
+            );
+            
+            if (!channel) {
+                channel = { channelIndex, sceneIndex, notes: [] };
+                currentRecording.channels.harmony.push(channel);
+            }
+            
+            return channel;
         }
 
         function startPadRecording(sceneIndex, fingerIndex, x, y, normX, normY) {
@@ -870,65 +1122,69 @@
             let time = getRecordingTime();
             let step = timeToStep(time);
             
-            if (autoBeatLock) {
-                step = Math.round(step);
-                time = stepToTime(step);
-            }
+            if (autoBeatLock) step = Math.round(step);
             
-            const freq = calculateFrequency(sceneIndex, normY);
+            let freq = calculateFrequency(sceneIndex, normY);
+            if (autoTuneLock) freq = quantizeToScale(freq, 0);
             const filter = calculateFilter(sceneIndex, normX);
             
-            const padData = {
-                sceneIndex,
-                fingerIndex,
+            const channel = getOrCreateHarmonyChannel(fingerIndex, sceneIndex);
+            if (!channel) return null;
+            
+            const noteData = {
                 startStep: step,
-                steps: [{ step, x: normX, y: normY, freq, filter }]
+                endStep: null,
+                events: [{ step, x: normX, y: normY, freq, filter }]
             };
             
-            currentRecording.pads.push(padData);
-            return currentRecording.pads.length - 1;
+            channel.notes.push(noteData);
+            
+            return { channelIndex: fingerIndex, sceneIndex, noteIndex: channel.notes.length - 1 };
         }
 
-        function updatePadRecording(padIndex, normX, normY, sceneIndex) {
-            if (!isRecording || !currentRecording || padIndex === null) return;
+        function updatePadRecording(recordRef, normX, normY, sceneIndex) {
+            if (!isRecording || !currentRecording || !recordRef) return;
             
-            const padData = currentRecording.pads[padIndex];
-            if (!padData) return;
+            const channel = currentRecording.channels.harmony.find(
+                c => c.channelIndex === recordRef.channelIndex && c.sceneIndex === recordRef.sceneIndex
+            );
+            if (!channel) return;
+            
+            const noteData = channel.notes[recordRef.noteIndex];
+            if (!noteData) return;
             
             let time = getRecordingTime();
             let step = timeToStep(time);
             
-            if (autoBeatLock) {
-                step = Math.round(step);
-            }
+            if (autoBeatLock) step = Math.round(step);
             
-            // Only record if we're on a new step
-            const lastStep = padData.steps[padData.steps.length - 1];
-            if (step > lastStep.step && step < TOTAL_STEPS) {
+            const lastEvent = noteData.events[noteData.events.length - 1];
+            if (step > lastEvent.step && step < TOTAL_STEPS) {
                 let freq = calculateFrequency(sceneIndex, normY);
-                if (autoTuneLock) {
-                    freq = quantizeToScale(freq, 0);
-                }
+                if (autoTuneLock) freq = quantizeToScale(freq, 0);
                 const filter = calculateFilter(sceneIndex, normX);
                 
-                padData.steps.push({ step, x: normX, y: normY, freq, filter });
+                noteData.events.push({ step, x: normX, y: normY, freq, filter });
             }
         }
 
-        function endPadRecording(padIndex) {
-            if (!isRecording || !currentRecording || padIndex === null) return;
+        function endPadRecording(recordRef) {
+            if (!isRecording || !currentRecording || !recordRef) return;
             
-            const padData = currentRecording.pads[padIndex];
-            if (!padData) return;
+            const channel = currentRecording.channels.harmony.find(
+                c => c.channelIndex === recordRef.channelIndex && c.sceneIndex === recordRef.sceneIndex
+            );
+            if (!channel) return;
+            
+            const noteData = channel.notes[recordRef.noteIndex];
+            if (!noteData) return;
             
             let time = getRecordingTime();
             let step = timeToStep(time);
             
-            if (autoBeatLock) {
-                step = Math.round(step);
-            }
+            if (autoBeatLock) step = Math.round(step);
             
-            padData.endStep = step;
+            noteData.endStep = step;
         }
 
         function calculateFrequency(sceneIndex, normY) {
@@ -953,11 +1209,8 @@
             document.getElementById('recordBtn').classList.add('recording');
             document.getElementById('recordIndicator').classList.add('visible');
             
-            // Auto-stop after 4 bars
             setTimeout(() => {
-                if (isRecording) {
-                    stopRecording();
-                }
+                if (isRecording) stopRecording();
             }, TOTAL_STEPS * STEP_DURATION);
         }
 
@@ -968,10 +1221,13 @@
             if (currentRecording) {
                 currentRecording.duration = getRecordingTime();
                 
-                // Add to mixer if there's content
-                if (currentRecording.drums.length > 0 || currentRecording.pads.length > 0) {
+                const hasBeats = currentRecording.channels.beats.events.length > 0;
+                const hasHarmony = currentRecording.channels.harmony.some(c => c.notes.length > 0);
+                
+                if (hasBeats || hasHarmony) {
                     mixerTracks.push(currentRecording);
                     renderTracks();
+                    updateMasterPanelVisibility();
                 }
             }
             
@@ -984,15 +1240,37 @@
             playbackTimeouts = [];
             isPlaying = false;
             
-            // Stop all beat loops
+            activeSustainedNotes.forEach(noteData => {
+                if (noteData.gainNode) {
+                    noteData.gainNode.gain.setTargetAtTime(0, audioContext.currentTime, 0.05);
+                }
+                if (noteData.oscillator) {
+                    setTimeout(() => { try { noteData.oscillator.stop(); } catch(e) {} }, 100);
+                }
+            });
+            activeSustainedNotes.clear();
+            
             [0, 1, 2].forEach(i => stopBeatLoops(i));
         }
 
         function exportRecording() {
-            if (!currentRecording || (currentRecording.drums.length === 0 && currentRecording.pads.length === 0)) {
+            if (!currentRecording) {
                 if (mixerTracks.length > 0) {
-                    // Export all mixer tracks
-                    const exportData = { version: "2.0", tracks: mixerTracks };
+                    const exportData = { version: "3.0", tracks: mixerTracks };
+                    const json = JSON.stringify(exportData, null, 2);
+                    downloadJson(json, 'fluffcore-mix');
+                } else {
+                    alert('Nothing to export!');
+                }
+                return;
+            }
+            
+            const hasContent = currentRecording.channels.beats.events.length > 0 ||
+                currentRecording.channels.harmony.some(c => c.notes.length > 0);
+            
+            if (!hasContent) {
+                if (mixerTracks.length > 0) {
+                    const exportData = { version: "3.0", tracks: mixerTracks };
                     const json = JSON.stringify(exportData, null, 2);
                     downloadJson(json, 'fluffcore-mix');
                 } else {
@@ -1037,11 +1315,8 @@
             e.stopPropagation();
             initAudio();
             
-            if (isRecording) {
-                stopRecording();
-            } else {
-                startRecording();
-            }
+            if (isRecording) stopRecording();
+            else startRecording();
         });
 
         // Stop button
@@ -1060,7 +1335,7 @@
         });
 
         // Drum sounds
-        function playDrumSound(drumIndex) {
+        function playDrumSound(drumIndex, shouldRecord = true) {
             if (!audioContext) return;
             
             const drum = drumSounds[drumIndex];
@@ -1088,7 +1363,7 @@
             osc.start(now);
             osc.stop(now + drum.decay + 0.1);
             
-            recordDrumHit(drumIndex);
+            if (shouldRecord) recordDrumHit(drumIndex);
         }
 
         document.querySelectorAll('.drum-btn').forEach(btn => {
@@ -1128,9 +1403,7 @@
                 const scaleIndex = Math.floor(normY * (scale.length - 1));
                 let freq = scale[scaleIndex] * (1 + (layerIndex * 0.01));
                 
-                if (autoTuneLock) {
-                    freq = quantizeToScale(freq, melodyMode);
-                }
+                if (autoTuneLock) freq = quantizeToScale(freq, melodyMode);
                 
                 const oscillator = audioContext.createOscillator();
                 const gainNode = audioContext.createGain();
@@ -1175,9 +1448,7 @@
                 const scaleIndex = Math.floor(normY * (scale.length - 1));
                 let freq = scale[scaleIndex];
                 
-                if (autoTuneLock) {
-                    freq = quantizeToScale(freq, melodyMode);
-                }
+                if (autoTuneLock) freq = quantizeToScale(freq, melodyMode);
                 
                 osc.frequency.setTargetAtTime(freq, audioContext.currentTime, 0.05);
             });
@@ -1335,9 +1606,9 @@
                         
                         const normX = x / rect.width;
                         const normY = 1 - (y / rect.height);
-                        const recordIndex = startPadRecording(sceneIndex, layerIndex, x, y, normX, normY);
+                        const recordRef = startPadRecording(sceneIndex, layerIndex, x, y, normX, normY);
                         
-                        padTouches.set(touch.identifier, { x, y, visual, sound, layerIndex, recordIndex, rect });
+                        padTouches.set(touch.identifier, { x, y, visual, sound, layerIndex, recordRef, rect });
                         createSparkle(x, y, pad, sceneIndex);
                     }
                 }
@@ -1373,7 +1644,7 @@
                         
                         const normX = x / data.rect.width;
                         const normY = 1 - (y / data.rect.height);
-                        updatePadRecording(data.recordIndex, normX, normY, sceneIndex);
+                        updatePadRecording(data.recordRef, normX, normY, sceneIndex);
                         
                         if (Math.random() < 0.08) createSparkle(x, y, pad, sceneIndex);
                     }
@@ -1391,7 +1662,7 @@
                         setTimeout(() => data.visual.indicator.remove(), 300);
                         
                         if (data.sound) stopTone(data.sound);
-                        endPadRecording(data.recordIndex);
+                        endPadRecording(data.recordRef);
                         
                         padTouches.delete(touch.identifier);
                     }
@@ -1422,9 +1693,9 @@
                 
                 const normX = x / rect.width;
                 const normY = 1 - (y / rect.height);
-                const recordIndex = startPadRecording(sceneIndex, 0, x, y, normX, normY);
+                const recordRef = startPadRecording(sceneIndex, 0, x, y, normX, normY);
                 
-                mouseData = { x, y, visual, sound, rect, recordIndex };
+                mouseData = { x, y, visual, sound, rect, recordRef };
                 
                 updateLayerIndicators(sceneIndex, 1);
                 startBeatLoops(sceneIndex);
@@ -1448,7 +1719,7 @@
                 
                 const normX = x / mouseData.rect.width;
                 const normY = 1 - (y / mouseData.rect.height);
-                updatePadRecording(mouseData.recordIndex, normX, normY, sceneIndex);
+                updatePadRecording(mouseData.recordRef, normX, normY, sceneIndex);
                 
                 if (Math.random() < 0.08) createSparkle(x, y, pad, sceneIndex);
             });
@@ -1458,7 +1729,7 @@
                     mouseData.visual.indicator.remove();
                     mouseData.visual.ring.remove();
                     if (mouseData.sound) stopTone(mouseData.sound);
-                    endPadRecording(mouseData.recordIndex);
+                    endPadRecording(mouseData.recordRef);
                     
                     mouseData = null;
                     updateLayerIndicators(sceneIndex, 0);
@@ -1511,46 +1782,102 @@
         const emptyState = document.getElementById('emptyState');
         const fileInput = document.getElementById('fileInput');
 
-        function createStepGrid(track) {
-            let html = '';
-            const stepEvents = new Set();
+        function createChannelGrids(track) {
+            let html = '<div class="channel-grid">';
             
-            // Mark steps with drum events
-            track.drums.forEach(d => stepEvents.add(Math.floor(d.step)));
+            const beatSteps = new Set();
+            if (track.channels && track.channels.beats) {
+                track.channels.beats.events.forEach(e => beatSteps.add(Math.floor(e.step)));
+            } else if (track.drums) {
+                track.drums.forEach(d => beatSteps.add(Math.floor(d.step)));
+            }
             
-            // Mark steps with pad events
-            track.pads.forEach(p => {
-                p.steps.forEach(s => stepEvents.add(Math.floor(s.step)));
-            });
-            
+            html += '<div class="channel-row"><span class="channel-label">🥁</span><div class="step-grid">';
             for (let i = 0; i < Math.min(TOTAL_STEPS, 32); i++) {
-                const hasEvent = stepEvents.has(i);
+                const hasEvent = beatSteps.has(i);
                 const isBeatMarker = i % 4 === 0;
                 html += `<div class="step-cell${hasEvent ? ' has-event' : ''}${isBeatMarker ? ' beat-marker' : ''}"></div>`;
             }
+            html += '</div></div>';
             
+            const harmonyChannels = track.channels ? track.channels.harmony : [];
+            const legacyPads = track.pads || [];
+            
+            const numChannels = Math.max(
+                harmonyChannels.length,
+                legacyPads.length > 0 ? Math.max(...legacyPads.map(p => p.fingerIndex || 0)) + 1 : 0
+            );
+            
+            for (let ch = 0; ch < Math.min(numChannels, MAX_HARMONY_CHANNELS); ch++) {
+                const channelData = harmonyChannels.find(c => c.channelIndex === ch);
+                const legacyPad = legacyPads.find(p => (p.fingerIndex || 0) === ch);
+                
+                const eventSteps = new Set();
+                const sustainSteps = new Set();
+                
+                if (channelData) {
+                    channelData.notes.forEach(note => {
+                        note.events.forEach(e => eventSteps.add(Math.floor(e.step)));
+                        if (note.endStep !== null) {
+                            for (let s = Math.floor(note.startStep); s <= Math.floor(note.endStep); s++) {
+                                sustainSteps.add(s);
+                            }
+                        }
+                    });
+                } else if (legacyPad) {
+                    legacyPad.steps.forEach(s => eventSteps.add(Math.floor(s.step)));
+                    if (legacyPad.endStep !== undefined) {
+                        for (let s = Math.floor(legacyPad.startStep || 0); s <= Math.floor(legacyPad.endStep); s++) {
+                            sustainSteps.add(s);
+                        }
+                    }
+                }
+                
+                const emojis = ['🎵', '🎶', '✨', '💫', '🌟'];
+                html += `<div class="channel-row"><span class="channel-label">${emojis[ch]}</span><div class="step-grid">`;
+                for (let i = 0; i < Math.min(TOTAL_STEPS, 32); i++) {
+                    const hasEvent = eventSteps.has(i);
+                    const hasSustain = sustainSteps.has(i) && !hasEvent;
+                    const isBeatMarker = i % 4 === 0;
+                    html += `<div class="step-cell${hasEvent ? ' has-event' : ''}${hasSustain ? ' has-sustain' : ''}${isBeatMarker ? ' beat-marker' : ''}"></div>`;
+                }
+                html += '</div></div>';
+            }
+            
+            html += '</div>';
             return html;
         }
 
         function createTrackElement(track, index) {
             const trackEl = document.createElement('div');
             trackEl.className = 'track-item';
+            trackEl.draggable = true;
+            trackEl.dataset.trackIndex = index;
             
-            const drumCount = track.drums ? track.drums.length : 0;
-            const padCount = track.pads ? track.pads.length : 0;
+            let beatCount = 0;
+            let harmonyCount = 0;
+            
+            if (track.channels) {
+                beatCount = track.channels.beats.events.length;
+                harmonyCount = track.channels.harmony.reduce((sum, ch) => sum + ch.notes.length, 0);
+            } else {
+                beatCount = track.drums ? track.drums.length : 0;
+                harmonyCount = track.pads ? track.pads.length : 0;
+            }
             
             trackEl.innerHTML = `
                 <div class="track-header">
                     <div>
                         <span class="track-name">${track.name || 'Track ' + (index + 1)}</span>
-                        <div class="track-info">${drumCount} drums, ${padCount} pads</div>
+                        <div class="track-info">${beatCount} beats, ${harmonyCount} notes</div>
                     </div>
                     <div class="track-controls">
+                        <button class="track-btn track-add-master" data-index="${index}" title="Add to Master">➕</button>
                         <button class="track-btn track-play" data-index="${index}">▶</button>
                         <button class="track-btn track-delete" data-index="${index}">✕</button>
                     </div>
                 </div>
-                <div class="step-grid">${createStepGrid(track)}</div>
+                ${createChannelGrids(track)}
                 <div class="trim-controls">
                     <div class="stretch-control">
                         <span class="stretch-label">L</span>
@@ -1569,6 +1896,40 @@
                     <button class="autorhythm-btn${track.autoRhythmPlayback ? ' active' : ''}" data-index="${index}">🥁</button>
                 </div>
             `;
+            
+            // Drag events for reordering tracks
+            trackEl.addEventListener('dragstart', (e) => {
+                draggedTrackIndex = index;
+                trackEl.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+            });
+            
+            trackEl.addEventListener('dragend', () => {
+                trackEl.classList.remove('dragging');
+                draggedTrackIndex = null;
+                document.querySelectorAll('.track-item').forEach(el => el.classList.remove('drag-over'));
+            });
+            
+            trackEl.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                if (draggedTrackIndex !== null && draggedTrackIndex !== index) {
+                    trackEl.classList.add('drag-over');
+                }
+            });
+            
+            trackEl.addEventListener('dragleave', () => {
+                trackEl.classList.remove('drag-over');
+            });
+            
+            trackEl.addEventListener('drop', (e) => {
+                e.preventDefault();
+                trackEl.classList.remove('drag-over');
+                if (draggedTrackIndex !== null && draggedTrackIndex !== index) {
+                    const movedTrack = mixerTracks.splice(draggedTrackIndex, 1)[0];
+                    mixerTracks.splice(index, 0, movedTrack);
+                    renderTracks();
+                }
+            });
             
             return trackEl;
         }
@@ -1598,6 +1959,14 @@
                     const index = parseInt(btn.dataset.index);
                     mixerTracks.splice(index, 1);
                     renderTracks();
+                    updateMasterPanelVisibility();
+                });
+            });
+            
+            document.querySelectorAll('.track-add-master').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const index = parseInt(btn.dataset.index);
+                    addTrackToMaster(index);
                 });
             });
             
@@ -1643,11 +2012,8 @@
             
             let t = step / totalSteps;
             
-            if (curve === 'log') {
-                t = Math.log(1 + t * 9) / Math.log(10);
-            } else if (curve === 'exp') {
-                t = (Math.pow(10, t) - 1) / 9;
-            }
+            if (curve === 'log') t = Math.log(1 + t * 9) / Math.log(10);
+            else if (curve === 'exp') t = (Math.pow(10, t) - 1) / 9;
             
             const leftInfluence = 1 - t;
             const rightInfluence = t;
@@ -1656,71 +2022,255 @@
             return step * Math.max(0.1, stretchFactor);
         }
 
-        function playTrack(track) {
+        function createSustainedNote(freq, filterValue, sceneIndex = 0) {
+            const config = synthConfigs[sceneIndex];
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            const filter = audioContext.createBiquadFilter();
+            
+            oscillator.type = config.types[0];
+            oscillator.frequency.value = freq;
+            
+            filter.type = 'lowpass';
+            filter.frequency.value = filterValue || 2000;
+            filter.Q.value = 2;
+            
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.12, audioContext.currentTime + 0.02);
+            
+            oscillator.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(masterGain);
+            oscillator.start();
+            
+            return { oscillator, gainNode, filter };
+        }
+
+        function updateSustainedNote(noteData, freq, filterValue) {
+            if (!noteData) return;
+            noteData.oscillator.frequency.setTargetAtTime(freq, audioContext.currentTime, 0.03);
+            noteData.filter.frequency.setTargetAtTime(filterValue, audioContext.currentTime, 0.03);
+        }
+
+        function stopSustainedNote(noteData) {
+            if (!noteData) return;
+            noteData.gainNode.gain.setTargetAtTime(0, audioContext.currentTime, 0.05);
+            setTimeout(() => { try { noteData.oscillator.stop(); } catch(e) {} }, 150);
+        }
+
+        function playTrack(track, timeOffset = 0) {
             initAudio();
             
             const autoRhythm = track.autoRhythmPlayback;
             const autoTune = track.autoTunePlayback;
             const totalSteps = track.totalSteps || TOTAL_STEPS;
+            const cropStart = track.cropStart || 0;
+            const cropEnd = track.cropEnd || totalSteps;
             
-            // Play drums
-            if (track.drums) {
-                track.drums.forEach(drum => {
-                    let step = drum.step;
+            if (track.channels) {
+                track.channels.beats.events.forEach(event => {
+                    let step = event.step;
+                    if (step < cropStart || step > cropEnd) return;
+                    step = step - cropStart;
+                    if (autoRhythm) step = Math.round(step);
+                    step = applyStretch(step, track, cropEnd - cropStart);
                     
-                    if (autoRhythm) {
-                        step = Math.round(step);
+                    const time = stepToTime(step) + timeOffset;
+                    if (time >= 0) {
+                        const id = setTimeout(() => playDrumSound(event.drumIndex, false), time);
+                        playbackTimeouts.push(id);
                     }
-                    
-                    step = applyStretch(step, track, totalSteps);
-                    
-                    const time = stepToTime(step);
-                    const id = setTimeout(() => playDrumSound(drum.drumIndex), time);
-                    playbackTimeouts.push(id);
                 });
-            }
-            
-            // Play pads
-            if (track.pads) {
-                track.pads.forEach(padData => {
-                    padData.steps.forEach((stepData, i) => {
-                        let step = stepData.step;
+                
+                track.channels.harmony.forEach(channel => {
+                    channel.notes.forEach(note => {
+                        if (note.startStep > cropEnd || (note.endStep !== null && note.endStep < cropStart)) return;
                         
-                        if (autoRhythm) {
-                            step = Math.round(step);
+                        const noteId = `${channel.channelIndex}-${note.startStep}-${Date.now()}`;
+                        
+                        let startStep = Math.max(note.startStep, cropStart) - cropStart;
+                        if (autoRhythm) startStep = Math.round(startStep);
+                        startStep = applyStretch(startStep, track, cropEnd - cropStart);
+                        
+                        const startTime = stepToTime(startStep) + timeOffset;
+                        
+                        if (startTime >= 0) {
+                            const startId = setTimeout(() => {
+                                const firstEvent = note.events[0];
+                                let freq = firstEvent.freq;
+                                if (autoTune) freq = quantizeToScale(freq);
+                                
+                                const sustainedNote = createSustainedNote(freq, firstEvent.filter, channel.sceneIndex);
+                                activeSustainedNotes.set(noteId, sustainedNote);
+                            }, startTime);
+                            playbackTimeouts.push(startId);
                         }
                         
-                        step = applyStretch(step, track, totalSteps);
-                        
-                        const time = stepToTime(step);
-                        const id = setTimeout(() => {
-                            let freq = stepData.freq;
-                            if (autoTune) {
-                                freq = quantizeToScale(freq);
+                        note.events.forEach((event, idx) => {
+                            if (idx === 0) return;
+                            if (event.step < cropStart || event.step > cropEnd) return;
+                            
+                            let step = event.step - cropStart;
+                            if (autoRhythm) step = Math.round(step);
+                            step = applyStretch(step, track, cropEnd - cropStart);
+                            
+                            const time = stepToTime(step) + timeOffset;
+                            if (time >= 0) {
+                                const updateId = setTimeout(() => {
+                                    const sustainedNote = activeSustainedNotes.get(noteId);
+                                    if (sustainedNote) {
+                                        let freq = event.freq;
+                                        if (autoTune) freq = quantizeToScale(freq);
+                                        updateSustainedNote(sustainedNote, freq, event.filter);
+                                    }
+                                }, time);
+                                playbackTimeouts.push(updateId);
                             }
+                        });
+                        
+                        if (note.endStep !== null) {
+                            let endStep = Math.min(note.endStep, cropEnd) - cropStart;
+                            if (autoRhythm) endStep = Math.round(endStep);
+                            endStep = applyStretch(endStep, track, cropEnd - cropStart);
                             
-                            const osc = audioContext.createOscillator();
-                            const gain = audioContext.createGain();
-                            const filter = audioContext.createBiquadFilter();
-                            
-                            osc.frequency.value = freq;
-                            osc.type = 'sine';
-                            
-                            filter.type = 'lowpass';
-                            filter.frequency.value = stepData.filter || 2000;
-                            
-                            gain.gain.setValueAtTime(0.12, audioContext.currentTime);
-                            gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.15);
-                            
-                            osc.connect(filter);
-                            filter.connect(gain);
-                            gain.connect(masterGain);
-                            osc.start();
-                            osc.stop(audioContext.currentTime + 0.2);
-                        }, time);
-                        playbackTimeouts.push(id);
+                            const endTime = stepToTime(endStep) + timeOffset;
+                            if (endTime >= 0) {
+                                const endId = setTimeout(() => {
+                                    const sustainedNote = activeSustainedNotes.get(noteId);
+                                    if (sustainedNote) {
+                                        stopSustainedNote(sustainedNote);
+                                        activeSustainedNotes.delete(noteId);
+                                    }
+                                }, endTime);
+                                playbackTimeouts.push(endId);
+                            }
+                        }
                     });
                 });
+            } else {
+                // Legacy format support
+                if (track.drums) {
+                    track.drums.forEach(drum => {
+                        let step = drum.step;
+                        if (step < cropStart || step > cropEnd) return;
+                        step = step - cropStart;
+                        if (autoRhythm) step = Math.round(step);
+                        step = applyStretch(step, track, cropEnd - cropStart);
+                        
+                        const time = stepToTime(step) + timeOffset;
+                        if (time >= 0) {
+                            const id = setTimeout(() => playDrumSound(drum.drumIndex, false), time);
+                            playbackTimeouts.push(id);
+                        }
+                    });
+                }
+                
+                if (track.pads) {
+                    track.pads.forEach((padData, padIdx) => {
+                        const noteId = `legacy-${padIdx}-${Date.now()}`;
+                        const hasMultipleSteps = padData.steps.length > 1;
+                        const hasSustain = padData.endStep !== undefined && padData.endStep > padData.startStep;
+                        
+                        if (hasSustain || hasMultipleSteps) {
+                            let startStep = padData.startStep || padData.steps[0].step;
+                            if (startStep > cropEnd) return;
+                            startStep = Math.max(startStep, cropStart) - cropStart;
+                            if (autoRhythm) startStep = Math.round(startStep);
+                            startStep = applyStretch(startStep, track, cropEnd - cropStart);
+                            
+                            const startTime = stepToTime(startStep) + timeOffset;
+                            
+                            if (startTime >= 0) {
+                                const startId = setTimeout(() => {
+                                    const firstEvent = padData.steps[0];
+                                    let freq = firstEvent.freq;
+                                    if (autoTune) freq = quantizeToScale(freq);
+                                    
+                                    const sustainedNote = createSustainedNote(freq, firstEvent.filter, padData.sceneIndex || 0);
+                                    activeSustainedNotes.set(noteId, sustainedNote);
+                                }, startTime);
+                                playbackTimeouts.push(startId);
+                            }
+                            
+                            padData.steps.forEach((stepData, idx) => {
+                                if (idx === 0) return;
+                                if (stepData.step < cropStart || stepData.step > cropEnd) return;
+                                
+                                let step = stepData.step - cropStart;
+                                if (autoRhythm) step = Math.round(step);
+                                step = applyStretch(step, track, cropEnd - cropStart);
+                                
+                                const time = stepToTime(step) + timeOffset;
+                                if (time >= 0) {
+                                    const updateId = setTimeout(() => {
+                                        const sustainedNote = activeSustainedNotes.get(noteId);
+                                        if (sustainedNote) {
+                                            let freq = stepData.freq;
+                                            if (autoTune) freq = quantizeToScale(freq);
+                                            updateSustainedNote(sustainedNote, freq, stepData.filter);
+                                        }
+                                    }, time);
+                                    playbackTimeouts.push(updateId);
+                                }
+                            });
+                            
+                            if (padData.endStep !== undefined) {
+                                let endStep = Math.min(padData.endStep, cropEnd) - cropStart;
+                                if (autoRhythm) endStep = Math.round(endStep);
+                                endStep = applyStretch(endStep, track, cropEnd - cropStart);
+                                
+                                const endTime = stepToTime(endStep) + timeOffset;
+                                if (endTime >= 0) {
+                                    const endId = setTimeout(() => {
+                                        const sustainedNote = activeSustainedNotes.get(noteId);
+                                        if (sustainedNote) {
+                                            stopSustainedNote(sustainedNote);
+                                            activeSustainedNotes.delete(noteId);
+                                        }
+                                    }, endTime);
+                                    playbackTimeouts.push(endId);
+                                }
+                            }
+                        } else {
+                            padData.steps.forEach(stepData => {
+                                if (stepData.step < cropStart || stepData.step > cropEnd) return;
+                                
+                                let step = stepData.step - cropStart;
+                                if (autoRhythm) step = Math.round(step);
+                                step = applyStretch(step, track, cropEnd - cropStart);
+                                
+                                const time = stepToTime(step) + timeOffset;
+                                if (time >= 0) {
+                                    const id = setTimeout(() => {
+                                        let freq = stepData.freq;
+                                        if (autoTune) freq = quantizeToScale(freq);
+                                        
+                                        const osc = audioContext.createOscillator();
+                                        const gain = audioContext.createGain();
+                                        const filter = audioContext.createBiquadFilter();
+                                        
+                                        osc.frequency.value = freq;
+                                        osc.type = 'sine';
+                                        
+                                        filter.type = 'lowpass';
+                                        filter.frequency.value = stepData.filter || 2000;
+                                        
+                                        gain.gain.setValueAtTime(0.12, audioContext.currentTime);
+                                        gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.15);
+                                        
+                                        osc.connect(filter);
+                                        filter.connect(gain);
+                                        gain.connect(masterGain);
+                                        osc.start();
+                                        osc.stop(audioContext.currentTime + 0.2);
+                                    }, time);
+                                    playbackTimeouts.push(id);
+                                }
+                            });
+                        }
+                    });
+                }
             }
         }
 
@@ -1733,7 +2283,6 @@
                     try {
                         const data = JSON.parse(event.target.result);
                         
-                        // Handle multi-track export
                         if (data.tracks) {
                             data.tracks.forEach(t => {
                                 t.name = t.name || file.name.replace('.json', '');
@@ -1745,6 +2294,7 @@
                         }
                         
                         renderTracks();
+                        updateMasterPanelVisibility();
                     } catch (err) {
                         console.error('Invalid JSON:', err);
                     }
@@ -1766,6 +2316,227 @@
         document.getElementById('clearAllBtn').addEventListener('click', () => {
             mixerTracks = [];
             renderTracks();
+            updateMasterPanelVisibility();
+        });
+
+        // Master Channel Functions
+        function updateMasterPanelVisibility() {
+            const panel = document.getElementById('masterPanel');
+            if (currentScene === 3) {
+                panel.classList.add('visible');
+            } else {
+                panel.classList.remove('visible');
+            }
+        }
+
+        function addTrackToMaster(trackIndex) {
+            const track = mixerTracks[trackIndex];
+            if (!track) return;
+            
+            const clip = {
+                trackIndex,
+                name: track.name || `Track ${trackIndex + 1}`,
+                cropStart: track.cropStart || 0,
+                cropEnd: track.cropEnd || (track.totalSteps || TOTAL_STEPS),
+                trackData: JSON.parse(JSON.stringify(track))
+            };
+            
+            masterClips.push(clip);
+            renderMasterTimeline();
+        }
+
+        function getClipDuration(clip) {
+            return clip.cropEnd - clip.cropStart;
+        }
+
+        function renderMasterTimeline() {
+            const inner = document.getElementById('masterTimelineInner');
+            const empty = document.getElementById('masterEmpty');
+            
+            if (masterClips.length === 0) {
+                inner.innerHTML = '';
+                inner.appendChild(empty);
+                return;
+            }
+            
+            inner.innerHTML = '';
+            
+            masterClips.forEach((clip, index) => {
+                const clipEl = document.createElement('div');
+                clipEl.className = 'master-clip' + (index === selectedClipIndex ? ' selected' : '');
+                clipEl.dataset.clipIndex = index;
+                
+                const duration = getClipDuration(clip);
+                const durationSec = (stepToTime(duration) / 1000).toFixed(1);
+                
+                clipEl.innerHTML = `
+                    <div class="master-clip-name">${clip.name}</div>
+                    <div class="master-clip-duration">${durationSec}s</div>
+                    <button class="master-clip-remove" data-index="${index}">✕</button>
+                    <div class="crop-handles">
+                        <div class="crop-handle crop-left" data-index="${index}" data-side="left"></div>
+                        <div class="crop-handle crop-right" data-index="${index}" data-side="right"></div>
+                    </div>
+                `;
+                
+                // Clip selection
+                clipEl.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('master-clip-remove') && !e.target.classList.contains('crop-handle')) {
+                        selectedClipIndex = index;
+                        renderMasterTimeline();
+                    }
+                });
+                
+                // Drag for reordering
+                clipEl.draggable = true;
+                
+                clipEl.addEventListener('dragstart', (e) => {
+                    draggedClipIndex = index;
+                    clipEl.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                });
+                
+                clipEl.addEventListener('dragend', () => {
+                    clipEl.classList.remove('dragging');
+                    draggedClipIndex = null;
+                });
+                
+                clipEl.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    if (draggedClipIndex !== null && draggedClipIndex !== index) {
+                        clipEl.style.borderColor = '#fff';
+                    }
+                });
+                
+                clipEl.addEventListener('dragleave', () => {
+                    clipEl.style.borderColor = '';
+                });
+                
+                clipEl.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    clipEl.style.borderColor = '';
+                    if (draggedClipIndex !== null && draggedClipIndex !== index) {
+                        const movedClip = masterClips.splice(draggedClipIndex, 1)[0];
+                        masterClips.splice(index, 0, movedClip);
+                        renderMasterTimeline();
+                    }
+                });
+                
+                inner.appendChild(clipEl);
+            });
+            
+            // Attach remove handlers
+            inner.querySelectorAll('.master-clip-remove').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const idx = parseInt(btn.dataset.index);
+                    masterClips.splice(idx, 1);
+                    if (selectedClipIndex >= masterClips.length) selectedClipIndex = masterClips.length - 1;
+                    renderMasterTimeline();
+                });
+            });
+            
+            // Attach crop handlers
+            inner.querySelectorAll('.crop-handle').forEach(handle => {
+                const handleTouch = (startE) => {
+                    startE.preventDefault();
+                    startE.stopPropagation();
+                    
+                    const idx = parseInt(handle.dataset.index);
+                    const side = handle.dataset.side;
+                    const clip = masterClips[idx];
+                    const startX = startE.type === 'touchstart' ? startE.touches[0].clientX : startE.clientX;
+                    const startCropStart = clip.cropStart;
+                    const startCropEnd = clip.cropEnd;
+                    const maxSteps = clip.trackData.totalSteps || TOTAL_STEPS;
+                    
+                    const onMove = (moveE) => {
+                        const currentX = moveE.type === 'touchmove' ? moveE.touches[0].clientX : moveE.clientX;
+                        const deltaX = currentX - startX;
+                        const stepsPerPixel = 0.5;
+                        const deltaSteps = Math.round(deltaX * stepsPerPixel);
+                        
+                        if (side === 'left') {
+                            clip.cropStart = Math.max(0, Math.min(startCropEnd - 4, startCropStart + deltaSteps));
+                        } else {
+                            clip.cropEnd = Math.max(startCropStart + 4, Math.min(maxSteps, startCropEnd + deltaSteps));
+                        }
+                        
+                        clip.trackData.cropStart = clip.cropStart;
+                        clip.trackData.cropEnd = clip.cropEnd;
+                        renderMasterTimeline();
+                    };
+                    
+                    const onEnd = () => {
+                        document.removeEventListener('mousemove', onMove);
+                        document.removeEventListener('mouseup', onEnd);
+                        document.removeEventListener('touchmove', onMove);
+                        document.removeEventListener('touchend', onEnd);
+                    };
+                    
+                    document.addEventListener('mousemove', onMove);
+                    document.addEventListener('mouseup', onEnd);
+                    document.addEventListener('touchmove', onMove);
+                    document.addEventListener('touchend', onEnd);
+                };
+                
+                handle.addEventListener('mousedown', handleTouch);
+                handle.addEventListener('touchstart', handleTouch);
+            });
+        }
+
+        // Master Play
+        document.getElementById('masterPlayBtn').addEventListener('click', () => {
+            initAudio();
+            stopAllPlayback();
+            
+            let timeOffset = 0;
+            masterClips.forEach(clip => {
+                playTrack(clip.trackData, timeOffset);
+                const duration = getClipDuration(clip);
+                timeOffset += stepToTime(duration);
+            });
+        });
+
+        // Master Download with CC0 License
+        document.getElementById('masterDownloadBtn').addEventListener('click', () => {
+            if (masterClips.length === 0) {
+                alert('Add clips to master channel first!');
+                return;
+            }
+            
+            const masterExport = {
+                version: "3.0",
+                license: {
+                    type: "CC0-1.0",
+                    name: "Creative Commons Zero v1.0 Universal",
+                    url: "https://creativecommons.org/publicdomain/zero/1.0/",
+                    dedication: "To the extent possible under law, the creator has waived all copyright and related or neighboring rights to this work. This work is published from the United States.",
+                    legalCode: "https://creativecommons.org/publicdomain/zero/1.0/legalcode"
+                },
+                createdWith: "🌈 Rainbow Unicorn Bunny Fluffcore 🐰",
+                createdAt: new Date().toISOString(),
+                bpm: BPM,
+                master: {
+                    clips: masterClips.map(clip => ({
+                        name: clip.name,
+                        cropStart: clip.cropStart,
+                        cropEnd: clip.cropEnd,
+                        track: clip.trackData
+                    }))
+                },
+                tracks: mixerTracks
+            };
+            
+            const json = JSON.stringify(masterExport, null, 2);
+            downloadJson(json, 'fluffcore-master-cc0');
+        });
+
+        // Master Clear
+        document.getElementById('masterClearBtn').addEventListener('click', () => {
+            masterClips = [];
+            selectedClipIndex = -1;
+            renderMasterTimeline();
         });
 
         // Scene navigation
@@ -1776,24 +2547,25 @@
             currentScene = Math.max(0, Math.min(3, index));
             sceneContainer.style.transform = `translateX(-${currentScene * 25}%)`;
             dots.forEach((dot, i) => dot.classList.toggle('active', i === currentScene));
+            updateMasterPanelVisibility();
         }
         
         let swipeStartX = 0;
         let isSwiping = false;
         
         document.querySelector('.app-container').addEventListener('touchstart', (e) => {
-            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn') || e.target.closest('.drum-btn') || e.target.closest('.ctrl-btn') || e.target.closest('.mixer-container')) return;
+            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn') || e.target.closest('.drum-btn') || e.target.closest('.ctrl-btn') || e.target.closest('.mixer-container') || e.target.closest('.master-panel')) return;
             swipeStartX = e.touches[0].clientX;
             isSwiping = false;
         });
         
         document.querySelector('.app-container').addEventListener('touchmove', (e) => {
-            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn') || e.target.closest('.drum-btn') || e.target.closest('.ctrl-btn') || e.target.closest('.mixer-container')) return;
+            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn') || e.target.closest('.drum-btn') || e.target.closest('.ctrl-btn') || e.target.closest('.mixer-container') || e.target.closest('.master-panel')) return;
             if (Math.abs(e.touches[0].clientX - swipeStartX) > 30) isSwiping = true;
         });
         
         document.querySelector('.app-container').addEventListener('touchend', (e) => {
-            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn') || e.target.closest('.drum-btn') || e.target.closest('.ctrl-btn') || e.target.closest('.mixer-container')) return;
+            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn') || e.target.closest('.drum-btn') || e.target.closest('.ctrl-btn') || e.target.closest('.mixer-container') || e.target.closest('.master-panel')) return;
             if (isSwiping) {
                 const deltaX = e.changedTouches[0].clientX - swipeStartX;
                 if (deltaX > 50) updateScene(currentScene - 1);
@@ -1809,6 +2581,7 @@
         updateScene(0);
         [0, 1, 2].forEach(i => updateActiveModeDisplay(i));
         renderTracks();
+        renderMasterTimeline();
     </script>
 </body>
 </html>

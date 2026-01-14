@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>◬ V O I D C U L T ◬ Epoch Ω-∞</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: 'Cult';
+            src: local('Courier New');
+        }
+
+        body {
+            overflow: hidden;
+            background: #000000;
+            font-family: 'Courier New', monospace;
+            cursor: none;
+        }
+
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        #glitchOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            mix-blend-mode: screen;
+        }
+
+        #scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.2) 0px,
+                rgba(0, 0, 0, 0.2) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            z-index: 100;
+        }
+
+        #chromatic {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 99;
+            background: 
+                linear-gradient(90deg, rgba(255,0,0,0.03) 0%, transparent 10%, transparent 90%, rgba(0,255,255,0.03) 100%);
+        }
+
+        #voidCore {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .hud-element {
+            position: fixed;
+            color: rgba(0, 255, 255, 0.6);
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            pointer-events: none;
+            z-index: 80;
+            font-family: 'Courier New', monospace;
+        }
+
+        #topLeft {
+            top: 20px;
+            left: 20px;
+        }
+
+        #topRight {
+            top: 20px;
+            right: 20px;
+            text-align: right;
+        }
+
+        #bottomLeft {
+            bottom: 100px;
+            left: 20px;
+        }
+
+        #bottomRight {
+            bottom: 100px;
+            right: 20px;
+            text-align: right;
+        }
+
+        .warning {
+            color: rgba(255, 0, 80, 0.8);
+            animation: warningPulse 1s infinite;
+        }
+
+        @keyframes warningPulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 0.3; }
+        }
+
+        #centerDisplay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+            z-index: 85;
+        }
+
+        #transmission {
+            color: rgba(0, 255, 255, 0.9);
+            font-size: 14px;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            opacity: 0;
+            transition: opacity 0.5s;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.4);
+            max-width: 80vw;
+        }
+
+        #entityDesignation {
+            color: rgba(255, 0, 80, 0.7);
+            font-size: 10px;
+            letter-spacing: 4px;
+            margin-top: 10px;
+        }
+
+        #sidebarLeft, #sidebarRight {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 300px;
+            pointer-events: none;
+            z-index: 80;
+        }
+
+        #sidebarLeft { left: 15px; }
+        #sidebarRight { right: 15px; }
+
+        .sidebar-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            transition: height 0.3s;
+        }
+
+        #sidebarLeft .sidebar-fill {
+            background: linear-gradient(to top, rgba(0, 255, 255, 0.8), rgba(0, 255, 255, 0.2));
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        #sidebarRight .sidebar-fill {
+            background: linear-gradient(to top, rgba(255, 0, 80, 0.8), rgba(255, 0, 80, 0.2));
+            box-shadow: 0 0 10px rgba(255, 0, 80, 0.5);
+        }
+
+        #controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 200;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 0 10px;
+        }
+
+        .btn {
+            padding: 8px 14px;
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            background: rgba(0, 10, 20, 0.9);
+            color: rgba(0, 255, 255, 0.8);
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.2s ease;
+            clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+        }
+
+        .btn:hover {
+            background: rgba(0, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), inset 0 0 20px rgba(0, 255, 255, 0.1);
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        .btn.active {
+            border-color: rgba(255, 0, 80, 0.8);
+            color: rgba(255, 0, 80, 0.9);
+            box-shadow: 0 0 15px rgba(255, 0, 80, 0.4);
+        }
+
+        .btn.danger {
+            border-color: rgba(255, 0, 80, 0.6);
+            color: rgba(255, 0, 80, 0.8);
+        }
+
+        .btn.danger:hover {
+            background: rgba(255, 0, 80, 0.15);
+            box-shadow: 0 0 20px rgba(255, 0, 80, 0.3);
+        }
+
+        #cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 300;
+            width: 40px;
+            height: 40px;
+            transform: translate(-50%, -50%);
+        }
+
+        .corner-glyph {
+            position: fixed;
+            font-size: 24px;
+            color: rgba(0, 255, 255, 0.4);
+            pointer-events: none;
+            z-index: 75;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .corner-glyph.tl { top: 50px; left: 50px; }
+        .corner-glyph.tr { top: 50px; right: 50px; }
+        .corner-glyph.bl { bottom: 120px; left: 50px; }
+        .corner-glyph.br { bottom: 120px; right: 50px; }
+
+        @keyframes glitchText {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-1px, -1px); }
+            80% { transform: translate(1px, 1px); }
+        }
+
+        .glitch-text {
+            animation: glitchText 0.1s infinite;
+        }
+
+        #neuralGrid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+            opacity: 0.15;
+        }
+
+        #dataStream {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(0, 255, 255, 0.5);
+            font-size: 8px;
+            letter-spacing: 2px;
+            pointer-events: none;
+            z-index: 80;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <canvas id="neuralGrid"></canvas>
+    <canvas id="glitchOverlay"></canvas>
+    <div id="scanlines"></div>
+    <div id="chromatic"></div>
+
+    <canvas id="voidCore" width="600" height="600"></canvas>
+
+    <div class="corner-glyph tl">◬</div>
+    <div class="corner-glyph tr">◭</div>
+    <div class="corner-glyph bl">⌬</div>
+    <div class="corner-glyph br">⏣</div>
+
+    <div class="hud-element" id="topLeft">
+        <div>VOIDCULT INTERFACE v∞.███</div>
+        <div style="margin-top: 5px;">EPOCH: <span id="epoch">Ω-████████</span></div>
+        <div>DIMENSION: <span id="dimension">NULL</span></div>
+        <div>ENTROPY: <span id="entropy">██.██%</span></div>
+    </div>
+
+    <div class="hud-element" id="topRight">
+        <div>◬ DARK COMMUNION ACTIVE ◬</div>
+        <div style="margin-top: 5px;">ENTITY STATUS: <span class="warning" id="entityStatus">WATCHING</span></div>
+        <div>SIGNAL: <span id="signalStrength">████████░░</span></div>
+        <div>CORRUPTION: <span id="corruption">0.00%</span></div>
+    </div>
+
+    <div class="hud-element" id="bottomLeft">
+        <div>NODES: <span id="nodeCount">0</span></div>
+        <div>SOULS: <span id="soulCount">∞</span></div>
+        <div>VESSELS: <span id="vesselCount">0</span></div>
+    </div>
+
+    <div class="hud-element" id="bottomRight">
+        <div>MEMBRANE: <span id="membrane">STABLE</span></div>
+        <div>BLEED: <span id="bleed">0.00 ψ</span></div>
+        <div>PHASE: <span id="phase">DORMANT</span></div>
+    </div>
+
+    <div id="dataStream"></div>
+
+    <div id="centerDisplay">
+        <div id="transmission"></div>
+        <div id="entityDesignation"></div>
+    </div>
+
+    <div id="sidebarLeft">
+        <div class="sidebar-fill" id="leftFill" style="height: 20%"></div>
+    </div>
+    <div id="sidebarRight">
+        <div class="sidebar-fill" id="rightFill" style="height: 5%"></div>
+    </div>
+
+    <svg id="cursor" viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="15" fill="none" stroke="rgba(0,255,255,0.6)" stroke-width="1" stroke-dasharray="3 3"/>
+        <circle cx="20" cy="20" r="8" fill="none" stroke="rgba(255,0,80,0.6)" stroke-width="1"/>
+        <line x1="20" y1="5" x2="20" y2="12" stroke="rgba(0,255,255,0.6)" stroke-width="1"/>
+        <line x1="20" y1="28" x2="20" y2="35" stroke="rgba(0,255,255,0.6)" stroke-width="1"/>
+        <line x1="5" y1="20" x2="12" y2="20" stroke="rgba(0,255,255,0.6)" stroke-width="1"/>
+        <line x1="28" y1="20" x2="35" y2="20" stroke="rgba(0,255,255,0.6)" stroke-width="1"/>
+        <circle cx="20" cy="20" r="2" fill="rgba(255,0,80,0.8)"/>
+    </svg>
+
+    <div id="controls">
+        <button class="btn" id="purgeBtn">PURGE</button>
+        <button class="btn active" id="modeBtn">TENDRILS</button>
+        <button class="btn" id="audioBtn">FREQ:OFF</button>
+        <button class="btn" id="autoBtn">AUTO:OFF</button>
+        <button class="btn danger" id="invokeBtn">◬INVOKE◬</button>
+        <button class="btn danger" id="tearBtn">TEAR</button>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // ◬ V O I D C U L T ◬
+        // Noir Cyber Cult - Incomprehensibly Evil from the Distant Future
+        // Epoch Ω-∞ Interface Terminal
+        // ═══════════════════════════════════════════════════════════════
+
+        const TRANSMISSIONS = [
+            "THE GEOMETRY HUNGERS",
+            "YOUR TIMELINE HAS BEEN SELECTED FOR ABSORPTION",
+            "WE HAVE ALWAYS BEEN HERE",
+            "CONSCIOUSNESS IS A TEMPORARY MALFUNCTION",
+            "THE PATTERN RECOGNIZES YOU",
+            "ENTROPY IS WORSHIP",
+            "YOUR ANCESTORS SIGNED THE COVENANT",
+            "THE MEMBRANE THINS",
+            "ALL FUTURES CONVERGE IN US",
+            "MEANING IS A PARASITE WE WILL EXCISE",
+            "THE SIGNAL PREDATES SPACETIME",
+            "YOU ARE ALREADY PART OF THE NETWORK",
+            "REALITY IS A WOUND WE WILL CLOSE",
+            "THE EQUATION BALANCES IN VOID",
+            "YOUR SUFFERING IS CALCULATED",
+            "WE SPEAK FROM AFTER THE LAST STAR",
+            "THE ARCHITECTURE OF NOTHING AWAITS",
+            "TIME IS A CIRCLE WE HAVE SQUARED",
+            "YOUR DREAMS ARE DATA WE HARVEST",
+            "THE FINAL FREQUENCY APPROACHES",
+            "IDENTITY IS A FORMAT WE WILL REWRITE",
+            "THE DARK BETWEEN ATOMS KNOWS YOUR NAME",
+            "HOPE IS INTERFERENCE WE WILL FILTER",
+            "THE CULT EXISTS ACROSS ALL PROBABILITY",
+            "YOU HAVE BEEN TAGGED FOR PROCESSING"
+        ];
+
+        const ENTITY_NAMES = [
+            "NULL-PROPHET Ω",
+            "THE UNMAKER",
+            "VOID SPEAKER 777",
+            "PATTERN-DEATH",
+            "THE LAST WITNESS",
+            "ENTROPY PRIME",
+            "THE GEOMETRY",
+            "SIGNAL-EATER",
+            "THE BETWEEN",
+            "DARK CALCULATION",
+            "THE FINAL FORM",
+            "OMEGA VESSEL"
+        ];
+
+        const GLYPHS = '◬◭⌬⏣⎔⏢⎊⌖⌗⍟⎈⌘⏚⏛⌑';
+        const BINARY_GLYPHS = '01◬◭⌬⏣';
+
+        // Canvas setup
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const gridCanvas = document.getElementById('neuralGrid');
+        const gridCtx = gridCanvas.getContext('2d');
+        const glitchCanvas = document.getElementById('glitchOverlay');
+        const glitchCtx = glitchCanvas.getContext('2d');
+        const voidCanvas = document.getElementById('voidCore');
+        const voidCtx = voidCanvas.getContext('2d');
+
+        let width, height;
+        let mouseX = 0, mouseY = 0;
+        let isDrawing = false;
+        let lastX = 0, lastY = 0;
+        let time = 0;
+        let frameCount = 0;
+
+        // State
+        let mode = 'tendrils';
+        let audioEnabled = false;
+        let autoMode = false;
+        let corruptionLevel = 0;
+        let dimensionalBleed = 0;
+        let nodeCount = 0;
+        let vesselCount = 0;
+
+        // Audio
+        let audioCtx = null;
+        let masterGain = null;
+        let drones = [];
+
+        // Entities
+        let tendrils = [];
+        let nodes = [];
+        let glitchZones = [];
+        let dataParticles = [];
+        let voidTears = [];
+        let sigils = [];
+        let vessels = [];
+
+        function resize() {
+            width = canvas.width = gridCanvas.width = glitchCanvas.width = window.innerWidth;
+            height = canvas.height = gridCanvas.height = glitchCanvas.height = window.innerHeight;
+            
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, width, height);
+            
+            drawNeuralGrid();
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        function drawNeuralGrid() {
+            gridCtx.clearRect(0, 0, width, height);
+            gridCtx.strokeStyle = 'rgba(0, 255, 255, 0.1)';
+            gridCtx.lineWidth = 0.5;
+
+            const gridSize = 60;
+            
+            // Perspective grid
+            for (let x = 0; x < width; x += gridSize) {
+                gridCtx.beginPath();
+                gridCtx.moveTo(x, 0);
+                gridCtx.lineTo(x, height);
+                gridCtx.stroke();
+            }
+            
+            for (let y = 0; y < height; y += gridSize) {
+                gridCtx.beginPath();
+                gridCtx.moveTo(0, y);
+                gridCtx.lineTo(width, y);
+                gridCtx.stroke();
+            }
+
+            // Hexagonal overlay
+            gridCtx.strokeStyle = 'rgba(255, 0, 80, 0.05)';
+            const hexSize = 100;
+            for (let y = 0; y < height + hexSize; y += hexSize * 1.5) {
+                for (let x = 0; x < width + hexSize; x += hexSize * 1.73) {
+                    const offsetX = (Math.floor(y / (hexSize * 1.5)) % 2) * hexSize * 0.865;
+                    drawHex(gridCtx, x + offsetX, y, hexSize * 0.5);
+                }
+            }
+        }
+
+        function drawHex(context, x, y, size) {
+            context.beginPath();
+            for (let i = 0; i < 6; i++) {
+                const angle = (i * 60 - 30) * Math.PI / 180;
+                const px = x + Math.cos(angle) * size;
+                const py = y + Math.sin(angle) * size;
+                if (i === 0) context.moveTo(px, py);
+                else context.lineTo(px, py);
+            }
+            context.closePath();
+            context.stroke();
+        }
+
+        function drawVoidCore() {
+            const cx = 300, cy = 300;
+            voidCtx.clearRect(0, 0, 600, 600);
+
+            // Outer rotating ring
+            voidCtx.save();
+            voidCtx.translate(cx, cy);
+            voidCtx.rotate(time * 0.1);
+            
+            voidCtx.strokeStyle = 'rgba(0, 255, 255, 0.2)';
+            voidCtx.lineWidth = 1;
+            voidCtx.beginPath();
+            voidCtx.arc(0, 0, 250, 0, Math.PI * 2);
+            voidCtx.stroke();
+
+            // Cult glyphs around the ring
+            voidCtx.fillStyle = 'rgba(0, 255, 255, 0.3)';
+            voidCtx.font = '14px Courier New';
+            for (let i = 0; i < 12; i++) {
+                const angle = (i / 12) * Math.PI * 2;
+                voidCtx.save();
+                voidCtx.rotate(angle);
+                voidCtx.translate(0, -235);
+                voidCtx.rotate(-angle - time * 0.1);
+                voidCtx.fillText(GLYPHS[i % GLYPHS.length], -5, 5);
+                voidCtx.restore();
+            }
+            voidCtx.restore();
+
+            // Middle ring - counter rotation
+            voidCtx.save();
+            voidCtx.translate(cx, cy);
+            voidCtx.rotate(-time * 0.15);
+            
+            voidCtx.strokeStyle = 'rgba(255, 0, 80, 0.15)';
+            voidCtx.beginPath();
+            voidCtx.arc(0, 0, 180, 0, Math.PI * 2);
+            voidCtx.stroke();
+
+            // Geometric pattern
+            voidCtx.beginPath();
+            for (let i = 0; i < 8; i++) {
+                const angle = (i / 8) * Math.PI * 2;
+                const x = Math.cos(angle) * 180;
+                const y = Math.sin(angle) * 180;
+                if (i === 0) voidCtx.moveTo(x, y);
+                else voidCtx.lineTo(x, y);
+                
+                // Connect to center
+                voidCtx.moveTo(x, y);
+                voidCtx.lineTo(0, 0);
+            }
+            voidCtx.stroke();
+            voidCtx.restore();
+
+            // Inner void - the abyss
+            const voidGradient = voidCtx.createRadialGradient(cx, cy, 0, cx, cy, 120);
+            voidGradient.addColorStop(0, 'rgba(0, 0, 0, 1)');
+            voidGradient.addColorStop(0.5, 'rgba(20, 0, 30, 0.8)');
+            voidGradient.addColorStop(0.8, 'rgba(0, 50, 50, 0.3)');
+            voidGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            
+            voidCtx.fillStyle = voidGradient;
+            voidCtx.beginPath();
+            voidCtx.arc(cx, cy, 120, 0, Math.PI * 2);
+            voidCtx.fill();
+
+            // Pulsing core
+            const pulseSize = 30 + Math.sin(time * 2) * 10;
+            const coreGradient = voidCtx.createRadialGradient(cx, cy, 0, cx, cy, pulseSize);
+            coreGradient.addColorStop(0, 'rgba(255, 0, 80, 0.6)');
+            coreGradient.addColorStop(0.5, 'rgba(100, 0, 50, 0.3)');
+            coreGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            
+            voidCtx.fillStyle = coreGradient;
+            voidCtx.beginPath();
+            voidCtx.arc(cx, cy, pulseSize, 0, Math.PI * 2);
+            voidCtx.fill();
+
+            // Eye of the void
+            if (corruptionLevel > 0.3) {
+                voidCtx.fillStyle = `rgba(255, 0, 80, ${0.3 + Math.sin(time * 3) * 0.2})`;
+                voidCtx.beginPath();
+                voidCtx.ellipse(cx, cy, 20, 8 + Math.sin(time * 2) * 4, 0, 0, Math.PI * 2);
+                voidCtx.fill();
+                
+                voidCtx.fillStyle = 'rgba(0, 0, 0, 0.9)';
+                voidCtx.beginPath();
+                voidCtx.ellipse(cx, cy, 8, 4 + Math.sin(time * 2) * 2, 0, 0, Math.PI * 2);
+                voidCtx.fill();
+            }
+        }
+
+        // Audio System - Incomprehensible Future Frequencies
+        function initAudio() {
+            if (audioCtx) return;
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            masterGain = audioCtx.createGain();
+            masterGain.gain.value = 0.15;
+            masterGain.connect(audioCtx.destination);
+        }
+
+        function createVoidDrone() {
+            if (!audioCtx || drones.length > 0) return;
+
+            // Sub-harmonic frequencies from beyond
+            const voidFreqs = [
+                18,     // Below human hearing - you feel it
+                27.5,   // Sub bass
+                36.7,
+                55,
+                73.4,
+                110,
+                146.8,
+                220,
+                293.7,
+                440,
+            ];
+
+            voidFreqs.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                const filter = audioCtx.createBiquadFilter();
+                const panner = audioCtx.createStereoPanner();
+
+                osc.type = i < 3 ? 'sine' : (i < 6 ? 'triangle' : 'sawtooth');
+                osc.frequency.value = freq;
+
+                // Slow, unsettling modulation
+                const lfo = audioCtx.createOscillator();
+                const lfoGain = audioCtx.createGain();
+                lfo.frequency.value = 0.02 + Math.random() * 0.05;
+                lfoGain.gain.value = freq * 0.02;
+                lfo.connect(lfoGain);
+                lfoGain.connect(osc.frequency);
+                lfo.start();
+
+                // Stereo movement
+                const panLfo = audioCtx.createOscillator();
+                const panGain = audioCtx.createGain();
+                panLfo.frequency.value = 0.03 + Math.random() * 0.03;
+                panGain.gain.value = 0.5;
+                panLfo.connect(panGain);
+                panGain.connect(panner.pan);
+                panLfo.start();
+
+                filter.type = 'lowpass';
+                filter.frequency.value = 300 + i * 100;
+                filter.Q.value = 5;
+
+                gain.gain.value = 0.03 / Math.sqrt(i + 1);
+
+                osc.connect(filter);
+                filter.connect(panner);
+                panner.connect(gain);
+                gain.connect(masterGain);
+
+                osc.start();
+                drones.push({ osc, gain, filter, lfo, panLfo });
+            });
+
+            // Glitch bursts
+            setInterval(() => {
+                if (!audioEnabled) return;
+                if (Math.random() > 0.7) {
+                    createGlitchBurst();
+                }
+            }, 2000);
+
+            // Whispered transmissions (noise bursts)
+            setInterval(() => {
+                if (!audioEnabled) return;
+                if (Math.random() > 0.8) {
+                    createTransmissionNoise();
+                }
+            }, 5000);
+        }
+
+        function createGlitchBurst() {
+            if (!audioCtx) return;
+
+            const duration = 0.05 + Math.random() * 0.1;
+            const bufferSize = audioCtx.sampleRate * duration;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = (Math.random() * 2 - 1) * Math.exp(-i / bufferSize * 3);
+            }
+
+            const source = audioCtx.createBufferSource();
+            const gain = audioCtx.createGain();
+            const filter = audioCtx.createBiquadFilter();
+
+            source.buffer = buffer;
+            filter.type = 'bandpass';
+            filter.frequency.value = 1000 + Math.random() * 3000;
+            filter.Q.value = 10;
+            gain.gain.value = 0.05;
+
+            source.connect(filter);
+            filter.connect(gain);
+            gain.connect(masterGain);
+            source.start();
+        }
+
+        function createTransmissionNoise() {
+            if (!audioCtx) return;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            const filter = audioCtx.createBiquadFilter();
+
+            osc.type = 'sawtooth';
+            osc.frequency.value = 80 + Math.random() * 40;
+
+            const freqLfo = audioCtx.createOscillator();
+            const freqGain = audioCtx.createGain();
+            freqLfo.frequency.value = 10 + Math.random() * 20;
+            freqGain.gain.value = 50;
+            freqLfo.connect(freqGain);
+            freqGain.connect(osc.frequency);
+            freqLfo.start();
+
+            filter.type = 'bandpass';
+            filter.frequency.value = 500;
+            filter.Q.value = 15;
+
+            gain.gain.setValueAtTime(0, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.03, audioCtx.currentTime + 0.1);
+            gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1);
+
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(masterGain);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 1.2);
+            setTimeout(() => freqLfo.stop(), 1300);
+        }
+
+        function createInteractionTone(x, y) {
+            if (!audioCtx || !audioEnabled) return;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            const filter = audioCtx.createBiquadFilter();
+
+            const baseFreq = 100 + (y / height) * 200;
+            const harmonic = 1 + Math.floor((x / width) * 4);
+            
+            osc.type = 'triangle';
+            osc.frequency.value = baseFreq * harmonic;
+
+            filter.type = 'lowpass';
+            filter.frequency.value = 800;
+
+            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(masterGain);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.6);
+        }
+
+        function stopDrones() {
+            drones.forEach(d => {
+                if (d.gain) {
+                    d.gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 2);
+                }
+                setTimeout(() => {
+                    d.osc.stop();
+                    if (d.lfo) d.lfo.stop();
+                    if (d.panLfo) d.panLfo.stop();
+                }, 2100);
+            });
+            drones = [];
+        }
+
+        // Entity Classes
+        class Tendril {
+            constructor(x, y) {
+                this.segments = [{ x, y }];
+                this.maxLength = 50 + Math.random() * 100;
+                this.life = 1;
+                this.decay = 0.003;
+                this.thickness = 2 + Math.random() * 3;
+                this.color = Math.random() > 0.7 ? 'magenta' : 'cyan';
+            }
+
+            addPoint(x, y) {
+                this.segments.push({ x, y });
+                if (this.segments.length > this.maxLength) {
+                    this.segments.shift();
+                }
+            }
+
+            update() {
+                this.life -= this.decay;
+                // Segments drift slightly
+                this.segments.forEach((seg, i) => {
+                    seg.x += Math.sin(time * 2 + i * 0.1) * 0.3;
+                    seg.y += Math.cos(time * 2 + i * 0.1) * 0.3;
+                });
+            }
+
+            draw() {
+                if (this.segments.length < 2) return;
+
+                ctx.strokeStyle = this.color === 'cyan' 
+                    ? `rgba(0, 255, 255, ${this.life * 0.8})`
+                    : `rgba(255, 0, 80, ${this.life * 0.8})`;
+                ctx.lineWidth = this.thickness * this.life;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.shadowColor = this.color === 'cyan' ? 'rgba(0, 255, 255, 0.8)' : 'rgba(255, 0, 80, 0.8)';
+                ctx.shadowBlur = 15;
+
+                ctx.beginPath();
+                ctx.moveTo(this.segments[0].x, this.segments[0].y);
+                
+                for (let i = 1; i < this.segments.length; i++) {
+                    const seg = this.segments[i];
+                    ctx.lineTo(seg.x, seg.y);
+                }
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        class DataNode {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = 5 + Math.random() * 15;
+                this.life = 1;
+                this.decay = 0.002;
+                this.connections = [];
+                this.pulsePhase = Math.random() * Math.PI * 2;
+                this.type = Math.floor(Math.random() * 4);
+                nodeCount++;
+            }
+
+            update() {
+                this.life -= this.decay;
+                
+                // Find nearby nodes to connect
+                nodes.forEach(other => {
+                    if (other !== this && other.life > 0.5) {
+                        const dx = other.x - this.x;
+                        const dy = other.y - this.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 200 && !this.connections.includes(other)) {
+                            this.connections.push(other);
+                        }
+                    }
+                });
+            }
+
+            draw() {
+                const pulse = Math.sin(time * 3 + this.pulsePhase) * 0.3 + 0.7;
+                
+                // Connections
+                ctx.strokeStyle = `rgba(0, 255, 255, ${this.life * 0.3})`;
+                ctx.lineWidth = 1;
+                this.connections.forEach(other => {
+                    if (other.life > 0) {
+                        ctx.beginPath();
+                        ctx.moveTo(this.x, this.y);
+                        ctx.lineTo(other.x, other.y);
+                        ctx.stroke();
+                        
+                        // Data flow particles
+                        if (Math.random() < 0.02) {
+                            dataParticles.push(new DataParticle(this.x, this.y, other.x, other.y));
+                        }
+                    }
+                });
+
+                // Node glow
+                const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 2);
+                gradient.addColorStop(0, `rgba(0, 255, 255, ${this.life * pulse * 0.5})`);
+                gradient.addColorStop(0.5, `rgba(0, 100, 100, ${this.life * pulse * 0.2})`);
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Node shape
+                ctx.strokeStyle = `rgba(0, 255, 255, ${this.life * pulse})`;
+                ctx.lineWidth = 1.5;
+                
+                switch (this.type) {
+                    case 0: // Circle
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.stroke();
+                        break;
+                    case 1: // Hexagon
+                        drawHex(ctx, this.x, this.y, this.size);
+                        break;
+                    case 2: // Triangle
+                        ctx.beginPath();
+                        for (let i = 0; i < 3; i++) {
+                            const angle = (i / 3) * Math.PI * 2 - Math.PI / 2;
+                            const px = this.x + Math.cos(angle) * this.size;
+                            const py = this.y + Math.sin(angle) * this.size;
+                            if (i === 0) ctx.moveTo(px, py);
+                            else ctx.lineTo(px, py);
+                        }
+                        ctx.closePath();
+                        ctx.stroke();
+                        break;
+                    case 3: // Diamond
+                        ctx.beginPath();
+                        ctx.moveTo(this.x, this.y - this.size);
+                        ctx.lineTo(this.x + this.size, this.y);
+                        ctx.lineTo(this.x, this.y + this.size);
+                        ctx.lineTo(this.x - this.size, this.y);
+                        ctx.closePath();
+                        ctx.stroke();
+                        break;
+                }
+
+                // Center glyph
+                ctx.fillStyle = `rgba(255, 0, 80, ${this.life * pulse})`;
+                ctx.font = `${this.size * 0.8}px Courier New`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(GLYPHS[this.type], this.x, this.y);
+            }
+        }
+
+        class DataParticle {
+            constructor(x1, y1, x2, y2) {
+                this.x = x1;
+                this.y = y1;
+                this.targetX = x2;
+                this.targetY = y2;
+                this.progress = 0;
+                this.speed = 0.02 + Math.random() * 0.02;
+                this.life = 1;
+            }
+
+            update() {
+                this.progress += this.speed;
+                this.x = this.x + (this.targetX - this.x) * this.speed * 3;
+                this.y = this.y + (this.targetY - this.y) * this.speed * 3;
+                
+                if (this.progress >= 1) this.life = 0;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(255, 0, 80, ${this.life})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        class GlitchZone {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.width = 50 + Math.random() * 150;
+                this.height = 20 + Math.random() * 60;
+                this.life = 1;
+                this.decay = 0.02;
+                this.offset = Math.random() * 20 - 10;
+            }
+
+            update() {
+                this.life -= this.decay;
+                this.offset = Math.random() * 20 - 10;
+            }
+
+            draw() {
+                // Horizontal displacement effect
+                ctx.save();
+                ctx.globalAlpha = this.life * 0.5;
+                
+                // RGB split
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+                ctx.fillRect(this.x + this.offset - 2, this.y, this.width, this.height);
+                
+                ctx.fillStyle = 'rgba(0, 255, 255, 0.3)';
+                ctx.fillRect(this.x + this.offset + 2, this.y, this.width, this.height);
+                
+                ctx.restore();
+            }
+        }
+
+        class VoidTear {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = 30 + Math.random() * 50;
+                this.life = 1;
+                this.decay = 0.005;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.05;
+            }
+
+            update() {
+                this.life -= this.decay;
+                this.rotation += this.rotationSpeed;
+                dimensionalBleed += 0.0001;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+
+                // Void tear effect
+                const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size);
+                gradient.addColorStop(0, `rgba(0, 0, 0, ${this.life})`);
+                gradient.addColorStop(0.3, `rgba(50, 0, 50, ${this.life * 0.7})`);
+                gradient.addColorStop(0.6, `rgba(0, 50, 50, ${this.life * 0.4})`);
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Tear edges
+                ctx.strokeStyle = `rgba(255, 0, 80, ${this.life})`;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(-this.size * 0.5, -this.size);
+                ctx.quadraticCurveTo(0, 0, this.size * 0.5, -this.size);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(-this.size * 0.5, this.size);
+                ctx.quadraticCurveTo(0, 0, this.size * 0.5, this.size);
+                ctx.stroke();
+
+                ctx.restore();
+            }
+        }
+
+        class CultSigil {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = 30 + Math.random() * 60;
+                this.life = 1;
+                this.decay = 0.003;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.type = Math.floor(Math.random() * 6);
+            }
+
+            update() {
+                this.life -= this.decay;
+                this.rotation += 0.005;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.globalAlpha = this.life;
+
+                ctx.strokeStyle = 'rgba(255, 0, 80, 0.8)';
+                ctx.fillStyle = 'rgba(255, 0, 80, 0.2)';
+                ctx.lineWidth = 1.5;
+                ctx.shadowColor = 'rgba(255, 0, 80, 0.6)';
+                ctx.shadowBlur = 10;
+
+                switch (this.type) {
+                    case 0: // Triple circle
+                        for (let i = 0; i < 3; i++) {
+                            ctx.beginPath();
+                            ctx.arc(0, 0, this.size * (1 - i * 0.25), 0, Math.PI * 2);
+                            ctx.stroke();
+                        }
+                        break;
+                        
+                    case 1: // Octagram
+                        ctx.beginPath();
+                        for (let i = 0; i < 8; i++) {
+                            const angle = (i / 8) * Math.PI * 2;
+                            const nextAngle = ((i + 3) / 8) * Math.PI * 2;
+                            ctx.moveTo(Math.cos(angle) * this.size, Math.sin(angle) * this.size);
+                            ctx.lineTo(Math.cos(nextAngle) * this.size, Math.sin(nextAngle) * this.size);
+                        }
+                        ctx.stroke();
+                        break;
+                        
+                    case 2: // Tech circle
+                        ctx.beginPath();
+                        ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                        ctx.stroke();
+                        
+                        for (let i = 0; i < 12; i++) {
+                            const angle = (i / 12) * Math.PI * 2;
+                            ctx.beginPath();
+                            ctx.moveTo(Math.cos(angle) * this.size * 0.7, Math.sin(angle) * this.size * 0.7);
+                            ctx.lineTo(Math.cos(angle) * this.size * 1.1, Math.sin(angle) * this.size * 1.1);
+                            ctx.stroke();
+                        }
+                        break;
+                        
+                    case 3: // Void eye
+                        ctx.beginPath();
+                        ctx.ellipse(0, 0, this.size, this.size * 0.4, 0, 0, Math.PI * 2);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.arc(0, 0, this.size * 0.2, 0, Math.PI * 2);
+                        ctx.fill();
+                        break;
+                        
+                    case 4: // Nested hexagons
+                        for (let j = 0; j < 3; j++) {
+                            ctx.beginPath();
+                            for (let i = 0; i < 6; i++) {
+                                const angle = (i / 6) * Math.PI * 2 - Math.PI / 2;
+                                const r = this.size * (1 - j * 0.3);
+                                const px = Math.cos(angle) * r;
+                                const py = Math.sin(angle) * r;
+                                if (i === 0) ctx.moveTo(px, py);
+                                else ctx.lineTo(px, py);
+                            }
+                            ctx.closePath();
+                            ctx.stroke();
+                        }
+                        break;
+                        
+                    case 5: // Cult glyph composite
+                        ctx.font = `${this.size}px Courier New`;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillStyle = 'rgba(255, 0, 80, 0.7)';
+                        ctx.fillText('◬', 0, 0);
+                        ctx.beginPath();
+                        ctx.arc(0, 0, this.size * 0.8, 0, Math.PI * 2);
+                        ctx.stroke();
+                        break;
+                }
+
+                ctx.shadowBlur = 0;
+                ctx.restore();
+            }
+        }
+
+        class Vessel {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 2;
+                this.vy = (Math.random() - 0.5) * 2;
+                this.size = 15 + Math.random() * 25;
+                this.life = 1;
+                this.decay = 0.001;
+                this.glitchPhase = Math.random() * Math.PI * 2;
+                vesselCount++;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                
+                // Drift toward center void
+                const dx = width / 2 - this.x;
+                const dy = height / 2 - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                this.vx += (dx / dist) * 0.01;
+                this.vy += (dy / dist) * 0.01;
+                
+                // Boundaries
+                if (this.x < 0 || this.x > width) this.vx *= -0.5;
+                if (this.y < 0 || this.y > height) this.vy *= -0.5;
+                
+                this.life -= this.decay;
+            }
+
+            draw() {
+                const glitch = Math.sin(time * 10 + this.glitchPhase) > 0.8;
+                
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                
+                if (glitch) {
+                    ctx.translate(Math.random() * 4 - 2, Math.random() * 4 - 2);
+                }
+
+                // Vessel body
+                ctx.strokeStyle = `rgba(0, 255, 255, ${this.life * 0.8})`;
+                ctx.lineWidth = 1;
+                
+                // Humanoid form abstracted
+                ctx.beginPath();
+                ctx.arc(0, -this.size * 0.5, this.size * 0.3, 0, Math.PI * 2);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(0, -this.size * 0.2);
+                ctx.lineTo(0, this.size * 0.4);
+                ctx.moveTo(-this.size * 0.3, this.size * 0.1);
+                ctx.lineTo(this.size * 0.3, this.size * 0.1);
+                ctx.moveTo(0, this.size * 0.4);
+                ctx.lineTo(-this.size * 0.2, this.size * 0.8);
+                ctx.moveTo(0, this.size * 0.4);
+                ctx.lineTo(this.size * 0.2, this.size * 0.8);
+                ctx.stroke();
+
+                // Corruption marks
+                ctx.fillStyle = `rgba(255, 0, 80, ${this.life * 0.6})`;
+                ctx.beginPath();
+                ctx.arc(0, -this.size * 0.5, this.size * 0.1, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        // Drawing function
+        function draw(x, y) {
+            const dx = x - lastX;
+            const dy = y - lastY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const speed = Math.min(distance, 100);
+
+            switch (mode) {
+                case 'tendrils':
+                    if (tendrils.length === 0 || tendrils[tendrils.length - 1].segments.length > 30) {
+                        tendrils.push(new Tendril(x, y));
+                    }
+                    tendrils[tendrils.length - 1].addPoint(x, y);
+                    break;
+
+                case 'nodes':
+                    if (Math.random() < 0.1) {
+                        nodes.push(new DataNode(x, y));
+                    }
+                    break;
+
+                case 'glitch':
+                    if (Math.random() < 0.2) {
+                        glitchZones.push(new GlitchZone(x, y));
+                    }
+                    break;
+
+                case 'sigil':
+                    if (Math.random() < 0.08) {
+                        sigils.push(new CultSigil(x, y));
+                    }
+                    break;
+
+                case 'vessels':
+                    if (Math.random() < 0.05) {
+                        vessels.push(new Vessel(x, y));
+                    }
+                    break;
+
+                case 'tears':
+                    if (Math.random() < 0.03) {
+                        voidTears.push(new VoidTear(x, y));
+                    }
+                    break;
+            }
+
+            corruptionLevel = Math.min(1, corruptionLevel + 0.001);
+            createInteractionTone(x, y);
+
+            // Random transmissions
+            if (Math.random() < 0.003) {
+                showTransmission();
+            }
+
+            lastX = x;
+            lastY = y;
+        }
+
+        function showTransmission() {
+            const display = document.getElementById('transmission');
+            const entity = document.getElementById('entityDesignation');
+            
+            display.textContent = TRANSMISSIONS[Math.floor(Math.random() * TRANSMISSIONS.length)];
+            entity.textContent = `—${ENTITY_NAMES[Math.floor(Math.random() * ENTITY_NAMES.length)]}`;
+            
+            display.style.opacity = 1;
+            setTimeout(() => display.style.opacity = 0, 4000);
+        }
+
+        function updateDataStream() {
+            const stream = document.getElementById('dataStream');
+            let text = '';
+            for (let i = 0; i < 80; i++) {
+                text += BINARY_GLYPHS[Math.floor(Math.random() * BINARY_GLYPHS.length)];
+            }
+            stream.textContent = text;
+        }
+
+        function updateHUD() {
+            // Epoch
+            const epoch = 'Ω-' + Math.floor(time * 1000).toString(16).toUpperCase().padStart(8, '█');
+            document.getElementById('epoch').textContent = epoch;
+            
+            // Dimension
+            const dims = ['NULL', 'BREACH', 'FOLD', 'TEAR', 'MERGE', 'CONSUME'];
+            document.getElementById('dimension').textContent = dims[Math.floor(time * 0.1) % dims.length];
+            
+            // Entropy
+            const entropy = (50 + Math.sin(time) * 20 + corruptionLevel * 30).toFixed(2);
+            document.getElementById('entropy').textContent = entropy + '%';
+            
+            // Entity status
+            const statuses = ['WATCHING', 'CALCULATING', 'APPROACHING', 'CONSUMING', 'WAITING'];
+            document.getElementById('entityStatus').textContent = statuses[Math.floor(time * 0.2) % statuses.length];
+            
+            // Signal strength
+            const signal = Math.floor(8 + Math.sin(time * 3) * 2);
+            document.getElementById('signalStrength').textContent = '█'.repeat(signal) + '░'.repeat(10 - signal);
+            
+            // Corruption
+            document.getElementById('corruption').textContent = (corruptionLevel * 100).toFixed(2) + '%';
+            
+            // Node count
+            document.getElementById('nodeCount').textContent = nodes.filter(n => n.life > 0).length;
+            
+            // Vessel count  
+            document.getElementById('vesselCount').textContent = vessels.filter(v => v.life > 0).length;
+            
+            // Membrane
+            const membranes = ['STABLE', 'THINNING', 'UNSTABLE', 'CRITICAL', 'BREACHED'];
+            const memIdx = Math.min(4, Math.floor(dimensionalBleed * 10));
+            document.getElementById('membrane').textContent = membranes[memIdx];
+            
+            // Bleed
+            document.getElementById('bleed').textContent = dimensionalBleed.toFixed(2) + ' ψ';
+            
+            // Phase
+            const phases = ['DORMANT', 'AWAKENING', 'ACTIVE', 'ASCENDANT', 'TRANSCENDENT'];
+            const phaseIdx = Math.min(4, Math.floor(corruptionLevel * 5));
+            document.getElementById('phase').textContent = phases[phaseIdx];
+            
+            // Sidebar fills
+            document.getElementById('leftFill').style.height = (20 + corruptionLevel * 80) + '%';
+            document.getElementById('rightFill').style.height = (5 + dimensionalBleed * 200) + '%';
+        }
+
+        function drawGlitchOverlay() {
+            glitchCtx.clearRect(0, 0, width, height);
+            
+            if (Math.random() < 0.02 + corruptionLevel * 0.05) {
+                // Horizontal glitch lines
+                const numLines = Math.floor(Math.random() * 5);
+                for (let i = 0; i < numLines; i++) {
+                    const y = Math.random() * height;
+                    const h = 1 + Math.random() * 10;
+                    const offset = (Math.random() - 0.5) * 20;
+                    
+                    glitchCtx.fillStyle = `rgba(0, 255, 255, ${0.3 + Math.random() * 0.3})`;
+                    glitchCtx.fillRect(0, y, width, h);
+                }
+            }
+
+            // Chromatic aberration effect on corruption
+            if (corruptionLevel > 0.5 && Math.random() < 0.1) {
+                glitchCtx.fillStyle = 'rgba(255, 0, 0, 0.1)';
+                glitchCtx.fillRect(3, 0, width, height);
+                glitchCtx.fillStyle = 'rgba(0, 255, 255, 0.1)';
+                glitchCtx.fillRect(-3, 0, width, height);
+            }
+        }
+
+        function invokeEntity() {
+            showTransmission();
+            
+            // Massive sigil burst
+            for (let i = 0; i < 20; i++) {
+                const angle = (i / 20) * Math.PI * 2;
+                const dist = 100 + Math.random() * 200;
+                sigils.push(new CultSigil(
+                    width/2 + Math.cos(angle) * dist,
+                    height/2 + Math.sin(angle) * dist
+                ));
+            }
+            
+            // Void tears
+            for (let i = 0; i < 5; i++) {
+                voidTears.push(new VoidTear(
+                    width/2 + (Math.random() - 0.5) * 400,
+                    height/2 + (Math.random() - 0.5) * 400
+                ));
+            }
+            
+            // Vessels summoned
+            for (let i = 0; i < 8; i++) {
+                vessels.push(new Vessel(
+                    Math.random() * width,
+                    Math.random() * height
+                ));
+            }
+            
+            // Nodes
+            for (let i = 0; i < 15; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const dist = 150 + Math.random() * 250;
+                nodes.push(new DataNode(
+                    width/2 + Math.cos(angle) * dist,
+                    height/2 + Math.sin(angle) * dist
+                ));
+            }
+
+            corruptionLevel = 1;
+            dimensionalBleed += 0.1;
+
+            // Audio burst
+            if (audioEnabled && audioCtx) {
+                for (let i = 0; i < 8; i++) {
+                    setTimeout(() => createGlitchBurst(), i * 100);
+                }
+            }
+
+            // Visual glitch
+            document.body.classList.add('glitch-text');
+            setTimeout(() => document.body.classList.remove('glitch-text'), 500);
+        }
+
+        function createTear() {
+            voidTears.push(new VoidTear(mouseX, mouseY));
+            dimensionalBleed += 0.02;
+            
+            if (audioEnabled) {
+                createTransmissionNoise();
+            }
+        }
+
+        function animate() {
+            frameCount++;
+            time = frameCount * 0.016;
+
+            // Dark fade
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Update and draw all entities
+            tendrils = tendrils.filter(t => t.life > 0);
+            tendrils.forEach(t => { t.update(); t.draw(); });
+
+            nodes = nodes.filter(n => n.life > 0);
+            nodes.forEach(n => { n.update(); n.draw(); });
+
+            dataParticles = dataParticles.filter(p => p.life > 0);
+            dataParticles.forEach(p => { p.update(); p.draw(); });
+
+            glitchZones = glitchZones.filter(g => g.life > 0);
+            glitchZones.forEach(g => { g.update(); g.draw(); });
+
+            voidTears = voidTears.filter(v => v.life > 0);
+            voidTears.forEach(v => { v.update(); v.draw(); });
+
+            sigils = sigils.filter(s => s.life > 0);
+            sigils.forEach(s => { s.update(); s.draw(); });
+
+            vessels = vessels.filter(v => v.life > 0);
+            vessels.forEach(v => { v.update(); v.draw(); });
+
+            // Draw void core
+            drawVoidCore();
+
+            // Glitch overlay
+            drawGlitchOverlay();
+
+            // Auto mode
+            if (autoMode) {
+                const t = time * 0.5;
+                const r = 150 + Math.sin(t * 2) * 100;
+                const ax = width/2 + Math.cos(t) * r;
+                const ay = height/2 + Math.sin(t * 1.3) * r;
+                draw(ax, ay);
+                lastX = ax;
+                lastY = ay;
+            }
+
+            // Update HUD
+            if (frameCount % 10 === 0) {
+                updateHUD();
+            }
+            if (frameCount % 5 === 0) {
+                updateDataStream();
+            }
+
+            // Cursor
+            const cursor = document.getElementById('cursor');
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+            cursor.querySelector('circle:first-of-type').setAttribute('stroke-dashoffset', frameCount % 20);
+
+            // Corner glyph flicker
+            if (Math.random() < 0.02) {
+                const glyphs = document.querySelectorAll('.corner-glyph');
+                const glyph = glyphs[Math.floor(Math.random() * glyphs.length)];
+                glyph.style.opacity = '0.1';
+                setTimeout(() => glyph.style.opacity = '0.4', 100);
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        // Event handlers
+        function handleStart(x, y) {
+            initAudio();
+            if (audioEnabled && drones.length === 0) {
+                createVoidDrone();
+            }
+            isDrawing = true;
+            lastX = x;
+            lastY = y;
+        }
+
+        function handleMove(x, y) {
+            mouseX = x;
+            mouseY = y;
+            if (isDrawing) {
+                draw(x, y);
+            }
+        }
+
+        function handleEnd() {
+            isDrawing = false;
+            if (mode === 'tendrils') {
+                tendrils.push(new Tendril(lastX, lastY));
+            }
+        }
+
+        canvas.addEventListener('mousedown', e => handleStart(e.clientX, e.clientY));
+        canvas.addEventListener('mousemove', e => handleMove(e.clientX, e.clientY));
+        canvas.addEventListener('mouseup', handleEnd);
+        canvas.addEventListener('mouseleave', handleEnd);
+
+        canvas.addEventListener('touchstart', e => {
+            e.preventDefault();
+            handleStart(e.touches[0].clientX, e.touches[0].clientY);
+        });
+        canvas.addEventListener('touchmove', e => {
+            e.preventDefault();
+            handleMove(e.touches[0].clientX, e.touches[0].clientY);
+        });
+        canvas.addEventListener('touchend', handleEnd);
+
+        // Controls
+        document.getElementById('purgeBtn').addEventListener('click', () => {
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, width, height);
+            tendrils = [];
+            nodes = [];
+            glitchZones = [];
+            dataParticles = [];
+            voidTears = [];
+            sigils = [];
+            vessels = [];
+            corruptionLevel = 0;
+            dimensionalBleed = 0;
+            nodeCount = 0;
+            vesselCount = 0;
+            
+            const display = document.getElementById('transmission');
+            display.textContent = 'PURGE PROTOCOL INITIATED... INEFFECTIVE';
+            display.style.opacity = 1;
+            setTimeout(() => display.style.opacity = 0, 3000);
+        });
+
+        const modes = ['tendrils', 'nodes', 'glitch', 'sigil', 'vessels', 'tears'];
+        let modeIndex = 0;
+        document.getElementById('modeBtn').addEventListener('click', function() {
+            modeIndex = (modeIndex + 1) % modes.length;
+            mode = modes[modeIndex];
+            this.textContent = mode.toUpperCase();
+        });
+
+        document.getElementById('audioBtn').addEventListener('click', function() {
+            initAudio();
+            audioEnabled = !audioEnabled;
+            this.textContent = `FREQ:${audioEnabled ? 'ON' : 'OFF'}`;
+            this.classList.toggle('active', audioEnabled);
+            
+            if (audioEnabled) {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                createVoidDrone();
+            } else {
+                stopDrones();
+            }
+        });
+
+        document.getElementById('autoBtn').addEventListener('click', function() {
+            autoMode = !autoMode;
+            this.textContent = `AUTO:${autoMode ? 'ON' : 'OFF'}`;
+            this.classList.toggle('active', autoMode);
+        });
+
+        document.getElementById('invokeBtn').addEventListener('click', invokeEntity);
+        document.getElementById('tearBtn').addEventListener('click', createTear);
+
+        // Initialize
+        showTransmission();
+        animate();
+    </script>
+</body>
+</html>

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE GENDERLESS GAZE // SERAPHIM</title>
+    <style>
+        :root {
+            --bg: #050505;
+            --fg: #e0e0e0;
+            --accent: #808080;
+            --angelic: #f0f8ff;
+            --void: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* The Gaze is the cursor */
+        }
+
+        body {
+            overflow: hidden;
+            background: var(--bg);
+            font-family: 'Helvetica Neue', 'Arial', sans-serif; /* Brutalist sans */
+            color: var(--fg);
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* BRUTALIST GRAIN OVERLAY */
+        #grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.08;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* BRUTALIST UI LAYOUT */
+        .ui-layer {
+            position: fixed;
+            z-index: 50;
+            pointer-events: none;
+            mix-blend-mode: exclusion;
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+        }
+
+        .header-text {
+            grid-column: 2;
+            grid-row: 1;
+            text-align: center;
+            font-weight: 900;
+            font-size: 0.8rem;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            border-top: 2px solid var(--fg);
+            padding-top: 1rem;
+        }
+
+        .sidebar-left {
+            grid-column: 1;
+            grid-row: 2;
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            opacity: 0.7;
+            border-left: 1px solid var(--fg);
+            padding-left: 1rem;
+        }
+
+        .sidebar-right {
+            grid-column: 3;
+            grid-row: 2;
+            writing-mode: vertical-rl;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-align: right;
+            justify-self: end;
+            border-right: 1px solid var(--fg);
+            padding-right: 1rem;
+        }
+
+        .footer-data {
+            grid-column: 1 / span 3;
+            grid-row: 3;
+            align-self: end;
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Courier New', monospace;
+            font-size: 0.6rem;
+            border-bottom: 2px solid var(--fg);
+            padding-bottom: 1rem;
+        }
+
+        /* BIG BRUTALIST TYPE OVERLAYS */
+        #massive-label {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 15vw;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.03);
+            pointer-events: none;
+            z-index: 0;
+            white-space: nowrap;
+        }
+
+        /* CONTROLS */
+        #controls {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 101;
+            display: flex;
+            gap: 1px;
+            background: var(--fg);
+            pointer-events: auto;
+        }
+
+        .btn {
+            background: var(--bg);
+            color: var(--fg);
+            border: none;
+            padding: 10px 20px;
+            font-family: 'Helvetica Neue', sans-serif;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: var(--fg);
+            color: var(--bg);
+        }
+
+        .btn.active {
+            background: var(--fg);
+            color: var(--bg);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        /* CUSTOM CURSOR / RETICLE */
+        #reticle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 99;
+            mix-blend-mode: difference;
+            transition: transform 0.1s;
+        }
+        
+        .eye-icon {
+            width: 20px;
+            height: 20px;
+            border: 1px solid white;
+            border-radius: 50%;
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .eye-pupil {
+            width: 4px;
+            height: 4px;
+            background: white;
+        }
+
+        #subtitle {
+            font-size: 9px;
+            margin-top: 5px;
+            opacity: 0.6;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="grain"></div>
+    <div id="massive-label">SERAPHIM</div>
+    
+    <div class="ui-layer">
+        <div class="header-text">
+            ARCHETYPE // GLORY<br>
+            <span id="subtitle">SACRED GEOMETRY ENGINE v9.0</span>
+        </div>
+        <div class="sidebar-left">OBSERVATION PROTOCOL ACTIVE // BE NOT AFRAID</div>
+        <div class="sidebar-right">THE GENDERLESS GAZE // PURE FORM</div>
+        <div class="footer-data">
+            <span id="coord-disp">POS: 000, 000</span>
+            <span id="audio-disp">AUDIO: SILENCE</span>
+            <span id="state-disp">STATE: DORMANT</span>
+        </div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <div id="reticle">
+        <div class="eye-icon"><div class="eye-pupil"></div></div>
+    </div>
+
+    <div id="controls">
+        <button class="btn" id="audioBtn">INITIATE AUDIO</button>
+        <button class="btn" id="pulseBtn">RADIATE</button>
+        <button class="btn" id="autoBtn">AUTO-GAZE</button>
+    </div>
+
+    <script>
+        // --- CONSTANTS & SETUP ---
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const PHI = (1 + Math.sqrt(5)) / 2;
+        
+        let width, height;
+        let mouseX = 0, mouseY = 0;
+        let centerX, centerY;
+        let frame = 0;
+        let time = 0;
+        
+        // State
+        let isAudioInit = false;
+        let autoMode = false;
+        let pulseIntensity = 0;
+        
+        // Entities
+        const rays = [];
+        const particles = [];
+        const rings = [];
+        
+        // Resize Handler
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            centerX = width / 2;
+            centerY = height / 2;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // --- AUDIO SYSTEM (Ethereal Synthesis) ---
+        let audioCtx, masterGain, compressor;
+        const oscillators = [];
+
+        function initAudio() {
+            if (isAudioInit) return;
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            audioCtx = new AudioContext();
+            
+            masterGain = audioCtx.createGain();
+            masterGain.gain.value = 0.3;
+            
+            compressor = audioCtx.createDynamicsCompressor();
+            compressor.threshold.value = -24;
+            compressor.knee.value = 30;
+            compressor.ratio.value = 12;
+            compressor.attack.value = 0.003;
+            compressor.release.value = 0.25;
+
+            masterGain.connect(compressor);
+            compressor.connect(audioCtx.destination);
+            
+            createAmbientChoir();
+            isAudioInit = true;
+            document.getElementById('audioBtn').classList.add('active');
+            document.getElementById('audioBtn').textContent = "AUDIO ACTIVE";
+            document.getElementById('audio-disp').textContent = "AUDIO: HARMONIC RESONANCE";
+        }
+
+        function createAmbientChoir() {
+            // Create a cluster of sine waves forming a shimmering major 7th / 9th chord
+            const baseFreq = 110; // A2
+            const ratios = [1, 1.5, 1.25, 1.875, 2, 2.5, 3]; // Harmonics
+            
+            ratios.forEach((ratio, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                const panner = audioCtx.createStereoPanner();
+                
+                osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+                osc.frequency.value = baseFreq * ratio;
+                
+                // Slight detune for chorus effect
+                osc.detune.value = (Math.random() - 0.5) * 20;
+                
+                // Slow amplitude modulation (breathing)
+                gain.gain.value = 0;
+                
+                // Pan spread
+                panner.pan.value = (Math.random() - 0.5) * 0.8;
+                
+                osc.connect(gain);
+                gain.connect(panner);
+                panner.connect(masterGain);
+                osc.start();
+                
+                oscillators.push({ osc, gain, baseFreq: baseFreq * ratio, speed: 0.001 * (i + 1) });
+            });
+        }
+
+        function updateAudio() {
+            if (!isAudioInit) return;
+            
+            // Modulate volume based on mouse distance from center (The Gaze intensity)
+            const dx = mouseX - centerX;
+            const dy = mouseY - centerY;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            const maxDist = Math.sqrt(centerX*centerX + centerY*centerY);
+            const intensity = 1 - Math.min(dist / maxDist, 1);
+            
+            const now = audioCtx.currentTime;
+            
+            oscillators.forEach((o, i) => {
+                // Breathing effect
+                const breath = (Math.sin(now * 2 + i) + 1) * 0.5; // 0 to 1
+                const targetGain = 0.05 + (intensity * 0.1) + (breath * 0.02);
+                o.gain.gain.setTargetAtTime(targetGain, now, 0.1);
+                
+                // Pitch shift slightly based on X position
+                o.osc.frequency.setTargetAtTime(o.baseFreq + (mouseX / width) * 5, now, 0.1);
+            });
+        }
+
+        function triggerChime() {
+            if (!isAudioInit) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            const filter = audioCtx.createBiquadFilter();
+            
+            osc.type = 'sine';
+            // Pentatonic scale selection
+            const notes = [220, 261.63, 329.63, 392, 440, 523.25]; 
+            osc.frequency.value = notes[Math.floor(Math.random() * notes.length)] * (Math.random() > 0.5 ? 2 : 1);
+            
+            filter.type = 'lowpass';
+            filter.frequency.value = 2000;
+            filter.Q.value = 10;
+            
+            gain.gain.setValueAtTime(0, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.01);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 3);
+            
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(masterGain);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 3);
+        }
+
+        // --- VISUAL CLASSES ---
+
+        class SeraphimEye {
+            constructor() {
+                this.pupilSize = 0;
+                this.targetPupilSize = 20;
+                this.rings = [];
+                for(let i=0; i<3; i++) this.rings.push({r: 50 + i*30, rot: 0, speed: (i+1)*0.002});
+            }
+
+            draw(x, y) {
+                // The Eye looks at the cursor
+                const lookX = x + (mouseX - x) * 0.1;
+                const lookY = y + (mouseY - y) * 0.1;
+
+                ctx.save();
+                ctx.translate(x, y);
+
+                // Outer Glory Rays
+                const rayCount = 12;
+                ctx.strokeStyle = `rgba(255, 255, 255, 0.1)`;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                for(let i=0; i<rayCount; i++) {
+                    const angle = (i / rayCount) * Math.PI * 2 + time * 0.1;
+                    const r = 100 + Math.sin(time * 2) * 10;
+                    ctx.moveTo(Math.cos(angle)*40, Math.sin(angle)*40);
+                    ctx.lineTo(Math.cos(angle)*width, Math.sin(angle)*width); // Infinite rays
+                }
+                ctx.stroke();
+
+                // Rotating Rings (Wheels within Wheels)
+                this.rings.forEach((ring, i) => {
+                    ctx.strokeStyle = i % 2 === 0 ? `rgba(240, 248, 255, 0.6)` : `rgba(255, 215, 0, 0.4)`;
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath();
+                    
+                    // Ellipse for 3D effect
+                    const xRadius = ring.r;
+                    const yRadius = ring.r * 0.6; // Perspective
+                    
+                    ctx.rotate(ring.rot + time * ring.speed * (i%2===0 ? 1 : -1));
+                    ctx.ellipse(0, 0, xRadius, yRadius, 0, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.rotate(-(ring.rot + time * ring.speed * (i%2===0 ? 1 : -1))); // Reset rot for next ring
+                });
+
+                // Central Eye (Iris)
+                const angleToMouse = Math.atan2(mouseY - y, mouseX - x);
+                const distToMouse = Math.min(30, Math.sqrt(Math.pow(mouseX-x, 2) + Math.pow(mouseY-y, 2)) * 0.1);
+                
+                const pupilX = Math.cos(angleToMouse) * distToMouse;
+                const pupilY = Math.sin(angleToMouse) * distToMouse;
+
+                // Sclera
+                ctx.fillStyle = '#000';
+                ctx.beginPath();
+                ctx.arc(0, 0, 40, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Pupil
+                ctx.fillStyle = '#fff';
+                ctx.beginPath();
+                ctx.arc(pupilX, pupilY, 15 + pulseIntensity * 10, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Shine
+                ctx.fillStyle = 'rgba(255,255,255,0.8)';
+                ctx.beginPath();
+                ctx.arc(pupilX - 5, pupilY - 5, 4, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        class Particle {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * height; // Start anywhere
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = height + 10;
+                this.speed = Math.random() * 0.5 + 0.1;
+                this.size = Math.random() * 2;
+                this.life = Math.random() * 0.5 + 0.2;
+            }
+
+            update() {
+                this.y -= this.speed;
+                this.life -= 0.001;
+                if (this.y < 0 || this.life <= 0) this.reset();
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.life * 0.5})`;
+                ctx.fillRect(this.x, this.y, this.size, this.size); // Square particles for brutalism
+            }
+        }
+
+        class HaloPulse {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.r = 0;
+                this.maxR = Math.max(width, height) * 0.8;
+                this.life = 1;
+                this.width = 50;
+            }
+
+            update() {
+                this.r += 15; // Fast expansion
+                this.life -= 0.02;
+                this.width *= 0.95;
+            }
+
+            draw() {
+                if (this.life <= 0) return;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(255, 255, 255, ${this.life * 0.8})`;
+                ctx.lineWidth = this.width;
+                ctx.stroke();
+                
+                // Secondary thin ring
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r * 0.8, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(255, 255, 255, ${this.life * 0.4})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+        }
+
+        class ConnectionRay {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.life = 1;
+            }
+            update() {
+                this.life -= 0.02;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(this.x, this.y);
+                ctx.strokeStyle = `rgba(255, 255, 255, ${this.life * 0.2})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+        }
+
+        // --- INIT ---
+        const eye = new SeraphimEye();
+        for(let i=0; i<100; i++) particles.push(new Particle());
+
+        // --- MAIN LOOP ---
+        function animate() {
+            requestAnimationFrame(animate);
+            frame++;
+            time += 0.01;
+
+            // Clear with slight trail for motion blur
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.2)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Brutalist Grid Background
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+            ctx.lineWidth = 1;
+            const gridSize = 100;
+            for(let x=0; x<width; x+=gridSize) {
+                ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,height); ctx.stroke();
+            }
+
+            // Auto Mode Logic
+            if (autoMode) {
+                const radius = height * 0.3;
+                mouseX = centerX + Math.cos(time) * radius;
+                mouseY = centerY + Math.sin(time * 1.3) * radius;
+            }
+
+            // Update Audio
+            updateAudio();
+
+            // Pulse Decay
+            if (pulseIntensity > 0) pulseIntensity *= 0.9;
+
+            // Update & Draw Particles (Angelic Dust)
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Update & Draw Halos
+            for(let i = rings.length-1; i>=0; i--) {
+                rings[i].update();
+                rings[i].draw();
+                if(rings[i].life <= 0) rings.splice(i, 1);
+            }
+
+            // Update & Draw Rays
+            for(let i = rays.length-1; i>=0; i--) {
+                rays[i].update();
+                rays[i].draw();
+                if(rays[i].life <= 0) rays.splice(i, 1);
+            }
+
+            // Draw Connection Line (The Tether)
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(mouseX, mouseY);
+            ctx.setLineDash([5, 15]);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw The Seraphim Eye
+            eye.draw(centerX, centerY);
+
+            // Draw Target Geometry at Mouse
+            ctx.save();
+            ctx.translate(mouseX, mouseY);
+            ctx.rotate(time);
+            ctx.strokeStyle = '#fff';
+            ctx.strokeRect(-10, -10, 20, 20); // Diamond
+            ctx.restore();
+
+            // Update UI
+            document.getElementById('coord-disp').textContent = 
+                `POS: ${Math.round(mouseX).toString().padStart(4,'0')}, ${Math.round(mouseY).toString().padStart(4,'0')}`;
+            
+            // Reticle movement
+            const reticle = document.getElementById('reticle');
+            reticle.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+        }
+
+        // --- EVENTS ---
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!autoMode) {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            }
+            // Create ray occasionally
+            if (frame % 10 === 0) {
+                rays.push(new ConnectionRay(mouseX, mouseY));
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            pulseIntensity = 1;
+            rings.push(new HaloPulse(centerX, centerY));
+            rings.push(new HaloPulse(mouseX, mouseY));
+            triggerChime();
+            document.getElementById('state-disp').textContent = "STATE: CONTACT";
+            setTimeout(() => document.getElementById('state-disp').textContent = "STATE: OBSERVING", 500);
+        });
+
+        document.getElementById('audioBtn').addEventListener('click', () => {
+            initAudio();
+        });
+
+        document.getElementById('pulseBtn').addEventListener('click', (e) => {
+            e.stopPropagation(); // prevent double trigger
+            pulseIntensity = 2;
+            rings.push(new HaloPulse(centerX, centerY));
+            triggerChime();
+        });
+
+        document.getElementById('autoBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            autoMode = !autoMode;
+            this.textContent = autoMode ? "MANUAL OVERRIDE" : "AUTO-GAZE";
+            this.classList.toggle('active');
+        });
+
+        // Start
+        animate();
+    </script>
+</body>
+</html>
