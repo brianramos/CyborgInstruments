@@ -103,14 +103,14 @@
 
         .scene-container {
             display: flex;
-            width: 400%;
+            width: 500%;
             height: 100%;
             transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             padding-top: 44px;
         }
 
         .scene {
-            width: 25%;
+            width: 20%;
             height: 100%;
             position: relative;
             display: flex;
@@ -121,6 +121,7 @@
         .scene-2 { background: linear-gradient(180deg, #667eea 0%, #764ba2 50%, #f093fb 100%); }
         .scene-3 { background: linear-gradient(180deg, #a1c4fd 0%, #c2e9fb 50%, #fff1eb 100%); }
         .scene-4 { background: linear-gradient(180deg, #434343 0%, #1a1a2e 50%, #16213e 100%); }
+        .scene-5 { background: linear-gradient(180deg, #11998e 0%, #38ef7d 30%, #a8e063 70%, #56ab2f 100%); }
 
         .header {
             padding: 3px 8px;
@@ -330,7 +331,6 @@
 
         .record-indicator.visible { display: block; }
 
-        /* Mixer styles */
         .mixer-container {
             flex: 1;
             display: flex;
@@ -380,15 +380,8 @@
             transition: all 0.2s;
         }
 
-        .track-item.dragging {
-            opacity: 0.5;
-            transform: scale(0.95);
-        }
-
-        .track-item.drag-over {
-            border-color: #a29bfe;
-            box-shadow: 0 0 10px rgba(162, 155, 254, 0.5);
-        }
+        .track-item.dragging { opacity: 0.5; transform: scale(0.95); }
+        .track-item.drag-over { border-color: #a29bfe; box-shadow: 0 0 10px rgba(162, 155, 254, 0.5); }
 
         .track-header {
             display: flex;
@@ -397,21 +390,10 @@
             margin-bottom: 4px;
         }
 
-        .track-name {
-            color: white;
-            font-size: 0.6rem;
-            font-weight: bold;
-        }
+        .track-name { color: white; font-size: 0.6rem; font-weight: bold; }
+        .track-info { color: rgba(255,255,255,0.6); font-size: 0.5rem; }
 
-        .track-info {
-            color: rgba(255,255,255,0.6);
-            font-size: 0.5rem;
-        }
-
-        .track-controls {
-            display: flex;
-            gap: 3px;
-        }
+        .track-controls { display: flex; gap: 3px; }
 
         .track-btn {
             width: 20px;
@@ -429,24 +411,9 @@
         .track-delete { background: #d63031; color: white; }
         .track-add-master { background: #6c5ce7; color: white; }
 
-        .channel-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            margin-bottom: 4px;
-        }
-
-        .channel-row {
-            display: flex;
-            align-items: center;
-            gap: 3px;
-        }
-
-        .channel-label {
-            width: 20px;
-            font-size: 0.45rem;
-            color: rgba(255,255,255,0.7);
-        }
+        .channel-grid { display: flex; flex-direction: column; gap: 2px; margin-bottom: 4px; }
+        .channel-row { display: flex; align-items: center; gap: 3px; }
+        .channel-label { width: 20px; font-size: 0.45rem; color: rgba(255,255,255,0.7); }
 
         .step-grid {
             display: flex;
@@ -458,41 +425,14 @@
             flex: 1;
         }
 
-        .step-cell {
-            flex: 1;
-            background: rgba(255,255,255,0.1);
-            position: relative;
-        }
+        .step-cell { flex: 1; background: rgba(255,255,255,0.1); position: relative; }
+        .step-cell.has-event { background: linear-gradient(135deg, #74b9ff, #0984e3); }
+        .step-cell.has-sustain { background: linear-gradient(135deg, #a29bfe, #6c5ce7); }
+        .step-cell.beat-marker { border-left: 1px solid rgba(255,255,255,0.3); }
 
-        .step-cell.has-event {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
-        }
-
-        .step-cell.has-sustain {
-            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
-        }
-
-        .step-cell.beat-marker {
-            border-left: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .trim-controls {
-            display: flex;
-            gap: 4px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .stretch-control {
-            display: flex;
-            align-items: center;
-            gap: 2px;
-        }
-
-        .stretch-label {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.5rem;
-        }
+        .trim-controls { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+        .stretch-control { display: flex; align-items: center; gap: 2px; }
+        .stretch-label { color: rgba(255,255,255,0.7); font-size: 0.5rem; }
 
         .stretch-slider {
             width: 50px;
@@ -553,7 +493,6 @@
             font-size: 0.5rem;
         }
 
-        /* Master Channel Panel */
         .master-panel {
             position: fixed;
             bottom: 0;
@@ -566,9 +505,7 @@
             display: none;
         }
 
-        .master-panel.visible {
-            display: block;
-        }
+        .master-panel.visible { display: block; }
 
         .master-header {
             display: flex;
@@ -577,16 +514,8 @@
             margin-bottom: 6px;
         }
 
-        .master-title {
-            color: white;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
-
-        .master-buttons {
-            display: flex;
-            gap: 4px;
-        }
+        .master-title { color: white; font-size: 0.7rem; font-weight: bold; }
+        .master-buttons { display: flex; gap: 4px; }
 
         .master-btn {
             padding: 4px 8px;
@@ -634,33 +563,11 @@
             transition: all 0.2s;
         }
 
-        .master-clip:active {
-            cursor: grabbing;
-        }
-
-        .master-clip.selected {
-            border-color: #fff;
-            box-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-
-        .master-clip.dragging {
-            opacity: 0.6;
-            transform: scale(0.95);
-        }
-
-        .master-clip-name {
-            color: white;
-            font-size: 0.5rem;
-            font-weight: bold;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .master-clip-duration {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.4rem;
-        }
+        .master-clip:active { cursor: grabbing; }
+        .master-clip.selected { border-color: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .master-clip.dragging { opacity: 0.6; transform: scale(0.95); }
+        .master-clip-name { color: white; font-size: 0.5rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .master-clip-duration { color: rgba(255,255,255,0.7); font-size: 0.4rem; }
 
         .master-clip-remove {
             position: absolute;
@@ -679,50 +586,220 @@
             justify-content: center;
         }
 
-        .crop-handles {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 8px;
+        .crop-handles { position: absolute; bottom: 0; left: 0; right: 0; height: 8px; display: flex; justify-content: space-between; }
+        .crop-handle { width: 8px; height: 100%; background: rgba(255,255,255,0.6); cursor: ew-resize; border-radius: 2px; }
+        .crop-handle:hover { background: white; }
+        .master-empty { color: rgba(255,255,255,0.4); font-size: 0.6rem; text-align: center; padding: 15px; }
+        .license-info { color: rgba(255,255,255,0.5); font-size: 0.4rem; text-align: center; margin-top: 4px; }
+
+        /* Remix Composer Styles */
+        .remix-container {
+            flex: 1;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            padding: 6px;
+            gap: 6px;
+            overflow-y: auto;
         }
 
-        .crop-handle {
-            width: 8px;
-            height: 100%;
-            background: rgba(255,255,255,0.6);
-            cursor: ew-resize;
-            border-radius: 2px;
+        .remix-header {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .crop-handle:hover {
-            background: white;
+        .remix-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        .master-empty {
-            color: rgba(255,255,255,0.4);
-            font-size: 0.6rem;
+        .remix-card-title {
+            color: white;
+            font-size: 0.65rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .composer-input {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 6px;
+            background: rgba(0,0,0,0.3);
+            color: white;
+            font-size: 0.55rem;
+            margin-bottom: 6px;
+        }
+
+        .composer-input::placeholder { color: rgba(255,255,255,0.4); }
+
+        .remix-tracks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            margin-bottom: 6px;
+        }
+
+        .remix-track-slot {
+            background: rgba(0,0,0,0.3);
+            border: 2px dashed rgba(255,255,255,0.3);
+            border-radius: 6px;
+            padding: 6px;
+            min-height: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .remix-track-slot.filled {
+            border-style: solid;
+            border-color: rgba(162,155,254,0.5);
+            background: rgba(108,92,231,0.2);
+        }
+
+        .remix-track-slot.drag-over {
+            border-color: #a29bfe;
+            background: rgba(162,155,254,0.3);
+        }
+
+        .remix-slot-label { color: rgba(255,255,255,0.5); font-size: 0.5rem; }
+        .remix-slot-name { color: white; font-size: 0.5rem; font-weight: bold; margin-top: 2px; }
+        .remix-slot-remove { font-size: 0.4rem; color: #ff7675; cursor: pointer; margin-top: 2px; }
+
+        .warp-section {
+            background: rgba(0,0,0,0.2);
+            border-radius: 6px;
+            padding: 6px;
+            margin-bottom: 6px;
+        }
+
+        .warp-title {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.55rem;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        .warp-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+        }
+
+        .warp-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.45rem;
+            cursor: pointer;
+        }
+
+        .warp-checkbox input {
+            width: 12px;
+            height: 12px;
+            accent-color: #a29bfe;
+        }
+
+        .warp-checkbox.active { color: #a29bfe; font-weight: bold; }
+
+        .license-section {
+            background: rgba(0,0,0,0.2);
+            border-radius: 6px;
+            padding: 6px;
+            margin-bottom: 6px;
+        }
+
+        .license-options {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .license-option {
+            flex: 1;
+            padding: 6px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+            cursor: pointer;
             text-align: center;
-            padding: 15px;
+            transition: all 0.2s;
         }
 
-        .drop-zone-indicator {
-            position: absolute;
-            width: 3px;
-            height: 40px;
-            background: #fff;
-            border-radius: 2px;
-            pointer-events: none;
+        .license-option.selected {
+            border-color: #a29bfe;
+            background: rgba(162,155,254,0.2);
+        }
+
+        .license-option-title { color: white; font-size: 0.55rem; font-weight: bold; }
+        .license-option-desc { color: rgba(255,255,255,0.6); font-size: 0.4rem; margin-top: 2px; }
+
+        .copyright-input {
+            width: 100%;
+            padding: 5px 8px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            background: rgba(0,0,0,0.3);
+            color: white;
+            font-size: 0.5rem;
             display: none;
         }
 
-        .license-info {
-            color: rgba(255,255,255,0.5);
-            font-size: 0.4rem;
-            text-align: center;
+        .copyright-input.visible { display: block; }
+        .copyright-input::placeholder { color: rgba(255,255,255,0.4); }
+
+        .remix-export-btns {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+        }
+
+        .remix-export-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.55rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            flex: 1;
+        }
+
+        .remix-play-btn { background: linear-gradient(135deg, #00b894, #55efc4); }
+        .remix-download-btn { background: linear-gradient(135deg, #f39c12, #e74c3c); }
+        .remix-clear-btn { background: linear-gradient(135deg, #636e72, #b2bec3); }
+
+        .intensity-slider {
+            width: 100%;
+            height: 4px;
+            -webkit-appearance: none;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
             margin-top: 4px;
+        }
+
+        .intensity-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+            border-radius: 50%;
+        }
+
+        .intensity-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.4rem;
+            display: flex;
+            justify-content: space-between;
         }
     </style>
 </head>
@@ -753,12 +830,10 @@
             <div class="scene scene-1" data-scene="0">
                 <div class="floating-element" style="top: 1%; left: 8%;">🦄</div>
                 <div class="floating-element" style="top: 3%; right: 12%; animation-delay: 0.5s;">🐰</div>
-                
                 <div class="header">
                     <div class="scene-title">🌈 Rainbow Meadow 🌸</div>
                     <div class="scene-subtitle">X: Tone | Y: Pitch</div>
                 </div>
-                
                 <div class="controls">
                     <button class="mode-btn beat-btn" data-beat="0">Hop</button>
                     <button class="mode-btn beat-btn" data-beat="1">Skip</button>
@@ -773,7 +848,6 @@
                     <button class="mode-btn melody-btn" data-melody="3">Wish</button>
                     <button class="mode-btn melody-btn" data-melody="4">Glow</button>
                 </div>
-                
                 <div class="touch-pad" data-scene-index="0">
                     <div class="xy-label pitch">↑ HIGH</div>
                     <div class="xy-label pitch-low">↓ LOW</div>
@@ -781,7 +855,6 @@
                     <div class="xy-label tone-bright">BRIGHT</div>
                     <div class="active-modes-display"></div>
                 </div>
-                
                 <div class="layer-display">
                     <div class="layer-indicator" style="background: #ff6b6b;">🎵</div>
                     <div class="layer-indicator" style="background: #feca57;">🎶</div>
@@ -795,12 +868,10 @@
             <div class="scene scene-2" data-scene="1">
                 <div class="floating-element" style="top: 1%; left: 10%;">💎</div>
                 <div class="floating-element" style="top: 3%; right: 15%; animation-delay: 0.7s;">🔮</div>
-                
                 <div class="header">
                     <div class="scene-title">💎 Crystal Cave 🔮</div>
                     <div class="scene-subtitle">X: Resonance | Y: Frequency</div>
                 </div>
-                
                 <div class="controls">
                     <button class="mode-btn beat-btn" data-beat="0">Echo</button>
                     <button class="mode-btn beat-btn" data-beat="1">Pulse</button>
@@ -815,7 +886,6 @@
                     <button class="mode-btn melody-btn" data-melody="3">Ethereal</button>
                     <button class="mode-btn melody-btn" data-melody="4">Cosmic</button>
                 </div>
-                
                 <div class="touch-pad" data-scene-index="1">
                     <div class="xy-label pitch">↑ HIGH</div>
                     <div class="xy-label pitch-low">↓ LOW</div>
@@ -823,7 +893,6 @@
                     <div class="xy-label tone-bright">CRYSTAL</div>
                     <div class="active-modes-display"></div>
                 </div>
-                
                 <div class="layer-display">
                     <div class="layer-indicator" style="background: #a55eea;">🎹</div>
                     <div class="layer-indicator" style="background: #5f27cd;">🎸</div>
@@ -837,12 +906,10 @@
             <div class="scene scene-3" data-scene="2">
                 <div class="floating-element" style="top: 1%; left: 8%;">☁️</div>
                 <div class="floating-element" style="top: 3%; right: 12%; animation-delay: 0.3s;">⭐</div>
-                
                 <div class="header">
                     <div class="scene-title">☁️ Cloud Kingdom 🌙</div>
                     <div class="scene-subtitle">X: Softness | Y: Dreaminess</div>
                 </div>
-                
                 <div class="controls">
                     <button class="mode-btn beat-btn" data-beat="0">Float</button>
                     <button class="mode-btn beat-btn" data-beat="1">Drift</button>
@@ -857,7 +924,6 @@
                     <button class="mode-btn melody-btn" data-melody="3">Soft</button>
                     <button class="mode-btn melody-btn" data-melody="4">Gentle</button>
                 </div>
-                
                 <div class="touch-pad" data-scene-index="2">
                     <div class="xy-label pitch">↑ AIRY</div>
                     <div class="xy-label pitch-low">↓ COZY</div>
@@ -865,7 +931,6 @@
                     <div class="xy-label tone-bright">SHIMMER</div>
                     <div class="active-modes-display"></div>
                 </div>
-                
                 <div class="layer-display">
                     <div class="layer-indicator" style="background: #74b9ff;">🌸</div>
                     <div class="layer-indicator" style="background: #a29bfe;">🦋</div>
@@ -881,7 +946,6 @@
                     <div class="scene-title">🎛️ Mixer Studio 🎚️</div>
                     <div class="scene-subtitle">Import, Mix & Master</div>
                 </div>
-                
                 <div class="mixer-container">
                     <div class="mixer-header">
                         <button class="mixer-btn import-btn" id="importBtn">📥 Import</button>
@@ -889,13 +953,91 @@
                         <button class="mixer-btn stop-all-btn" id="stopAllBtn">⏹ Stop</button>
                         <button class="mixer-btn clear-btn" id="clearAllBtn">🗑️ Clear</button>
                     </div>
-                    
                     <div class="tracks-container" id="tracksContainer">
                         <div class="empty-state" id="emptyState">
                             <div class="empty-state-icon">🎵</div>
                             <div style="font-size: 0.7rem;">No tracks yet!</div>
                             <div style="font-size: 0.55rem; margin-top: 4px;">Record or import JSON</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scene 5: Remix Composer -->
+            <div class="scene scene-5" data-scene="4">
+                <div class="header">
+                    <div class="scene-title">🎨 Remix Composer 🔄</div>
+                    <div class="scene-subtitle">Import Masters & Apply Warps</div>
+                </div>
+                <div class="remix-container">
+                    <div class="remix-card">
+                        <div class="remix-card-title">👤 Composer Info</div>
+                        <input type="text" class="composer-input" id="composerName" placeholder="Enter composer/artist name...">
+                        <input type="text" class="composer-input" id="remixTitle" placeholder="Remix title...">
+                    </div>
+
+                    <div class="remix-card">
+                        <div class="remix-card-title">📥 Import Masters (Up to 4)</div>
+                        <div class="remix-header" style="margin-bottom: 6px;">
+                            <button class="mixer-btn import-btn" id="remixImportBtn">📥 Import Master</button>
+                        </div>
+                        <div class="remix-tracks-grid" id="remixTracksGrid">
+                            <div class="remix-track-slot" data-slot="0"><span class="remix-slot-label">Track 1</span></div>
+                            <div class="remix-track-slot" data-slot="1"><span class="remix-slot-label">Track 2</span></div>
+                            <div class="remix-track-slot" data-slot="2"><span class="remix-slot-label">Track 3</span></div>
+                            <div class="remix-track-slot" data-slot="3"><span class="remix-slot-label">Track 4</span></div>
+                        </div>
+                    </div>
+
+                    <div class="remix-card">
+                        <div class="remix-card-title">🌀 Sequence Warps</div>
+                        <div class="warp-section">
+                            <div class="warp-title">Mathematical Sequences</div>
+                            <div class="warp-grid">
+                                <label class="warp-checkbox"><input type="checkbox" data-warp="fibonacci"> Fibonacci</label>
+                                <label class="warp-checkbox"><input type="checkbox" data-warp="lucas"> Lucas</label>
+                                <label class="warp-checkbox"><input type="checkbox" data-warp="catalan"> Catalan</label>
+                                <label class="warp-checkbox"><input type="checkbox" data-warp="pell"> Pell</label>
+                                <label class="warp-checkbox"><input type="checkbox" data-warp="bell"> Bell</label>
+                                <label class="warp-checkbox"><input type="checkbox" data-warp="triangular"> Triangular</label>
+                            </div>
+                        </div>
+                        <div class="warp-section">
+                            <div class="warp-title">Time Warps</div>
+                            <div class="warp-grid">
+                                <label class="warp-checkbox"><input type="checkbox" data-warp="linear"> Linear</label>
+                                <label class="warp-checkbox"><input type="checkbox" data-warp="log"> Logarithmic</label>
+                                <label class="warp-checkbox"><input type="checkbox" data-warp="exp"> Exponential</label>
+                                <label class="warp-checkbox"><input type="checkbox" data-warp="sine"> Sine Wave</label>
+                                <label class="warp-checkbox"><input type="checkbox" data-warp="bounce"> Bounce</label>
+                                <label class="warp-checkbox"><input type="checkbox" data-warp="elastic"> Elastic</label>
+                            </div>
+                        </div>
+                        <div class="intensity-label"><span>Intensity</span><span id="intensityValue">50%</span></div>
+                        <input type="range" class="intensity-slider" id="warpIntensity" min="0" max="100" value="50">
+                    </div>
+
+                    <div class="remix-card">
+                        <div class="remix-card-title">📜 License</div>
+                        <div class="license-section">
+                            <div class="license-options">
+                                <div class="license-option selected" data-license="cc0">
+                                    <div class="license-option-title">CC0</div>
+                                    <div class="license-option-desc">Public Domain</div>
+                                </div>
+                                <div class="license-option" data-license="mit">
+                                    <div class="license-option-title">MIT</div>
+                                    <div class="license-option-desc">With Copyright</div>
+                                </div>
+                            </div>
+                            <input type="text" class="copyright-input" id="copyrightHolder" placeholder="Copyright holder name (for MIT)...">
+                        </div>
+                    </div>
+
+                    <div class="remix-export-btns">
+                        <button class="remix-export-btn remix-play-btn" id="remixPlayBtn">▶️ Preview</button>
+                        <button class="remix-export-btn remix-download-btn" id="remixDownloadBtn">💾 Export</button>
+                        <button class="remix-export-btn remix-clear-btn" id="remixClearBtn">🗑️ Clear</button>
                     </div>
                 </div>
             </div>
@@ -913,11 +1055,8 @@
             </div>
             <div class="master-timeline" id="masterTimeline">
                 <div class="master-timeline-inner" id="masterTimelineInner">
-                    <div class="master-empty" id="masterEmpty">
-                        Drag tracks here or tap ➕ to add clips 🎵
-                    </div>
+                    <div class="master-empty" id="masterEmpty">Drag tracks here or tap ➕ to add clips 🎵</div>
                 </div>
-                <div class="drop-zone-indicator" id="dropIndicator"></div>
             </div>
             <div class="license-info">📜 CC0 1.0 Universal - Public Domain Dedication</div>
         </div>
@@ -927,69 +1066,51 @@
             <div class="dot" data-scene="1"></div>
             <div class="dot" data-scene="2"></div>
             <div class="dot" data-scene="3"></div>
+            <div class="dot" data-scene="4"></div>
         </div>
         
         <div class="swipe-hint">← Swipe to change scenes →</div>
     </div>
 
     <input type="file" id="fileInput" accept=".json" multiple style="display:none;">
+    <input type="file" id="remixFileInput" accept=".json" multiple style="display:none;">
 
     <script>
-        // Configuration
         const BPM = 120;
         const STEP_DURATION = (60000 / BPM) / 4;
         const STEPS_PER_BAR = 16;
         const TOTAL_STEPS = 64;
         const MAX_HARMONY_CHANNELS = 5;
         
-        // Audio Context
-        let audioContext;
-        let masterGain;
-        
-        // Recording state
-        let isRecording = false;
-        let recordingStartTime = 0;
-        let autoBeatLock = false;
-        let autoTuneLock = false;
+        let audioContext, masterGain;
+        let isRecording = false, recordingStartTime = 0;
+        let autoBeatLock = false, autoTuneLock = false;
         let currentRecording = null;
-        
-        // Active sustained notes for playback
         let activeSustainedNotes = new Map();
-        
-        // Playback state
-        let isPlaying = false;
-        let playbackTimeouts = [];
-        
-        // Mixer tracks
+        let isPlaying = false, playbackTimeouts = [];
         let mixerTracks = [];
-        
-        // Master channel clips
-        let masterClips = [];
-        let selectedClipIndex = -1;
-        
-        // Scene management
+        let masterClips = [], selectedClipIndex = -1;
         let currentScene = 0;
+        let draggedTrackIndex = null, draggedClipIndex = null;
         
-        // Drag state
-        let draggedTrackIndex = null;
-        let draggedClipIndex = null;
-        let cropDragData = null;
-        
-        // Stackable mode settings per scene
+        // Remix state
+        let remixTracks = [null, null, null, null];
+        let selectedLicense = 'cc0';
+        let activeWarps = new Set();
+        let warpIntensity = 50;
+
         const sceneSettings = [
             { beatModes: new Set(), melodyModes: new Set() },
             { beatModes: new Set(), melodyModes: new Set() },
             { beatModes: new Set(), melodyModes: new Set() }
         ];
         
-        // Beat loop management
         const beatLoops = [
             { intervals: [], active: false },
             { intervals: [], active: false },
             { intervals: [], active: false }
         ];
         
-        // Drum sounds config
         const drumSounds = [
             { emoji: '🐱', freq: 180, type: 'sine', decay: 0.3, pitch: 1.5 },
             { emoji: '🦊', freq: 120, type: 'triangle', decay: 0.25, pitch: 0.8 },
@@ -1003,7 +1124,6 @@
             { emoji: '✨', freq: 2000, type: 'sine', decay: 0.3, pitch: 3 }
         ];
         
-        // Scales for melodies
         const melodyScales = [
             [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25],
             [293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25, 587.33],
@@ -1032,6 +1152,57 @@
             { types: ['sine', 'sine', 'triangle', 'sine', 'triangle'], filterBase: 3000 }
         ];
 
+        // Mathematical Sequences
+        const sequences = {
+            fibonacci: (n) => { let a = 0, b = 1; for (let i = 0; i < n; i++) { [a, b] = [b, a + b]; } return a; },
+            lucas: (n) => { let a = 2, b = 1; for (let i = 0; i < n; i++) { [a, b] = [b, a + b]; } return a; },
+            catalan: (n) => { if (n <= 1) return 1; let c = 0; for (let i = 0; i < n; i++) c += sequences.catalan(i) * sequences.catalan(n - 1 - i); return c; },
+            pell: (n) => { let a = 0, b = 1; for (let i = 0; i < n; i++) { [a, b] = [b, 2 * b + a]; } return a; },
+            bell: (n) => { const b = [[1]]; for (let i = 1; i <= n; i++) { b[i] = [b[i-1][b[i-1].length-1]]; for (let j = 1; j <= i; j++) b[i].push(b[i][j-1] + b[i-1][j-1]); } return b[n][0]; },
+            triangular: (n) => (n * (n + 1)) / 2
+        };
+
+        function generateSequenceValues(type, count) {
+            const values = [];
+            for (let i = 0; i < count; i++) {
+                values.push(sequences[type](i % 12));
+            }
+            const max = Math.max(...values);
+            return values.map(v => v / max);
+        }
+
+        function applySequenceWarp(step, totalSteps, activeWarps, intensity) {
+            if (activeWarps.size === 0) return step;
+            
+            const t = step / totalSteps;
+            let warpedT = t;
+            const intensityFactor = intensity / 100;
+            
+            activeWarps.forEach(warpType => {
+                let warpValue = 0;
+                const seqIndex = Math.floor(t * 12);
+                
+                switch(warpType) {
+                    case 'fibonacci': warpValue = (sequences.fibonacci(seqIndex) % 10) / 10; break;
+                    case 'lucas': warpValue = (sequences.lucas(seqIndex) % 10) / 10; break;
+                    case 'catalan': warpValue = Math.min(1, sequences.catalan(Math.min(seqIndex, 8)) / 100); break;
+                    case 'pell': warpValue = (sequences.pell(seqIndex) % 20) / 20; break;
+                    case 'bell': warpValue = Math.min(1, sequences.bell(Math.min(seqIndex, 8)) / 100); break;
+                    case 'triangular': warpValue = sequences.triangular(seqIndex) / sequences.triangular(12); break;
+                    case 'linear': warpValue = t; break;
+                    case 'log': warpValue = Math.log(1 + t * 9) / Math.log(10); break;
+                    case 'exp': warpValue = (Math.pow(10, t) - 1) / 9; break;
+                    case 'sine': warpValue = (Math.sin(t * Math.PI * 2) + 1) / 2; break;
+                    case 'bounce': warpValue = Math.abs(Math.sin(t * Math.PI * 3)); break;
+                    case 'elastic': warpValue = Math.pow(2, -10 * t) * Math.sin((t - 0.1) * 5 * Math.PI) + 1; break;
+                }
+                
+                warpedT = warpedT * (1 - intensityFactor * 0.5) + warpValue * intensityFactor * 0.5;
+            });
+            
+            return Math.max(0, Math.min(totalSteps, warpedT * totalSteps));
+        }
+
         function initAudio() {
             if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -1039,151 +1210,80 @@
                 masterGain.gain.value = 0.25;
                 masterGain.connect(audioContext.destination);
             }
-            if (audioContext.state === 'suspended') {
-                audioContext.resume();
-            }
+            if (audioContext.state === 'suspended') audioContext.resume();
         }
 
-        function getRecordingTime() {
-            return Date.now() - recordingStartTime;
-        }
-
-        function timeToStep(time) {
-            return time / STEP_DURATION;
-        }
-
-        function stepToTime(step) {
-            return step * STEP_DURATION;
-        }
+        function getRecordingTime() { return Date.now() - recordingStartTime; }
+        function timeToStep(time) { return time / STEP_DURATION; }
+        function stepToTime(step) { return step * STEP_DURATION; }
 
         function quantizeToScale(freq, scaleIndex = 0) {
             const scale = melodyScales[scaleIndex];
-            let closest = scale[0];
-            let minDiff = Math.abs(freq - closest);
-            
-            for (const note of scale) {
-                const diff = Math.abs(freq - note);
-                if (diff < minDiff) {
-                    minDiff = diff;
-                    closest = note;
-                }
-            }
-            return closest;
+            return scale.reduce((closest, note) => Math.abs(freq - note) < Math.abs(freq - closest) ? note : closest, scale[0]);
         }
 
         function createNewRecording() {
             return {
                 version: "3.0",
                 name: `Recording ${new Date().toLocaleTimeString()}`,
-                bpm: BPM,
-                stepsPerBar: STEPS_PER_BAR,
-                totalSteps: TOTAL_STEPS,
-                duration: 0,
-                autoBeat: autoBeatLock,
-                autoTune: autoTuneLock,
-                channels: {
-                    beats: { type: "beats", events: [] },
-                    harmony: []
-                }
+                bpm: BPM, stepsPerBar: STEPS_PER_BAR, totalSteps: TOTAL_STEPS,
+                duration: 0, autoBeat: autoBeatLock, autoTune: autoTuneLock,
+                channels: { beats: { type: "beats", events: [] }, harmony: [] }
             };
         }
 
         function recordDrumHit(drumIndex) {
             if (!isRecording || !currentRecording) return;
-            
-            let time = getRecordingTime();
-            let step = timeToStep(time);
-            
+            let step = timeToStep(getRecordingTime());
             if (autoBeatLock) step = Math.round(step);
-            
-            if (step < TOTAL_STEPS) {
-                currentRecording.channels.beats.events.push({ step, drumIndex });
-            }
+            if (step < TOTAL_STEPS) currentRecording.channels.beats.events.push({ step, drumIndex });
         }
 
         function getOrCreateHarmonyChannel(channelIndex, sceneIndex) {
             if (!currentRecording) return null;
-            
-            let channel = currentRecording.channels.harmony.find(
-                c => c.channelIndex === channelIndex && c.sceneIndex === sceneIndex
-            );
-            
-            if (!channel) {
-                channel = { channelIndex, sceneIndex, notes: [] };
-                currentRecording.channels.harmony.push(channel);
-            }
-            
+            let channel = currentRecording.channels.harmony.find(c => c.channelIndex === channelIndex && c.sceneIndex === sceneIndex);
+            if (!channel) { channel = { channelIndex, sceneIndex, notes: [] }; currentRecording.channels.harmony.push(channel); }
             return channel;
         }
 
         function startPadRecording(sceneIndex, fingerIndex, x, y, normX, normY) {
             if (!isRecording || !currentRecording) return null;
-            
-            let time = getRecordingTime();
-            let step = timeToStep(time);
-            
+            let step = timeToStep(getRecordingTime());
             if (autoBeatLock) step = Math.round(step);
-            
             let freq = calculateFrequency(sceneIndex, normY);
             if (autoTuneLock) freq = quantizeToScale(freq, 0);
             const filter = calculateFilter(sceneIndex, normX);
-            
             const channel = getOrCreateHarmonyChannel(fingerIndex, sceneIndex);
             if (!channel) return null;
-            
-            const noteData = {
-                startStep: step,
-                endStep: null,
-                events: [{ step, x: normX, y: normY, freq, filter }]
-            };
-            
+            const noteData = { startStep: step, endStep: null, events: [{ step, x: normX, y: normY, freq, filter }] };
             channel.notes.push(noteData);
-            
             return { channelIndex: fingerIndex, sceneIndex, noteIndex: channel.notes.length - 1 };
         }
 
         function updatePadRecording(recordRef, normX, normY, sceneIndex) {
             if (!isRecording || !currentRecording || !recordRef) return;
-            
-            const channel = currentRecording.channels.harmony.find(
-                c => c.channelIndex === recordRef.channelIndex && c.sceneIndex === recordRef.sceneIndex
-            );
+            const channel = currentRecording.channels.harmony.find(c => c.channelIndex === recordRef.channelIndex && c.sceneIndex === recordRef.sceneIndex);
             if (!channel) return;
-            
             const noteData = channel.notes[recordRef.noteIndex];
             if (!noteData) return;
-            
-            let time = getRecordingTime();
-            let step = timeToStep(time);
-            
+            let step = timeToStep(getRecordingTime());
             if (autoBeatLock) step = Math.round(step);
-            
             const lastEvent = noteData.events[noteData.events.length - 1];
             if (step > lastEvent.step && step < TOTAL_STEPS) {
                 let freq = calculateFrequency(sceneIndex, normY);
                 if (autoTuneLock) freq = quantizeToScale(freq, 0);
-                const filter = calculateFilter(sceneIndex, normX);
-                
-                noteData.events.push({ step, x: normX, y: normY, freq, filter });
+                noteData.events.push({ step, x: normX, y: normY, freq, filter: calculateFilter(sceneIndex, normX) });
             }
         }
 
         function endPadRecording(recordRef) {
             if (!isRecording || !currentRecording || !recordRef) return;
-            
-            const channel = currentRecording.channels.harmony.find(
-                c => c.channelIndex === recordRef.channelIndex && c.sceneIndex === recordRef.sceneIndex
-            );
+            const channel = currentRecording.channels.harmony.find(c => c.channelIndex === recordRef.channelIndex && c.sceneIndex === recordRef.sceneIndex);
             if (!channel) return;
-            
             const noteData = channel.notes[recordRef.noteIndex];
             if (!noteData) return;
-            
-            let time = getRecordingTime();
-            let step = timeToStep(time);
-            
+            let step = timeToStep(getRecordingTime());
             if (autoBeatLock) step = Math.round(step);
-            
             noteData.endStep = step;
         }
 
@@ -1191,15 +1291,12 @@
             const settings = sceneSettings[sceneIndex];
             const activeMelodies = Array.from(settings.melodyModes);
             if (activeMelodies.length === 0) return 440;
-            
             const scale = melodyScales[activeMelodies[0]];
-            const scaleIndex = Math.floor(normY * (scale.length - 1));
-            return scale[scaleIndex];
+            return scale[Math.floor(normY * (scale.length - 1))];
         }
 
         function calculateFilter(sceneIndex, normX) {
-            const config = synthConfigs[sceneIndex];
-            return config.filterBase + (normX * 4000);
+            return synthConfigs[sceneIndex].filterBase + (normX * 4000);
         }
 
         function startRecording() {
@@ -1208,29 +1305,17 @@
             currentRecording = createNewRecording();
             document.getElementById('recordBtn').classList.add('recording');
             document.getElementById('recordIndicator').classList.add('visible');
-            
-            setTimeout(() => {
-                if (isRecording) stopRecording();
-            }, TOTAL_STEPS * STEP_DURATION);
+            setTimeout(() => { if (isRecording) stopRecording(); }, TOTAL_STEPS * STEP_DURATION);
         }
 
         function stopRecording() {
             if (!isRecording) return;
-            
             isRecording = false;
             if (currentRecording) {
                 currentRecording.duration = getRecordingTime();
-                
-                const hasBeats = currentRecording.channels.beats.events.length > 0;
-                const hasHarmony = currentRecording.channels.harmony.some(c => c.notes.length > 0);
-                
-                if (hasBeats || hasHarmony) {
-                    mixerTracks.push(currentRecording);
-                    renderTracks();
-                    updateMasterPanelVisibility();
-                }
+                const hasContent = currentRecording.channels.beats.events.length > 0 || currentRecording.channels.harmony.some(c => c.notes.length > 0);
+                if (hasContent) { mixerTracks.push(currentRecording); renderTracks(); updateMasterPanelVisibility(); }
             }
-            
             document.getElementById('recordBtn').classList.remove('recording');
             document.getElementById('recordIndicator').classList.remove('visible');
         }
@@ -1239,48 +1324,12 @@
             playbackTimeouts.forEach(id => clearTimeout(id));
             playbackTimeouts = [];
             isPlaying = false;
-            
             activeSustainedNotes.forEach(noteData => {
-                if (noteData.gainNode) {
-                    noteData.gainNode.gain.setTargetAtTime(0, audioContext.currentTime, 0.05);
-                }
-                if (noteData.oscillator) {
-                    setTimeout(() => { try { noteData.oscillator.stop(); } catch(e) {} }, 100);
-                }
+                if (noteData.gainNode) noteData.gainNode.gain.setTargetAtTime(0, audioContext.currentTime, 0.05);
+                if (noteData.oscillator) setTimeout(() => { try { noteData.oscillator.stop(); } catch(e) {} }, 100);
             });
             activeSustainedNotes.clear();
-            
             [0, 1, 2].forEach(i => stopBeatLoops(i));
-        }
-
-        function exportRecording() {
-            if (!currentRecording) {
-                if (mixerTracks.length > 0) {
-                    const exportData = { version: "3.0", tracks: mixerTracks };
-                    const json = JSON.stringify(exportData, null, 2);
-                    downloadJson(json, 'fluffcore-mix');
-                } else {
-                    alert('Nothing to export!');
-                }
-                return;
-            }
-            
-            const hasContent = currentRecording.channels.beats.events.length > 0 ||
-                currentRecording.channels.harmony.some(c => c.notes.length > 0);
-            
-            if (!hasContent) {
-                if (mixerTracks.length > 0) {
-                    const exportData = { version: "3.0", tracks: mixerTracks };
-                    const json = JSON.stringify(exportData, null, 2);
-                    downloadJson(json, 'fluffcore-mix');
-                } else {
-                    alert('Nothing to export!');
-                }
-                return;
-            }
-            
-            const json = JSON.stringify(currentRecording, null, 2);
-            downloadJson(json, 'fluffcore-track');
         }
 
         function downloadJson(json, prefix) {
@@ -1293,226 +1342,140 @@
             URL.revokeObjectURL(url);
         }
 
-        // Auto-beat button
+        function exportRecording() {
+            if (mixerTracks.length > 0) {
+                const exportData = { version: "3.0", tracks: mixerTracks };
+                downloadJson(JSON.stringify(exportData, null, 2), 'fluffcore-mix');
+            } else { alert('Nothing to export!'); }
+        }
+
         document.getElementById('autoBeatBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            autoBeatLock = !autoBeatLock;
-            e.target.classList.toggle('active', autoBeatLock);
+            e.preventDefault(); autoBeatLock = !autoBeatLock; e.target.classList.toggle('active', autoBeatLock);
         });
 
-        // Auto-tune button
         document.getElementById('autoTuneBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            autoTuneLock = !autoTuneLock;
-            e.target.classList.toggle('active', autoTuneLock);
+            e.preventDefault(); autoTuneLock = !autoTuneLock; e.target.classList.toggle('active', autoTuneLock);
         });
 
-        // Record button
         document.getElementById('recordBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            initAudio();
-            
-            if (isRecording) stopRecording();
-            else startRecording();
+            e.preventDefault(); initAudio(); isRecording ? stopRecording() : startRecording();
         });
 
-        // Stop button
-        document.getElementById('stopBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            stopRecording();
-            stopAllPlayback();
-        });
+        document.getElementById('stopBtn').addEventListener('click', (e) => { e.preventDefault(); stopRecording(); stopAllPlayback(); });
+        document.getElementById('exportBtn').addEventListener('click', (e) => { e.preventDefault(); exportRecording(); });
 
-        // Export button
-        document.getElementById('exportBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            exportRecording();
-        });
-
-        // Drum sounds
         function playDrumSound(drumIndex, shouldRecord = true) {
             if (!audioContext) return;
-            
             const drum = drumSounds[drumIndex];
             const now = audioContext.currentTime;
-            
             const osc = audioContext.createOscillator();
             const gain = audioContext.createGain();
             const filter = audioContext.createBiquadFilter();
-            
             osc.type = drum.type;
             osc.frequency.setValueAtTime(drum.freq * drum.pitch, now);
             osc.frequency.exponentialRampToValueAtTime(drum.freq * 0.3, now + drum.decay);
-            
             filter.type = 'lowpass';
             filter.frequency.setValueAtTime(3000, now);
             filter.frequency.exponentialRampToValueAtTime(500, now + drum.decay);
-            
             gain.gain.setValueAtTime(0.4, now);
             gain.gain.exponentialRampToValueAtTime(0.001, now + drum.decay);
-            
-            osc.connect(filter);
-            filter.connect(gain);
-            gain.connect(masterGain);
-            
-            osc.start(now);
-            osc.stop(now + drum.decay + 0.1);
-            
+            osc.connect(filter); filter.connect(gain); gain.connect(masterGain);
+            osc.start(now); osc.stop(now + drum.decay + 0.1);
             if (shouldRecord) recordDrumHit(drumIndex);
         }
 
         document.querySelectorAll('.drum-btn').forEach(btn => {
-            function triggerDrum(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                initAudio();
-                
-                const drumIndex = parseInt(btn.dataset.drum);
-                playDrumSound(drumIndex);
-                
-                btn.classList.add('playing');
-                setTimeout(() => btn.classList.remove('playing'), 150);
-            }
-            
-            btn.addEventListener('touchstart', triggerDrum);
-            btn.addEventListener('mousedown', triggerDrum);
+            const trigger = (e) => {
+                e.preventDefault(); initAudio();
+                playDrumSound(parseInt(btn.dataset.drum));
+                btn.classList.add('playing'); setTimeout(() => btn.classList.remove('playing'), 150);
+            };
+            btn.addEventListener('touchstart', trigger);
+            btn.addEventListener('mousedown', trigger);
         });
 
         function createContinuousTone(sceneIndex, layerIndex, x, y, padWidth, padHeight) {
             if (!audioContext) return null;
-            
             const settings = sceneSettings[sceneIndex];
             const activeMelodies = Array.from(settings.melodyModes);
             if (activeMelodies.length === 0) return null;
-            
             const config = synthConfigs[sceneIndex];
-            const oscillators = [];
-            const gainNodes = [];
-            const filters = [];
-            
+            const oscillators = [], gainNodes = [], filters = [];
             const normX = Math.max(0, Math.min(1, x / padWidth));
             const normY = Math.max(0, Math.min(1, 1 - (y / padHeight)));
-            
             activeMelodies.forEach((melodyMode) => {
                 const scale = melodyScales[melodyMode];
-                const scaleIndex = Math.floor(normY * (scale.length - 1));
-                let freq = scale[scaleIndex] * (1 + (layerIndex * 0.01));
-                
+                let freq = scale[Math.floor(normY * (scale.length - 1))] * (1 + (layerIndex * 0.01));
                 if (autoTuneLock) freq = quantizeToScale(freq, melodyMode);
-                
                 const oscillator = audioContext.createOscillator();
                 const gainNode = audioContext.createGain();
                 const filter = audioContext.createBiquadFilter();
-                
                 oscillator.type = config.types[layerIndex % 5];
                 oscillator.frequency.value = freq;
-                
                 filter.type = 'lowpass';
                 filter.frequency.value = config.filterBase + (normX * 4000);
                 filter.Q.value = 2 + (normX * 8);
-                
                 gainNode.gain.value = 0.15 / Math.max(1, activeMelodies.length);
-                
-                oscillator.connect(filter);
-                filter.connect(gainNode);
-                gainNode.connect(masterGain);
+                oscillator.connect(filter); filter.connect(gainNode); gainNode.connect(masterGain);
                 oscillator.start();
-                
-                oscillators.push(oscillator);
-                gainNodes.push(gainNode);
-                filters.push(filter);
+                oscillators.push(oscillator); gainNodes.push(gainNode); filters.push(filter);
             });
-            
             return { oscillators, gainNodes, filters, sceneIndex };
         }
 
         function updateTonePosition(soundData, x, y, padWidth, padHeight) {
             if (!soundData) return;
-            
             const settings = sceneSettings[soundData.sceneIndex];
             const activeMelodies = Array.from(settings.melodyModes);
-            
             const normX = Math.max(0, Math.min(1, x / padWidth));
             const normY = Math.max(0, Math.min(1, 1 - (y / padHeight)));
-            
             soundData.oscillators.forEach((osc, idx) => {
                 const melodyMode = activeMelodies[idx];
                 if (melodyMode === undefined) return;
-                
                 const scale = melodyScales[melodyMode];
-                const scaleIndex = Math.floor(normY * (scale.length - 1));
-                let freq = scale[scaleIndex];
-                
+                let freq = scale[Math.floor(normY * (scale.length - 1))];
                 if (autoTuneLock) freq = quantizeToScale(freq, melodyMode);
-                
                 osc.frequency.setTargetAtTime(freq, audioContext.currentTime, 0.05);
             });
-            
             soundData.filters.forEach(filter => {
-                const config = synthConfigs[soundData.sceneIndex];
-                filter.frequency.setTargetAtTime(config.filterBase + (normX * 4000), audioContext.currentTime, 0.05);
+                filter.frequency.setTargetAtTime(synthConfigs[soundData.sceneIndex].filterBase + (normX * 4000), audioContext.currentTime, 0.05);
             });
         }
 
         function stopTone(soundData) {
             if (!soundData) return;
-            soundData.gainNodes.forEach(gain => {
-                gain.gain.setTargetAtTime(0, audioContext.currentTime, 0.1);
-            });
-            setTimeout(() => {
-                soundData.oscillators.forEach(osc => { try { osc.stop(); } catch(e) {} });
-            }, 300);
+            soundData.gainNodes.forEach(gain => gain.gain.setTargetAtTime(0, audioContext.currentTime, 0.1));
+            setTimeout(() => soundData.oscillators.forEach(osc => { try { osc.stop(); } catch(e) {} }), 300);
         }
 
         function createBeatSound(beatMode, sceneIndex, accent = 1) {
             if (!audioContext) return;
-            
-            const baseFreqs = [60, 80, 50, 100, 70];
-            const freq = baseFreqs[beatMode];
-            
+            const freq = [60, 80, 50, 100, 70][beatMode];
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
-            
             oscillator.type = ['sine', 'triangle', 'square', 'sawtooth', 'sine'][beatMode];
             oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
             oscillator.frequency.exponentialRampToValueAtTime(freq * 0.4, audioContext.currentTime + 0.15);
-            
             gainNode.gain.setValueAtTime(0.2 * accent, audioContext.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.2);
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(masterGain);
-            
+            oscillator.connect(gainNode); gainNode.connect(masterGain);
             oscillator.start(audioContext.currentTime);
             oscillator.stop(audioContext.currentTime + 0.25);
         }
 
         function startBeatLoops(sceneIndex) {
             stopBeatLoops(sceneIndex);
-            
             const settings = sceneSettings[sceneIndex];
             if (settings.beatModes.size === 0) return;
-            
             settings.beatModes.forEach(beatMode => {
                 const pattern = beatPatterns[beatMode];
                 let stepIndex = 0;
-                
                 function playStep() {
                     if (!beatLoops[sceneIndex].active) return;
                     createBeatSound(beatMode, sceneIndex, pattern.accents[stepIndex]);
-                    
-                    const interval = pattern.intervals[stepIndex];
                     stepIndex = (stepIndex + 1) % pattern.intervals.length;
-                    
-                    const timeoutId = setTimeout(playStep, interval);
-                    beatLoops[sceneIndex].intervals.push(timeoutId);
+                    beatLoops[sceneIndex].intervals.push(setTimeout(playStep, pattern.intervals[stepIndex]));
                 }
-                
                 beatLoops[sceneIndex].active = true;
                 playStep();
             });
@@ -1526,50 +1489,31 @@
 
         function updateLayerIndicators(sceneIndex, count) {
             const scene = document.querySelectorAll('.scene')[sceneIndex];
-            scene.querySelectorAll('.layer-indicator').forEach((ind, i) => {
-                ind.classList.toggle('active', i < count);
-            });
+            scene.querySelectorAll('.layer-indicator').forEach((ind, i) => ind.classList.toggle('active', i < count));
         }
 
         function updateActiveModeDisplay(sceneIndex) {
             const scene = document.querySelectorAll('.scene')[sceneIndex];
             const display = scene.querySelector('.active-modes-display');
             if (!display) return;
-            
             const settings = sceneSettings[sceneIndex];
             display.innerHTML = '';
-            
             const beatNames = [['Hop', 'Skip', 'Bounce', 'Flutter', 'Gallop'], ['Echo', 'Pulse', 'Crystal', 'Cave', 'Deep'], ['Float', 'Drift', 'Breeze', 'Whisper', 'Lullaby']];
             const melodyNames = [['Sparkle', 'Dream', 'Magic', 'Wish', 'Glow'], ['Mystic', 'Aura', 'Spirit', 'Ethereal', 'Cosmic'], ['Sleepy', 'Dreamy', 'Fluffy', 'Soft', 'Gentle']];
-            
-            settings.beatModes.forEach(mode => {
-                const tag = document.createElement('div');
-                tag.className = 'active-mode-tag';
-                tag.textContent = '🥁' + beatNames[sceneIndex][mode];
-                display.appendChild(tag);
-            });
-            
-            settings.melodyModes.forEach(mode => {
-                const tag = document.createElement('div');
-                tag.className = 'active-mode-tag';
-                tag.textContent = '🎵' + melodyNames[sceneIndex][mode];
-                display.appendChild(tag);
-            });
+            settings.beatModes.forEach(mode => { const tag = document.createElement('div'); tag.className = 'active-mode-tag'; tag.textContent = '🥁' + beatNames[sceneIndex][mode]; display.appendChild(tag); });
+            settings.melodyModes.forEach(mode => { const tag = document.createElement('div'); tag.className = 'active-mode-tag'; tag.textContent = '🎵' + melodyNames[sceneIndex][mode]; display.appendChild(tag); });
         }
 
         function createTouchVisual(x, y, touchPad, layerIndex, sceneIndex) {
             const color = layerColors[sceneIndex][layerIndex % 5];
-            
             const indicator = document.createElement('div');
             indicator.className = 'touch-indicator';
             indicator.style.cssText = `left:${x}px;top:${y}px;width:35px;height:35px;background:radial-gradient(circle,${color} 0%,transparent 70%);box-shadow:0 0 12px ${color};`;
             touchPad.appendChild(indicator);
-            
             const ring = document.createElement('div');
             ring.className = 'touch-ring';
             ring.style.cssText = `left:${x}px;top:${y}px;width:35px;height:35px;border-color:${color};`;
             touchPad.appendChild(ring);
-            
             return { indicator, ring };
         }
 
@@ -1582,270 +1526,159 @@
             setTimeout(() => sparkle.remove(), 500);
         }
 
-        // Touch pad handling
-        const touchPads = document.querySelectorAll('.touch-pad');
-        
-        touchPads.forEach((pad) => {
+        document.querySelectorAll('.touch-pad').forEach((pad) => {
             const sceneIndex = parseInt(pad.dataset.sceneIndex);
             const padTouches = new Map();
-            
-            function handleTouchStart(e) {
-                e.preventDefault();
-                initAudio();
-                
+            let mouseData = null;
+
+            pad.addEventListener('touchstart', (e) => {
+                e.preventDefault(); initAudio();
                 const rect = pad.getBoundingClientRect();
-                
                 for (let touch of e.changedTouches) {
-                    const x = touch.clientX - rect.left;
-                    const y = touch.clientY - rect.top;
+                    const x = touch.clientX - rect.left, y = touch.clientY - rect.top;
                     const layerIndex = padTouches.size;
-                    
                     if (layerIndex < 5) {
                         const visual = createTouchVisual(x, y, pad, layerIndex, sceneIndex);
                         const sound = createContinuousTone(sceneIndex, layerIndex, x, y, rect.width, rect.height);
-                        
-                        const normX = x / rect.width;
-                        const normY = 1 - (y / rect.height);
+                        const normX = x / rect.width, normY = 1 - (y / rect.height);
                         const recordRef = startPadRecording(sceneIndex, layerIndex, x, y, normX, normY);
-                        
                         padTouches.set(touch.identifier, { x, y, visual, sound, layerIndex, recordRef, rect });
                         createSparkle(x, y, pad, sceneIndex);
                     }
                 }
-                
-                const count = Math.min(padTouches.size, 5);
-                updateLayerIndicators(sceneIndex, count);
-                
-                if (count > 0 && !beatLoops[sceneIndex].active) {
-                    startBeatLoops(sceneIndex);
-                }
-            }
-            
-            function handleTouchMove(e) {
+                updateLayerIndicators(sceneIndex, Math.min(padTouches.size, 5));
+                if (padTouches.size > 0 && !beatLoops[sceneIndex].active) startBeatLoops(sceneIndex);
+            });
+
+            pad.addEventListener('touchmove', (e) => {
                 e.preventDefault();
-                
                 for (let touch of e.changedTouches) {
                     const data = padTouches.get(touch.identifier);
                     if (data) {
-                        const x = touch.clientX - data.rect.left;
-                        const y = touch.clientY - data.rect.top;
-                        
-                        data.x = x;
-                        data.y = y;
-                        
-                        data.visual.indicator.style.left = x + 'px';
-                        data.visual.indicator.style.top = y + 'px';
-                        data.visual.ring.style.left = x + 'px';
-                        data.visual.ring.style.top = y + 'px';
-                        
-                        if (data.sound) {
-                            updateTonePosition(data.sound, x, y, data.rect.width, data.rect.height);
-                        }
-                        
-                        const normX = x / data.rect.width;
-                        const normY = 1 - (y / data.rect.height);
-                        updatePadRecording(data.recordRef, normX, normY, sceneIndex);
-                        
+                        const x = touch.clientX - data.rect.left, y = touch.clientY - data.rect.top;
+                        data.visual.indicator.style.left = x + 'px'; data.visual.indicator.style.top = y + 'px';
+                        data.visual.ring.style.left = x + 'px'; data.visual.ring.style.top = y + 'px';
+                        if (data.sound) updateTonePosition(data.sound, x, y, data.rect.width, data.rect.height);
+                        updatePadRecording(data.recordRef, x / data.rect.width, 1 - (y / data.rect.height), sceneIndex);
                         if (Math.random() < 0.08) createSparkle(x, y, pad, sceneIndex);
                     }
                 }
-            }
-            
-            function handleTouchEnd(e) {
+            });
+
+            const handleTouchEnd = (e) => {
                 e.preventDefault();
-                
                 for (let touch of e.changedTouches) {
                     const data = padTouches.get(touch.identifier);
                     if (data) {
-                        data.visual.indicator.style.opacity = '0';
-                        data.visual.ring.remove();
+                        data.visual.indicator.style.opacity = '0'; data.visual.ring.remove();
                         setTimeout(() => data.visual.indicator.remove(), 300);
-                        
                         if (data.sound) stopTone(data.sound);
                         endPadRecording(data.recordRef);
-                        
                         padTouches.delete(touch.identifier);
                     }
                 }
-                
                 updateLayerIndicators(sceneIndex, padTouches.size);
                 if (padTouches.size === 0) stopBeatLoops(sceneIndex);
-            }
-            
-            pad.addEventListener('touchstart', handleTouchStart);
-            pad.addEventListener('touchmove', handleTouchMove);
+            };
             pad.addEventListener('touchend', handleTouchEnd);
             pad.addEventListener('touchcancel', handleTouchEnd);
-            
-            // Mouse support
-            let mouseData = null;
-            
+
             pad.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                initAudio();
-                
+                e.preventDefault(); initAudio();
                 const rect = pad.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
+                const x = e.clientX - rect.left, y = e.clientY - rect.top;
                 const visual = createTouchVisual(x, y, pad, 0, sceneIndex);
                 const sound = createContinuousTone(sceneIndex, 0, x, y, rect.width, rect.height);
-                
-                const normX = x / rect.width;
-                const normY = 1 - (y / rect.height);
-                const recordRef = startPadRecording(sceneIndex, 0, x, y, normX, normY);
-                
+                const recordRef = startPadRecording(sceneIndex, 0, x, y, x / rect.width, 1 - (y / rect.height));
                 mouseData = { x, y, visual, sound, rect, recordRef };
-                
                 updateLayerIndicators(sceneIndex, 1);
                 startBeatLoops(sceneIndex);
                 createSparkle(x, y, pad, sceneIndex);
             });
-            
+
             pad.addEventListener('mousemove', (e) => {
                 if (!mouseData) return;
-                
-                const x = e.clientX - mouseData.rect.left;
-                const y = e.clientY - mouseData.rect.top;
-                
-                mouseData.visual.indicator.style.left = x + 'px';
-                mouseData.visual.indicator.style.top = y + 'px';
-                mouseData.visual.ring.style.left = x + 'px';
-                mouseData.visual.ring.style.top = y + 'px';
-                
-                if (mouseData.sound) {
-                    updateTonePosition(mouseData.sound, x, y, mouseData.rect.width, mouseData.rect.height);
-                }
-                
-                const normX = x / mouseData.rect.width;
-                const normY = 1 - (y / mouseData.rect.height);
-                updatePadRecording(mouseData.recordRef, normX, normY, sceneIndex);
-                
+                const x = e.clientX - mouseData.rect.left, y = e.clientY - mouseData.rect.top;
+                mouseData.visual.indicator.style.left = x + 'px'; mouseData.visual.indicator.style.top = y + 'px';
+                mouseData.visual.ring.style.left = x + 'px'; mouseData.visual.ring.style.top = y + 'px';
+                if (mouseData.sound) updateTonePosition(mouseData.sound, x, y, mouseData.rect.width, mouseData.rect.height);
+                updatePadRecording(mouseData.recordRef, x / mouseData.rect.width, 1 - (y / mouseData.rect.height), sceneIndex);
                 if (Math.random() < 0.08) createSparkle(x, y, pad, sceneIndex);
             });
-            
-            function endMouse() {
+
+            const endMouse = () => {
                 if (mouseData) {
-                    mouseData.visual.indicator.remove();
-                    mouseData.visual.ring.remove();
+                    mouseData.visual.indicator.remove(); mouseData.visual.ring.remove();
                     if (mouseData.sound) stopTone(mouseData.sound);
                     endPadRecording(mouseData.recordRef);
-                    
                     mouseData = null;
                     updateLayerIndicators(sceneIndex, 0);
                     stopBeatLoops(sceneIndex);
                 }
-            }
-            
+            };
             pad.addEventListener('mouseup', endMouse);
             pad.addEventListener('mouseleave', endMouse);
         });
 
-        // Mode buttons
         document.querySelectorAll('.mode-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                initAudio();
-                
+                e.stopPropagation(); initAudio();
                 const sceneEl = btn.closest('.scene');
                 const sceneIndex = parseInt(sceneEl.dataset.scene);
                 const settings = sceneSettings[sceneIndex];
-                
                 if (btn.classList.contains('beat-btn')) {
                     const beatMode = parseInt(btn.dataset.beat);
-                    if (settings.beatModes.has(beatMode)) {
-                        settings.beatModes.delete(beatMode);
-                        btn.classList.remove('active');
-                    } else {
-                        settings.beatModes.add(beatMode);
-                        btn.classList.add('active');
-                        createBeatSound(beatMode, sceneIndex, 1);
-                    }
+                    if (settings.beatModes.has(beatMode)) { settings.beatModes.delete(beatMode); btn.classList.remove('active'); }
+                    else { settings.beatModes.add(beatMode); btn.classList.add('active'); createBeatSound(beatMode, sceneIndex, 1); }
                     if (beatLoops[sceneIndex].active) startBeatLoops(sceneIndex);
                 } else if (btn.classList.contains('melody-btn')) {
                     const melodyMode = parseInt(btn.dataset.melody);
-                    if (settings.melodyModes.has(melodyMode)) {
-                        settings.melodyModes.delete(melodyMode);
-                        btn.classList.remove('active');
-                    } else {
-                        settings.melodyModes.add(melodyMode);
-                        btn.classList.add('active');
-                    }
+                    if (settings.melodyModes.has(melodyMode)) { settings.melodyModes.delete(melodyMode); btn.classList.remove('active'); }
+                    else { settings.melodyModes.add(melodyMode); btn.classList.add('active'); }
                 }
-                
                 updateActiveModeDisplay(sceneIndex);
             });
         });
 
-        // Mixer functionality
         const tracksContainer = document.getElementById('tracksContainer');
         const emptyState = document.getElementById('emptyState');
         const fileInput = document.getElementById('fileInput');
 
         function createChannelGrids(track) {
             let html = '<div class="channel-grid">';
-            
             const beatSteps = new Set();
-            if (track.channels && track.channels.beats) {
-                track.channels.beats.events.forEach(e => beatSteps.add(Math.floor(e.step)));
-            } else if (track.drums) {
-                track.drums.forEach(d => beatSteps.add(Math.floor(d.step)));
-            }
-            
+            if (track.channels?.beats) track.channels.beats.events.forEach(e => beatSteps.add(Math.floor(e.step)));
             html += '<div class="channel-row"><span class="channel-label">🥁</span><div class="step-grid">';
             for (let i = 0; i < Math.min(TOTAL_STEPS, 32); i++) {
-                const hasEvent = beatSteps.has(i);
-                const isBeatMarker = i % 4 === 0;
-                html += `<div class="step-cell${hasEvent ? ' has-event' : ''}${isBeatMarker ? ' beat-marker' : ''}"></div>`;
+                html += `<div class="step-cell${beatSteps.has(i) ? ' has-event' : ''}${i % 4 === 0 ? ' beat-marker' : ''}"></div>`;
             }
             html += '</div></div>';
-            
-            const harmonyChannels = track.channels ? track.channels.harmony : [];
-            const legacyPads = track.pads || [];
-            
-            const numChannels = Math.max(
-                harmonyChannels.length,
-                legacyPads.length > 0 ? Math.max(...legacyPads.map(p => p.fingerIndex || 0)) + 1 : 0
-            );
-            
-            for (let ch = 0; ch < Math.min(numChannels, MAX_HARMONY_CHANNELS); ch++) {
+            const harmonyChannels = track.channels?.harmony || [];
+            for (let ch = 0; ch < Math.min(harmonyChannels.length, MAX_HARMONY_CHANNELS); ch++) {
                 const channelData = harmonyChannels.find(c => c.channelIndex === ch);
-                const legacyPad = legacyPads.find(p => (p.fingerIndex || 0) === ch);
-                
-                const eventSteps = new Set();
-                const sustainSteps = new Set();
-                
+                const eventSteps = new Set(), sustainSteps = new Set();
                 if (channelData) {
                     channelData.notes.forEach(note => {
                         note.events.forEach(e => eventSteps.add(Math.floor(e.step)));
-                        if (note.endStep !== null) {
-                            for (let s = Math.floor(note.startStep); s <= Math.floor(note.endStep); s++) {
-                                sustainSteps.add(s);
-                            }
-                        }
+                        if (note.endStep !== null) for (let s = Math.floor(note.startStep); s <= Math.floor(note.endStep); s++) sustainSteps.add(s);
                     });
-                } else if (legacyPad) {
-                    legacyPad.steps.forEach(s => eventSteps.add(Math.floor(s.step)));
-                    if (legacyPad.endStep !== undefined) {
-                        for (let s = Math.floor(legacyPad.startStep || 0); s <= Math.floor(legacyPad.endStep); s++) {
-                            sustainSteps.add(s);
-                        }
-                    }
                 }
-                
                 const emojis = ['🎵', '🎶', '✨', '💫', '🌟'];
                 html += `<div class="channel-row"><span class="channel-label">${emojis[ch]}</span><div class="step-grid">`;
                 for (let i = 0; i < Math.min(TOTAL_STEPS, 32); i++) {
-                    const hasEvent = eventSteps.has(i);
-                    const hasSustain = sustainSteps.has(i) && !hasEvent;
-                    const isBeatMarker = i % 4 === 0;
-                    html += `<div class="step-cell${hasEvent ? ' has-event' : ''}${hasSustain ? ' has-sustain' : ''}${isBeatMarker ? ' beat-marker' : ''}"></div>`;
+                    html += `<div class="step-cell${eventSteps.has(i) ? ' has-event' : ''}${sustainSteps.has(i) && !eventSteps.has(i) ? ' has-sustain' : ''}${i % 4 === 0 ? ' beat-marker' : ''}"></div>`;
                 }
                 html += '</div></div>';
             }
-            
             html += '</div>';
             return html;
+        }
+
+        function renderTracks() {
+            tracksContainer.innerHTML = '';
+            if (mixerTracks.length === 0) { tracksContainer.appendChild(emptyState); }
+            else { mixerTracks.forEach((track, index) => tracksContainer.appendChild(createTrackElement(track, index))); }
+            attachTrackListeners();
         }
 
         function createTrackElement(track, index) {
@@ -1853,24 +1686,11 @@
             trackEl.className = 'track-item';
             trackEl.draggable = true;
             trackEl.dataset.trackIndex = index;
-            
-            let beatCount = 0;
-            let harmonyCount = 0;
-            
-            if (track.channels) {
-                beatCount = track.channels.beats.events.length;
-                harmonyCount = track.channels.harmony.reduce((sum, ch) => sum + ch.notes.length, 0);
-            } else {
-                beatCount = track.drums ? track.drums.length : 0;
-                harmonyCount = track.pads ? track.pads.length : 0;
-            }
-            
+            const beatCount = track.channels?.beats?.events?.length || 0;
+            const harmonyCount = track.channels?.harmony?.reduce((sum, ch) => sum + ch.notes.length, 0) || 0;
             trackEl.innerHTML = `
                 <div class="track-header">
-                    <div>
-                        <span class="track-name">${track.name || 'Track ' + (index + 1)}</span>
-                        <div class="track-info">${beatCount} beats, ${harmonyCount} notes</div>
-                    </div>
+                    <div><span class="track-name">${track.name || 'Track ' + (index + 1)}</span><div class="track-info">${beatCount} beats, ${harmonyCount} notes</div></div>
                     <div class="track-controls">
                         <button class="track-btn track-add-master" data-index="${index}" title="Add to Master">➕</button>
                         <button class="track-btn track-play" data-index="${index}">▶</button>
@@ -1878,399 +1698,81 @@
                     </div>
                 </div>
                 ${createChannelGrids(track)}
-                <div class="trim-controls">
-                    <div class="stretch-control">
-                        <span class="stretch-label">L</span>
-                        <input type="range" class="stretch-slider" data-index="${index}" data-end="left" min="-2" max="2" step="0.1" value="0">
-                    </div>
-                    <div class="stretch-control">
-                        <span class="stretch-label">R</span>
-                        <input type="range" class="stretch-slider" data-index="${index}" data-end="right" min="-2" max="2" step="0.1" value="0">
-                    </div>
-                    <select class="curve-select" data-index="${index}">
-                        <option value="linear">Lin</option>
-                        <option value="log">Log</option>
-                        <option value="exp">Exp</option>
-                    </select>
-                    <button class="autotune-btn${track.autoTunePlayback ? ' active' : ''}" data-index="${index}">🎵</button>
-                    <button class="autorhythm-btn${track.autoRhythmPlayback ? ' active' : ''}" data-index="${index}">🥁</button>
-                </div>
             `;
-            
-            // Drag events for reordering tracks
-            trackEl.addEventListener('dragstart', (e) => {
-                draggedTrackIndex = index;
-                trackEl.classList.add('dragging');
-                e.dataTransfer.effectAllowed = 'move';
-            });
-            
-            trackEl.addEventListener('dragend', () => {
-                trackEl.classList.remove('dragging');
-                draggedTrackIndex = null;
-                document.querySelectorAll('.track-item').forEach(el => el.classList.remove('drag-over'));
-            });
-            
-            trackEl.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                if (draggedTrackIndex !== null && draggedTrackIndex !== index) {
-                    trackEl.classList.add('drag-over');
-                }
-            });
-            
-            trackEl.addEventListener('dragleave', () => {
-                trackEl.classList.remove('drag-over');
-            });
-            
-            trackEl.addEventListener('drop', (e) => {
-                e.preventDefault();
-                trackEl.classList.remove('drag-over');
-                if (draggedTrackIndex !== null && draggedTrackIndex !== index) {
-                    const movedTrack = mixerTracks.splice(draggedTrackIndex, 1)[0];
-                    mixerTracks.splice(index, 0, movedTrack);
-                    renderTracks();
-                }
-            });
-            
             return trackEl;
         }
 
-        function renderTracks() {
-            tracksContainer.innerHTML = '';
-            if (mixerTracks.length === 0) {
-                tracksContainer.appendChild(emptyState);
-            } else {
-                mixerTracks.forEach((track, index) => {
-                    tracksContainer.appendChild(createTrackElement(track, index));
-                });
-            }
-            attachTrackListeners();
-        }
-
         function attachTrackListeners() {
-            document.querySelectorAll('.track-play').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const index = parseInt(btn.dataset.index);
-                    playTrack(mixerTracks[index]);
-                });
-            });
-            
-            document.querySelectorAll('.track-delete').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const index = parseInt(btn.dataset.index);
-                    mixerTracks.splice(index, 1);
-                    renderTracks();
-                    updateMasterPanelVisibility();
-                });
-            });
-            
-            document.querySelectorAll('.track-add-master').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const index = parseInt(btn.dataset.index);
-                    addTrackToMaster(index);
-                });
-            });
-            
-            document.querySelectorAll('.autotune-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const index = parseInt(btn.dataset.index);
-                    mixerTracks[index].autoTunePlayback = !mixerTracks[index].autoTunePlayback;
-                    btn.classList.toggle('active', mixerTracks[index].autoTunePlayback);
-                });
-            });
-            
-            document.querySelectorAll('.autorhythm-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const index = parseInt(btn.dataset.index);
-                    mixerTracks[index].autoRhythmPlayback = !mixerTracks[index].autoRhythmPlayback;
-                    btn.classList.toggle('active', mixerTracks[index].autoRhythmPlayback);
-                });
-            });
-            
-            document.querySelectorAll('.stretch-slider').forEach(slider => {
-                slider.addEventListener('input', () => {
-                    const index = parseInt(slider.dataset.index);
-                    const end = slider.dataset.end;
-                    if (!mixerTracks[index].stretch) mixerTracks[index].stretch = {};
-                    mixerTracks[index].stretch[end] = parseFloat(slider.value);
-                });
-            });
-            
-            document.querySelectorAll('.curve-select').forEach(select => {
-                select.addEventListener('change', () => {
-                    const index = parseInt(select.dataset.index);
-                    mixerTracks[index].stretchCurve = select.value;
-                });
-            });
-        }
-
-        function applyStretch(step, track, totalSteps) {
-            if (!track.stretch) return step;
-            
-            const leftStretch = track.stretch.left || 0;
-            const rightStretch = track.stretch.right || 0;
-            const curve = track.stretchCurve || 'linear';
-            
-            let t = step / totalSteps;
-            
-            if (curve === 'log') t = Math.log(1 + t * 9) / Math.log(10);
-            else if (curve === 'exp') t = (Math.pow(10, t) - 1) / 9;
-            
-            const leftInfluence = 1 - t;
-            const rightInfluence = t;
-            const stretchFactor = 1 + (leftStretch * leftInfluence) + (rightStretch * rightInfluence);
-            
-            return step * Math.max(0.1, stretchFactor);
+            document.querySelectorAll('.track-play').forEach(btn => btn.addEventListener('click', () => playTrack(mixerTracks[parseInt(btn.dataset.index)])));
+            document.querySelectorAll('.track-delete').forEach(btn => btn.addEventListener('click', () => { mixerTracks.splice(parseInt(btn.dataset.index), 1); renderTracks(); updateMasterPanelVisibility(); }));
+            document.querySelectorAll('.track-add-master').forEach(btn => btn.addEventListener('click', () => addTrackToMaster(parseInt(btn.dataset.index))));
         }
 
         function createSustainedNote(freq, filterValue, sceneIndex = 0) {
             const config = synthConfigs[sceneIndex];
-            
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
             const filter = audioContext.createBiquadFilter();
-            
             oscillator.type = config.types[0];
             oscillator.frequency.value = freq;
-            
             filter.type = 'lowpass';
             filter.frequency.value = filterValue || 2000;
             filter.Q.value = 2;
-            
             gainNode.gain.setValueAtTime(0, audioContext.currentTime);
             gainNode.gain.linearRampToValueAtTime(0.12, audioContext.currentTime + 0.02);
-            
-            oscillator.connect(filter);
-            filter.connect(gainNode);
-            gainNode.connect(masterGain);
+            oscillator.connect(filter); filter.connect(gainNode); gainNode.connect(masterGain);
             oscillator.start();
-            
             return { oscillator, gainNode, filter };
         }
 
-        function updateSustainedNote(noteData, freq, filterValue) {
-            if (!noteData) return;
-            noteData.oscillator.frequency.setTargetAtTime(freq, audioContext.currentTime, 0.03);
-            noteData.filter.frequency.setTargetAtTime(filterValue, audioContext.currentTime, 0.03);
-        }
-
-        function stopSustainedNote(noteData) {
-            if (!noteData) return;
-            noteData.gainNode.gain.setTargetAtTime(0, audioContext.currentTime, 0.05);
-            setTimeout(() => { try { noteData.oscillator.stop(); } catch(e) {} }, 150);
-        }
-
-        function playTrack(track, timeOffset = 0) {
+        function playTrack(track, timeOffset = 0, warpSettings = null) {
             initAudio();
-            
-            const autoRhythm = track.autoRhythmPlayback;
-            const autoTune = track.autoTunePlayback;
             const totalSteps = track.totalSteps || TOTAL_STEPS;
             const cropStart = track.cropStart || 0;
             const cropEnd = track.cropEnd || totalSteps;
-            
+            const warps = warpSettings?.warps || new Set();
+            const intensity = warpSettings?.intensity || 0;
+
             if (track.channels) {
                 track.channels.beats.events.forEach(event => {
                     let step = event.step;
                     if (step < cropStart || step > cropEnd) return;
                     step = step - cropStart;
-                    if (autoRhythm) step = Math.round(step);
-                    step = applyStretch(step, track, cropEnd - cropStart);
-                    
+                    if (warps.size > 0) step = applySequenceWarp(step, cropEnd - cropStart, warps, intensity);
                     const time = stepToTime(step) + timeOffset;
-                    if (time >= 0) {
-                        const id = setTimeout(() => playDrumSound(event.drumIndex, false), time);
-                        playbackTimeouts.push(id);
-                    }
+                    if (time >= 0) playbackTimeouts.push(setTimeout(() => playDrumSound(event.drumIndex, false), time));
                 });
-                
+
                 track.channels.harmony.forEach(channel => {
                     channel.notes.forEach(note => {
                         if (note.startStep > cropEnd || (note.endStep !== null && note.endStep < cropStart)) return;
-                        
                         const noteId = `${channel.channelIndex}-${note.startStep}-${Date.now()}`;
-                        
                         let startStep = Math.max(note.startStep, cropStart) - cropStart;
-                        if (autoRhythm) startStep = Math.round(startStep);
-                        startStep = applyStretch(startStep, track, cropEnd - cropStart);
-                        
+                        if (warps.size > 0) startStep = applySequenceWarp(startStep, cropEnd - cropStart, warps, intensity);
                         const startTime = stepToTime(startStep) + timeOffset;
-                        
                         if (startTime >= 0) {
-                            const startId = setTimeout(() => {
-                                const firstEvent = note.events[0];
-                                let freq = firstEvent.freq;
-                                if (autoTune) freq = quantizeToScale(freq);
-                                
-                                const sustainedNote = createSustainedNote(freq, firstEvent.filter, channel.sceneIndex);
+                            playbackTimeouts.push(setTimeout(() => {
+                                const sustainedNote = createSustainedNote(note.events[0].freq, note.events[0].filter, channel.sceneIndex);
                                 activeSustainedNotes.set(noteId, sustainedNote);
-                            }, startTime);
-                            playbackTimeouts.push(startId);
+                            }, startTime));
                         }
-                        
-                        note.events.forEach((event, idx) => {
-                            if (idx === 0) return;
-                            if (event.step < cropStart || event.step > cropEnd) return;
-                            
-                            let step = event.step - cropStart;
-                            if (autoRhythm) step = Math.round(step);
-                            step = applyStretch(step, track, cropEnd - cropStart);
-                            
-                            const time = stepToTime(step) + timeOffset;
-                            if (time >= 0) {
-                                const updateId = setTimeout(() => {
-                                    const sustainedNote = activeSustainedNotes.get(noteId);
-                                    if (sustainedNote) {
-                                        let freq = event.freq;
-                                        if (autoTune) freq = quantizeToScale(freq);
-                                        updateSustainedNote(sustainedNote, freq, event.filter);
-                                    }
-                                }, time);
-                                playbackTimeouts.push(updateId);
-                            }
-                        });
-                        
                         if (note.endStep !== null) {
                             let endStep = Math.min(note.endStep, cropEnd) - cropStart;
-                            if (autoRhythm) endStep = Math.round(endStep);
-                            endStep = applyStretch(endStep, track, cropEnd - cropStart);
-                            
+                            if (warps.size > 0) endStep = applySequenceWarp(endStep, cropEnd - cropStart, warps, intensity);
                             const endTime = stepToTime(endStep) + timeOffset;
                             if (endTime >= 0) {
-                                const endId = setTimeout(() => {
+                                playbackTimeouts.push(setTimeout(() => {
                                     const sustainedNote = activeSustainedNotes.get(noteId);
                                     if (sustainedNote) {
-                                        stopSustainedNote(sustainedNote);
+                                        sustainedNote.gainNode.gain.setTargetAtTime(0, audioContext.currentTime, 0.05);
+                                        setTimeout(() => { try { sustainedNote.oscillator.stop(); } catch(e) {} }, 150);
                                         activeSustainedNotes.delete(noteId);
                                     }
-                                }, endTime);
-                                playbackTimeouts.push(endId);
+                                }, endTime));
                             }
                         }
                     });
                 });
-            } else {
-                // Legacy format support
-                if (track.drums) {
-                    track.drums.forEach(drum => {
-                        let step = drum.step;
-                        if (step < cropStart || step > cropEnd) return;
-                        step = step - cropStart;
-                        if (autoRhythm) step = Math.round(step);
-                        step = applyStretch(step, track, cropEnd - cropStart);
-                        
-                        const time = stepToTime(step) + timeOffset;
-                        if (time >= 0) {
-                            const id = setTimeout(() => playDrumSound(drum.drumIndex, false), time);
-                            playbackTimeouts.push(id);
-                        }
-                    });
-                }
-                
-                if (track.pads) {
-                    track.pads.forEach((padData, padIdx) => {
-                        const noteId = `legacy-${padIdx}-${Date.now()}`;
-                        const hasMultipleSteps = padData.steps.length > 1;
-                        const hasSustain = padData.endStep !== undefined && padData.endStep > padData.startStep;
-                        
-                        if (hasSustain || hasMultipleSteps) {
-                            let startStep = padData.startStep || padData.steps[0].step;
-                            if (startStep > cropEnd) return;
-                            startStep = Math.max(startStep, cropStart) - cropStart;
-                            if (autoRhythm) startStep = Math.round(startStep);
-                            startStep = applyStretch(startStep, track, cropEnd - cropStart);
-                            
-                            const startTime = stepToTime(startStep) + timeOffset;
-                            
-                            if (startTime >= 0) {
-                                const startId = setTimeout(() => {
-                                    const firstEvent = padData.steps[0];
-                                    let freq = firstEvent.freq;
-                                    if (autoTune) freq = quantizeToScale(freq);
-                                    
-                                    const sustainedNote = createSustainedNote(freq, firstEvent.filter, padData.sceneIndex || 0);
-                                    activeSustainedNotes.set(noteId, sustainedNote);
-                                }, startTime);
-                                playbackTimeouts.push(startId);
-                            }
-                            
-                            padData.steps.forEach((stepData, idx) => {
-                                if (idx === 0) return;
-                                if (stepData.step < cropStart || stepData.step > cropEnd) return;
-                                
-                                let step = stepData.step - cropStart;
-                                if (autoRhythm) step = Math.round(step);
-                                step = applyStretch(step, track, cropEnd - cropStart);
-                                
-                                const time = stepToTime(step) + timeOffset;
-                                if (time >= 0) {
-                                    const updateId = setTimeout(() => {
-                                        const sustainedNote = activeSustainedNotes.get(noteId);
-                                        if (sustainedNote) {
-                                            let freq = stepData.freq;
-                                            if (autoTune) freq = quantizeToScale(freq);
-                                            updateSustainedNote(sustainedNote, freq, stepData.filter);
-                                        }
-                                    }, time);
-                                    playbackTimeouts.push(updateId);
-                                }
-                            });
-                            
-                            if (padData.endStep !== undefined) {
-                                let endStep = Math.min(padData.endStep, cropEnd) - cropStart;
-                                if (autoRhythm) endStep = Math.round(endStep);
-                                endStep = applyStretch(endStep, track, cropEnd - cropStart);
-                                
-                                const endTime = stepToTime(endStep) + timeOffset;
-                                if (endTime >= 0) {
-                                    const endId = setTimeout(() => {
-                                        const sustainedNote = activeSustainedNotes.get(noteId);
-                                        if (sustainedNote) {
-                                            stopSustainedNote(sustainedNote);
-                                            activeSustainedNotes.delete(noteId);
-                                        }
-                                    }, endTime);
-                                    playbackTimeouts.push(endId);
-                                }
-                            }
-                        } else {
-                            padData.steps.forEach(stepData => {
-                                if (stepData.step < cropStart || stepData.step > cropEnd) return;
-                                
-                                let step = stepData.step - cropStart;
-                                if (autoRhythm) step = Math.round(step);
-                                step = applyStretch(step, track, cropEnd - cropStart);
-                                
-                                const time = stepToTime(step) + timeOffset;
-                                if (time >= 0) {
-                                    const id = setTimeout(() => {
-                                        let freq = stepData.freq;
-                                        if (autoTune) freq = quantizeToScale(freq);
-                                        
-                                        const osc = audioContext.createOscillator();
-                                        const gain = audioContext.createGain();
-                                        const filter = audioContext.createBiquadFilter();
-                                        
-                                        osc.frequency.value = freq;
-                                        osc.type = 'sine';
-                                        
-                                        filter.type = 'lowpass';
-                                        filter.frequency.value = stepData.filter || 2000;
-                                        
-                                        gain.gain.setValueAtTime(0.12, audioContext.currentTime);
-                                        gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.15);
-                                        
-                                        osc.connect(filter);
-                                        filter.connect(gain);
-                                        gain.connect(masterGain);
-                                        osc.start();
-                                        osc.stop(audioContext.currentTime + 0.2);
-                                    }, time);
-                                    playbackTimeouts.push(id);
-                                }
-                            });
-                        }
-                    });
-                }
             }
         }
 
@@ -2282,306 +1784,252 @@
                 reader.onload = (event) => {
                     try {
                         const data = JSON.parse(event.target.result);
-                        
-                        if (data.tracks) {
-                            data.tracks.forEach(t => {
-                                t.name = t.name || file.name.replace('.json', '');
-                                mixerTracks.push(t);
-                            });
-                        } else {
-                            data.name = data.name || file.name.replace('.json', '');
-                            mixerTracks.push(data);
-                        }
-                        
+                        if (data.tracks) data.tracks.forEach(t => { t.name = t.name || file.name.replace('.json', ''); mixerTracks.push(t); });
+                        else if (data.master?.clips) data.master.clips.forEach(c => { if (c.track) mixerTracks.push(c.track); });
+                        else { data.name = data.name || file.name.replace('.json', ''); mixerTracks.push(data); }
                         renderTracks();
                         updateMasterPanelVisibility();
-                    } catch (err) {
-                        console.error('Invalid JSON:', err);
-                    }
+                    } catch (err) { console.error('Invalid JSON:', err); }
                 };
                 reader.readAsText(file);
             });
             fileInput.value = '';
         });
 
-        document.getElementById('playAllBtn').addEventListener('click', () => {
-            initAudio();
-            mixerTracks.forEach(track => playTrack(track));
-        });
+        document.getElementById('playAllBtn').addEventListener('click', () => { initAudio(); mixerTracks.forEach(track => playTrack(track)); });
+        document.getElementById('stopAllBtn').addEventListener('click', stopAllPlayback);
+        document.getElementById('clearAllBtn').addEventListener('click', () => { mixerTracks = []; renderTracks(); updateMasterPanelVisibility(); });
 
-        document.getElementById('stopAllBtn').addEventListener('click', () => {
-            stopAllPlayback();
-        });
-
-        document.getElementById('clearAllBtn').addEventListener('click', () => {
-            mixerTracks = [];
-            renderTracks();
-            updateMasterPanelVisibility();
-        });
-
-        // Master Channel Functions
         function updateMasterPanelVisibility() {
-            const panel = document.getElementById('masterPanel');
-            if (currentScene === 3) {
-                panel.classList.add('visible');
-            } else {
-                panel.classList.remove('visible');
-            }
+            document.getElementById('masterPanel').classList.toggle('visible', currentScene === 3);
         }
 
         function addTrackToMaster(trackIndex) {
             const track = mixerTracks[trackIndex];
             if (!track) return;
-            
-            const clip = {
-                trackIndex,
-                name: track.name || `Track ${trackIndex + 1}`,
-                cropStart: track.cropStart || 0,
-                cropEnd: track.cropEnd || (track.totalSteps || TOTAL_STEPS),
+            masterClips.push({
+                trackIndex, name: track.name || `Track ${trackIndex + 1}`,
+                cropStart: track.cropStart || 0, cropEnd: track.cropEnd || (track.totalSteps || TOTAL_STEPS),
                 trackData: JSON.parse(JSON.stringify(track))
-            };
-            
-            masterClips.push(clip);
+            });
             renderMasterTimeline();
         }
 
-        function getClipDuration(clip) {
-            return clip.cropEnd - clip.cropStart;
-        }
+        function getClipDuration(clip) { return clip.cropEnd - clip.cropStart; }
 
         function renderMasterTimeline() {
             const inner = document.getElementById('masterTimelineInner');
-            const empty = document.getElementById('masterEmpty');
-            
-            if (masterClips.length === 0) {
-                inner.innerHTML = '';
-                inner.appendChild(empty);
-                return;
-            }
-            
+            if (masterClips.length === 0) { inner.innerHTML = '<div class="master-empty">Drag tracks here or tap ➕ to add clips 🎵</div>'; return; }
             inner.innerHTML = '';
-            
             masterClips.forEach((clip, index) => {
                 const clipEl = document.createElement('div');
                 clipEl.className = 'master-clip' + (index === selectedClipIndex ? ' selected' : '');
-                clipEl.dataset.clipIndex = index;
-                
-                const duration = getClipDuration(clip);
-                const durationSec = (stepToTime(duration) / 1000).toFixed(1);
-                
                 clipEl.innerHTML = `
                     <div class="master-clip-name">${clip.name}</div>
-                    <div class="master-clip-duration">${durationSec}s</div>
+                    <div class="master-clip-duration">${(stepToTime(getClipDuration(clip)) / 1000).toFixed(1)}s</div>
                     <button class="master-clip-remove" data-index="${index}">✕</button>
-                    <div class="crop-handles">
-                        <div class="crop-handle crop-left" data-index="${index}" data-side="left"></div>
-                        <div class="crop-handle crop-right" data-index="${index}" data-side="right"></div>
-                    </div>
                 `;
-                
-                // Clip selection
-                clipEl.addEventListener('click', (e) => {
-                    if (!e.target.classList.contains('master-clip-remove') && !e.target.classList.contains('crop-handle')) {
-                        selectedClipIndex = index;
-                        renderMasterTimeline();
-                    }
-                });
-                
-                // Drag for reordering
-                clipEl.draggable = true;
-                
-                clipEl.addEventListener('dragstart', (e) => {
-                    draggedClipIndex = index;
-                    clipEl.classList.add('dragging');
-                    e.dataTransfer.effectAllowed = 'move';
-                });
-                
-                clipEl.addEventListener('dragend', () => {
-                    clipEl.classList.remove('dragging');
-                    draggedClipIndex = null;
-                });
-                
-                clipEl.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    if (draggedClipIndex !== null && draggedClipIndex !== index) {
-                        clipEl.style.borderColor = '#fff';
-                    }
-                });
-                
-                clipEl.addEventListener('dragleave', () => {
-                    clipEl.style.borderColor = '';
-                });
-                
-                clipEl.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    clipEl.style.borderColor = '';
-                    if (draggedClipIndex !== null && draggedClipIndex !== index) {
-                        const movedClip = masterClips.splice(draggedClipIndex, 1)[0];
-                        masterClips.splice(index, 0, movedClip);
-                        renderMasterTimeline();
-                    }
-                });
-                
+                clipEl.addEventListener('click', (e) => { if (!e.target.classList.contains('master-clip-remove')) { selectedClipIndex = index; renderMasterTimeline(); } });
                 inner.appendChild(clipEl);
             });
-            
-            // Attach remove handlers
-            inner.querySelectorAll('.master-clip-remove').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const idx = parseInt(btn.dataset.index);
-                    masterClips.splice(idx, 1);
-                    if (selectedClipIndex >= masterClips.length) selectedClipIndex = masterClips.length - 1;
-                    renderMasterTimeline();
-                });
-            });
-            
-            // Attach crop handlers
-            inner.querySelectorAll('.crop-handle').forEach(handle => {
-                const handleTouch = (startE) => {
-                    startE.preventDefault();
-                    startE.stopPropagation();
-                    
-                    const idx = parseInt(handle.dataset.index);
-                    const side = handle.dataset.side;
-                    const clip = masterClips[idx];
-                    const startX = startE.type === 'touchstart' ? startE.touches[0].clientX : startE.clientX;
-                    const startCropStart = clip.cropStart;
-                    const startCropEnd = clip.cropEnd;
-                    const maxSteps = clip.trackData.totalSteps || TOTAL_STEPS;
-                    
-                    const onMove = (moveE) => {
-                        const currentX = moveE.type === 'touchmove' ? moveE.touches[0].clientX : moveE.clientX;
-                        const deltaX = currentX - startX;
-                        const stepsPerPixel = 0.5;
-                        const deltaSteps = Math.round(deltaX * stepsPerPixel);
+            inner.querySelectorAll('.master-clip-remove').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); masterClips.splice(parseInt(btn.dataset.index), 1); renderMasterTimeline(); }));
+        }
+
+        document.getElementById('masterPlayBtn').addEventListener('click', () => {
+            initAudio(); stopAllPlayback();
+            let timeOffset = 0;
+            masterClips.forEach(clip => { playTrack(clip.trackData, timeOffset); timeOffset += stepToTime(getClipDuration(clip)); });
+        });
+
+        document.getElementById('masterDownloadBtn').addEventListener('click', () => {
+            if (masterClips.length === 0) { alert('Add clips to master channel first!'); return; }
+            const masterExport = {
+                version: "3.0",
+                license: { type: "CC0-1.0", name: "Creative Commons Zero v1.0 Universal", url: "https://creativecommons.org/publicdomain/zero/1.0/" },
+                createdWith: "🌈 Rainbow Unicorn Bunny Fluffcore 🐰",
+                createdAt: new Date().toISOString(), bpm: BPM,
+                master: { clips: masterClips.map(clip => ({ name: clip.name, cropStart: clip.cropStart, cropEnd: clip.cropEnd, track: clip.trackData })) },
+                tracks: mixerTracks
+            };
+            downloadJson(JSON.stringify(masterExport, null, 2), 'fluffcore-master-cc0');
+        });
+
+        document.getElementById('masterClearBtn').addEventListener('click', () => { masterClips = []; selectedClipIndex = -1; renderMasterTimeline(); });
+
+        // Remix Composer
+        const remixFileInput = document.getElementById('remixFileInput');
+
+        document.getElementById('remixImportBtn').addEventListener('click', () => remixFileInput.click());
+
+        remixFileInput.addEventListener('change', (e) => {
+            Array.from(e.target.files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const data = JSON.parse(event.target.result);
+                        const emptySlot = remixTracks.findIndex(t => t === null);
+                        if (emptySlot === -1) { alert('All 4 slots are full!'); return; }
                         
-                        if (side === 'left') {
-                            clip.cropStart = Math.max(0, Math.min(startCropEnd - 4, startCropStart + deltaSteps));
-                        } else {
-                            clip.cropEnd = Math.max(startCropStart + 4, Math.min(maxSteps, startCropEnd + deltaSteps));
-                        }
+                        let trackData = null;
+                        if (data.master?.clips) trackData = { name: data.master.clips[0]?.name || file.name.replace('.json', ''), data: data };
+                        else if (data.tracks) trackData = { name: file.name.replace('.json', ''), data: data };
+                        else trackData = { name: data.name || file.name.replace('.json', ''), data: data };
                         
-                        clip.trackData.cropStart = clip.cropStart;
-                        clip.trackData.cropEnd = clip.cropEnd;
-                        renderMasterTimeline();
-                    };
-                    
-                    const onEnd = () => {
-                        document.removeEventListener('mousemove', onMove);
-                        document.removeEventListener('mouseup', onEnd);
-                        document.removeEventListener('touchmove', onMove);
-                        document.removeEventListener('touchend', onEnd);
-                    };
-                    
-                    document.addEventListener('mousemove', onMove);
-                    document.addEventListener('mouseup', onEnd);
-                    document.addEventListener('touchmove', onMove);
-                    document.addEventListener('touchend', onEnd);
+                        remixTracks[emptySlot] = trackData;
+                        renderRemixSlots();
+                    } catch (err) { console.error('Invalid JSON:', err); }
                 };
-                
-                handle.addEventListener('mousedown', handleTouch);
-                handle.addEventListener('touchstart', handleTouch);
+                reader.readAsText(file);
+            });
+            remixFileInput.value = '';
+        });
+
+        function renderRemixSlots() {
+            document.querySelectorAll('.remix-track-slot').forEach((slot, index) => {
+                const track = remixTracks[index];
+                if (track) {
+                    slot.classList.add('filled');
+                    slot.innerHTML = `<span class="remix-slot-name">${track.name}</span><span class="remix-slot-remove" data-slot="${index}">✕ Remove</span>`;
+                } else {
+                    slot.classList.remove('filled');
+                    slot.innerHTML = `<span class="remix-slot-label">Track ${index + 1}</span>`;
+                }
+            });
+            document.querySelectorAll('.remix-slot-remove').forEach(btn => {
+                btn.addEventListener('click', (e) => { e.stopPropagation(); remixTracks[parseInt(btn.dataset.slot)] = null; renderRemixSlots(); });
             });
         }
 
-        // Master Play
-        document.getElementById('masterPlayBtn').addEventListener('click', () => {
-            initAudio();
-            stopAllPlayback();
-            
-            let timeOffset = 0;
-            masterClips.forEach(clip => {
-                playTrack(clip.trackData, timeOffset);
-                const duration = getClipDuration(clip);
-                timeOffset += stepToTime(duration);
+        // Warp checkboxes
+        document.querySelectorAll('.warp-checkbox input').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                const warpType = checkbox.dataset.warp;
+                if (checkbox.checked) activeWarps.add(warpType);
+                else activeWarps.delete(warpType);
+                checkbox.parentElement.classList.toggle('active', checkbox.checked);
             });
         });
 
-        // Master Download with CC0 License
-        document.getElementById('masterDownloadBtn').addEventListener('click', () => {
-            if (masterClips.length === 0) {
-                alert('Add clips to master channel first!');
-                return;
-            }
+        document.getElementById('warpIntensity').addEventListener('input', (e) => {
+            warpIntensity = parseInt(e.target.value);
+            document.getElementById('intensityValue').textContent = warpIntensity + '%';
+        });
+
+        // License selection
+        document.querySelectorAll('.license-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.license-option').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedLicense = option.dataset.license;
+                document.getElementById('copyrightHolder').classList.toggle('visible', selectedLicense === 'mit');
+            });
+        });
+
+        document.getElementById('remixPlayBtn').addEventListener('click', () => {
+            initAudio(); stopAllPlayback();
+            let timeOffset = 0;
+            remixTracks.forEach(trackSlot => {
+                if (!trackSlot) return;
+                const data = trackSlot.data;
+                const warpSettings = { warps: activeWarps, intensity: warpIntensity };
+                if (data.master?.clips) {
+                    data.master.clips.forEach(clip => {
+                        if (clip.track) { playTrack(clip.track, timeOffset, warpSettings); timeOffset += stepToTime((clip.cropEnd || TOTAL_STEPS) - (clip.cropStart || 0)); }
+                    });
+                } else if (data.tracks) {
+                    data.tracks.forEach(track => { playTrack(track, timeOffset, warpSettings); timeOffset += stepToTime(track.totalSteps || TOTAL_STEPS); });
+                } else { playTrack(data, timeOffset, warpSettings); timeOffset += stepToTime(data.totalSteps || TOTAL_STEPS); }
+            });
+        });
+
+        document.getElementById('remixDownloadBtn').addEventListener('click', () => {
+            const validTracks = remixTracks.filter(t => t !== null);
+            if (validTracks.length === 0) { alert('Add at least one track to remix!'); return; }
             
-            const masterExport = {
+            const composerName = document.getElementById('composerName').value || 'Anonymous';
+            const remixTitle = document.getElementById('remixTitle').value || 'Untitled Remix';
+            const copyrightHolder = document.getElementById('copyrightHolder').value || composerName;
+            const year = new Date().getFullYear();
+
+            let license;
+            if (selectedLicense === 'cc0') {
+                license = { type: "CC0-1.0", name: "Creative Commons Zero v1.0 Universal", url: "https://creativecommons.org/publicdomain/zero/1.0/", dedication: "To the extent possible under law, the creator has waived all copyright and related or neighboring rights to this work." };
+            } else {
+                license = {
+                    type: "MIT",
+                    name: "MIT License",
+                    copyright: `Copyright (c) ${year} ${copyrightHolder}`,
+                    text: `Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.`
+                };
+            }
+
+            const remixExport = {
                 version: "3.0",
-                license: {
-                    type: "CC0-1.0",
-                    name: "Creative Commons Zero v1.0 Universal",
-                    url: "https://creativecommons.org/publicdomain/zero/1.0/",
-                    dedication: "To the extent possible under law, the creator has waived all copyright and related or neighboring rights to this work. This work is published from the United States.",
-                    legalCode: "https://creativecommons.org/publicdomain/zero/1.0/legalcode"
-                },
+                type: "remix",
+                title: remixTitle,
+                composer: composerName,
+                license,
                 createdWith: "🌈 Rainbow Unicorn Bunny Fluffcore 🐰",
                 createdAt: new Date().toISOString(),
                 bpm: BPM,
-                master: {
-                    clips: masterClips.map(clip => ({
-                        name: clip.name,
-                        cropStart: clip.cropStart,
-                        cropEnd: clip.cropEnd,
-                        track: clip.trackData
-                    }))
-                },
-                tracks: mixerTracks
+                warpSettings: { activeWarps: Array.from(activeWarps), intensity: warpIntensity },
+                sourceTracks: validTracks.map(t => ({ name: t.name, data: t.data }))
             };
-            
-            const json = JSON.stringify(masterExport, null, 2);
-            downloadJson(json, 'fluffcore-master-cc0');
+
+            const prefix = selectedLicense === 'cc0' ? 'remix-cc0' : 'remix-mit';
+            downloadJson(JSON.stringify(remixExport, null, 2), prefix);
         });
 
-        // Master Clear
-        document.getElementById('masterClearBtn').addEventListener('click', () => {
-            masterClips = [];
-            selectedClipIndex = -1;
-            renderMasterTimeline();
+        document.getElementById('remixClearBtn').addEventListener('click', () => {
+            remixTracks = [null, null, null, null];
+            activeWarps.clear();
+            warpIntensity = 50;
+            document.getElementById('warpIntensity').value = 50;
+            document.getElementById('intensityValue').textContent = '50%';
+            document.querySelectorAll('.warp-checkbox input').forEach(cb => { cb.checked = false; cb.parentElement.classList.remove('active'); });
+            document.getElementById('composerName').value = '';
+            document.getElementById('remixTitle').value = '';
+            document.getElementById('copyrightHolder').value = '';
+            renderRemixSlots();
         });
 
         // Scene navigation
         const sceneContainer = document.getElementById('sceneContainer');
         const dots = document.querySelectorAll('.dot');
-        
+
         function updateScene(index) {
-            currentScene = Math.max(0, Math.min(3, index));
-            sceneContainer.style.transform = `translateX(-${currentScene * 25}%)`;
+            currentScene = Math.max(0, Math.min(4, index));
+            sceneContainer.style.transform = `translateX(-${currentScene * 20}%)`;
             dots.forEach((dot, i) => dot.classList.toggle('active', i === currentScene));
             updateMasterPanelVisibility();
         }
-        
-        let swipeStartX = 0;
-        let isSwiping = false;
-        
+
+        let swipeStartX = 0, isSwiping = false;
         document.querySelector('.app-container').addEventListener('touchstart', (e) => {
-            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn') || e.target.closest('.drum-btn') || e.target.closest('.ctrl-btn') || e.target.closest('.mixer-container') || e.target.closest('.master-panel')) return;
-            swipeStartX = e.touches[0].clientX;
-            isSwiping = false;
+            if (e.target.closest('.touch-pad, .mode-btn, .drum-btn, .ctrl-btn, .mixer-container, .master-panel, .remix-container')) return;
+            swipeStartX = e.touches[0].clientX; isSwiping = false;
         });
-        
         document.querySelector('.app-container').addEventListener('touchmove', (e) => {
-            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn') || e.target.closest('.drum-btn') || e.target.closest('.ctrl-btn') || e.target.closest('.mixer-container') || e.target.closest('.master-panel')) return;
+            if (e.target.closest('.touch-pad, .mode-btn, .drum-btn, .ctrl-btn, .mixer-container, .master-panel, .remix-container')) return;
             if (Math.abs(e.touches[0].clientX - swipeStartX) > 30) isSwiping = true;
         });
-        
         document.querySelector('.app-container').addEventListener('touchend', (e) => {
-            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn') || e.target.closest('.drum-btn') || e.target.closest('.ctrl-btn') || e.target.closest('.mixer-container') || e.target.closest('.master-panel')) return;
+            if (e.target.closest('.touch-pad, .mode-btn, .drum-btn, .ctrl-btn, .mixer-container, .master-panel, .remix-container')) return;
             if (isSwiping) {
                 const deltaX = e.changedTouches[0].clientX - swipeStartX;
                 if (deltaX > 50) updateScene(currentScene - 1);
                 else if (deltaX < -50) updateScene(currentScene + 1);
             }
         });
-        
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => updateScene(index));
-        });
-        
+
+        dots.forEach((dot, index) => dot.addEventListener('click', () => updateScene(index)));
+
         // Initialize
         updateScene(0);
         [0, 1, 2].forEach(i => updateActiveModeDisplay(i));
         renderTracks();
         renderMasterTimeline();
+        renderRemixSlots();
     </script>
 </body>
 </html>
