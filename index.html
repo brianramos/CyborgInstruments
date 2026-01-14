@@ -28,140 +28,155 @@
             overflow: hidden;
         }
 
+        .drumkit-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            background: linear-gradient(135deg, rgba(255,107,107,0.95), rgba(255,182,193,0.95), rgba(168,237,234,0.95));
+            padding: 5px 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-bottom: 3px solid rgba(255,255,255,0.5);
+            flex-wrap: wrap;
+        }
+
+        .drum-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 50%;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .drum-btn:active, .drum-btn.playing {
+            transform: scale(0.85);
+        }
+
+        .ctrl-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+        }
+
+        .record-btn { background: linear-gradient(135deg, #ff4757, #c0392b); color: white; }
+        .record-btn.recording { animation: recordPulse 0.5s ease-in-out infinite; box-shadow: 0 0 15px #ff4757; }
+        .stop-btn { background: linear-gradient(135deg, #2f3542, #57606f); color: white; }
+        .export-btn { background: linear-gradient(135deg, #2ed573, #1e90ff); color: white; }
+        .autobeat-btn { background: linear-gradient(135deg, #ffa502, #ff6348); color: white; font-size: 0.6rem; }
+        .autotune-btn-top { background: linear-gradient(135deg, #a55eea, #8854d0); color: white; font-size: 0.6rem; }
+        .autobeat-btn.active, .autotune-btn-top.active { box-shadow: 0 0 12px currentColor; transform: scale(1.1); }
+
+        @keyframes recordPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .drum-0 { background: linear-gradient(135deg, #ff6b6b, #ee5a5a); }
+        .drum-1 { background: linear-gradient(135deg, #feca57, #f9b234); }
+        .drum-2 { background: linear-gradient(135deg, #48dbfb, #2ec4ea); }
+        .drum-3 { background: linear-gradient(135deg, #ff9ff3, #f368e0); }
+        .drum-4 { background: linear-gradient(135deg, #a55eea, #8854d0); }
+        .drum-5 { background: linear-gradient(135deg, #1dd1a1, #10ac84); }
+        .drum-6 { background: linear-gradient(135deg, #5f27cd, #4a1fb8); }
+        .drum-7 { background: linear-gradient(135deg, #ff9f43, #ee8620); }
+        .drum-8 { background: linear-gradient(135deg, #00d2d3, #00b5b6); }
+        .drum-9 { background: linear-gradient(135deg, #fd79a8, #e84393); }
+
         .scene-container {
             display: flex;
-            width: 300%;
+            width: 400%;
             height: 100%;
             transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            padding-top: 44px;
         }
 
         .scene {
-            width: 33.333%;
+            width: 25%;
             height: 100%;
             position: relative;
             display: flex;
             flex-direction: column;
         }
 
-        .scene-1 {
-            background: linear-gradient(180deg, #ff9a9e 0%, #fecfef 50%, #a8edea 100%);
-        }
-
-        .scene-2 {
-            background: linear-gradient(180deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-        }
-
-        .scene-3 {
-            background: linear-gradient(180deg, #a1c4fd 0%, #c2e9fb 50%, #fff1eb 100%);
-        }
+        .scene-1 { background: linear-gradient(180deg, #ff9a9e 0%, #fecfef 50%, #a8edea 100%); }
+        .scene-2 { background: linear-gradient(180deg, #667eea 0%, #764ba2 50%, #f093fb 100%); }
+        .scene-3 { background: linear-gradient(180deg, #a1c4fd 0%, #c2e9fb 50%, #fff1eb 100%); }
+        .scene-4 { background: linear-gradient(180deg, #434343 0%, #1a1a2e 50%, #16213e 100%); }
 
         .header {
-            padding: 8px 15px;
+            padding: 3px 8px;
             text-align: center;
-            z-index: 10;
         }
 
         .scene-title {
-            font-size: 1.3rem;
+            font-size: 0.9rem;
             font-weight: bold;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.5);
-            margin-bottom: 3px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .scene-subtitle {
-            font-size: 0.75rem;
+            font-size: 0.55rem;
             color: rgba(255,255,255,0.9);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
         .controls {
             display: flex;
             justify-content: center;
-            gap: 6px;
-            padding: 6px 10px;
+            gap: 3px;
+            padding: 2px 5px;
             flex-wrap: wrap;
         }
 
         .mode-btn {
-            padding: 6px 10px;
+            padding: 3px 5px;
             border: 2px solid transparent;
-            border-radius: 15px;
-            font-size: 0.7rem;
+            border-radius: 8px;
+            font-size: 0.5rem;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
             opacity: 0.6;
-        }
-
-        .mode-btn:active {
-            transform: scale(0.95);
         }
 
         .mode-btn.active {
             opacity: 1;
-            transform: scale(1.05);
             border-color: white;
-            box-shadow: 0 0 15px rgba(255,255,255,0.6);
         }
 
-        .beat-btn {
-            background: linear-gradient(135deg, #ff6b6b, #feca57);
-            color: white;
-        }
-
-        .melody-btn {
-            background: linear-gradient(135deg, #5f27cd, #48dbfb);
-            color: white;
-        }
+        .beat-btn { background: linear-gradient(135deg, #ff6b6b, #feca57); color: white; }
+        .melody-btn { background: linear-gradient(135deg, #5f27cd, #48dbfb); color: white; }
 
         .touch-pad {
             flex: 1;
-            margin: 8px;
-            border-radius: 25px;
+            margin: 3px;
+            border-radius: 12px;
             position: relative;
             overflow: hidden;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.1), 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.1), 0 8px 25px rgba(0,0,0,0.2);
         }
 
-        .scene-1 .touch-pad {
-            background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,182,193,0.3));
-            border: 3px solid rgba(255,255,255,0.5);
-        }
-
-        .scene-2 .touch-pad {
-            background: linear-gradient(135deg, rgba(138,43,226,0.3), rgba(75,0,130,0.3));
-            border: 3px solid rgba(200,150,255,0.5);
-        }
-
-        .scene-3 .touch-pad {
-            background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(200,230,255,0.3));
-            border: 3px solid rgba(255,255,255,0.6);
-        }
-
-        .xy-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-            opacity: 0.15;
-        }
-
-        .xy-label {
-            position: absolute;
-            color: white;
-            font-size: 0.6rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-            pointer-events: none;
-        }
-
-        .xy-label.pitch { top: 5px; left: 50%; transform: translateX(-50%); }
-        .xy-label.pitch-low { bottom: 5px; left: 50%; transform: translateX(-50%); }
-        .xy-label.tone { left: 5px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
-        .xy-label.tone-bright { right: 5px; top: 50%; transform: translateY(-50%) rotate(90deg); }
+        .scene-1 .touch-pad { background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,182,193,0.3)); border: 2px solid rgba(255,255,255,0.5); }
+        .scene-2 .touch-pad { background: linear-gradient(135deg, rgba(138,43,226,0.3), rgba(75,0,130,0.3)); border: 2px solid rgba(200,150,255,0.5); }
+        .scene-3 .touch-pad { background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(200,230,255,0.3)); border: 2px solid rgba(255,255,255,0.6); }
 
         .touch-indicator {
             position: absolute;
@@ -187,172 +202,367 @@
         .layer-display {
             display: flex;
             justify-content: center;
-            gap: 6px;
-            padding: 8px;
+            gap: 3px;
+            padding: 3px;
         }
 
         .layer-indicator {
-            width: 32px;
-            height: 32px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
-            transition: all 0.2s;
+            font-size: 0.6rem;
             opacity: 0.3;
             transform: scale(0.7);
         }
 
         .layer-indicator.active {
             opacity: 1;
-            transform: scale(1.1);
-            box-shadow: 0 0 15px currentColor;
+            transform: scale(1);
         }
 
         .scene-dots {
             position: fixed;
-            bottom: 15px;
+            bottom: 8px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 8px;
+            gap: 5px;
             z-index: 100;
         }
 
         .dot {
-            width: 10px;
-            height: 10px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             background: rgba(255,255,255,0.5);
-            transition: all 0.3s;
             cursor: pointer;
         }
 
         .dot.active {
             background: white;
             transform: scale(1.3);
-            box-shadow: 0 0 10px white;
         }
 
         .floating-element {
             position: absolute;
             pointer-events: none;
             animation: float 3s ease-in-out infinite;
-            opacity: 0.7;
+            opacity: 0.5;
+            font-size: 1rem;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
 
         .sparkle {
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 5px;
+            height: 5px;
             background: white;
             border-radius: 50%;
-            animation: sparkle 0.8s ease-out forwards;
+            animation: sparkle 0.5s ease-out forwards;
             pointer-events: none;
         }
 
         @keyframes sparkle {
-            0% { transform: scale(0) rotate(0deg); opacity: 1; }
-            100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
         }
 
-        .mode-label {
-            text-align: center;
+        .xy-label {
+            position: absolute;
             color: white;
-            font-size: 0.65rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-            margin-bottom: 3px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.45rem;
+            opacity: 0.5;
+            pointer-events: none;
         }
+
+        .xy-label.pitch { top: 2px; left: 50%; transform: translateX(-50%); }
+        .xy-label.pitch-low { bottom: 2px; left: 50%; transform: translateX(-50%); }
+        .xy-label.tone { left: 2px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
+        .xy-label.tone-bright { right: 2px; top: 50%; transform: translateY(-50%) rotate(90deg); }
 
         .active-modes-display {
             position: absolute;
-            bottom: 10px;
-            left: 10px;
-            right: 10px;
+            bottom: 4px;
+            left: 4px;
+            right: 4px;
             display: flex;
             justify-content: center;
-            gap: 5px;
+            gap: 2px;
             flex-wrap: wrap;
             pointer-events: none;
         }
 
         .active-mode-tag {
-            padding: 3px 8px;
+            padding: 1px 4px;
             background: rgba(255,255,255,0.3);
+            border-radius: 5px;
+            font-size: 0.45rem;
+            color: white;
+        }
+
+        .record-indicator {
+            position: fixed;
+            top: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,0,0,0.9);
+            color: white;
+            padding: 3px 10px;
             border-radius: 10px;
             font-size: 0.6rem;
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-weight: bold;
+            display: none;
+            z-index: 300;
+            animation: blink 1s infinite;
         }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .record-indicator.visible { display: block; }
+
+        /* Mixer styles */
+        .mixer-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 6px;
+            gap: 6px;
+            overflow-y: auto;
+        }
+
+        .mixer-header {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .mixer-btn {
+            padding: 5px 8px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.55rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+        }
+
+        .import-btn { background: linear-gradient(135deg, #6c5ce7, #a29bfe); }
+        .play-all-btn { background: linear-gradient(135deg, #00b894, #55efc4); }
+        .stop-all-btn { background: linear-gradient(135deg, #d63031, #ff7675); }
+        .clear-btn { background: linear-gradient(135deg, #636e72, #b2bec3); }
+
+        .tracks-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            overflow-y: auto;
+        }
+
+        .track-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 6px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .track-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .track-name {
+            color: white;
+            font-size: 0.6rem;
+            font-weight: bold;
+        }
+
+        .track-info {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.5rem;
+        }
+
+        .track-controls {
+            display: flex;
+            gap: 3px;
+        }
+
+        .track-btn {
+            width: 20px;
+            height: 20px;
+            border: none;
+            border-radius: 50%;
+            font-size: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .track-play { background: #00b894; color: white; }
+        .track-delete { background: #d63031; color: white; }
+
+        .step-grid {
+            display: flex;
+            gap: 1px;
+            height: 30px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+
+        .step-cell {
+            flex: 1;
+            background: rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .step-cell.has-event {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+        }
+
+        .step-cell.beat-marker {
+            border-left: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .trim-controls {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .stretch-control {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .stretch-label {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.5rem;
+        }
+
+        .stretch-slider {
+            width: 50px;
+            height: 3px;
+            -webkit-appearance: none;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+        }
+
+        .stretch-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 10px;
+            height: 10px;
+            background: #a29bfe;
+            border-radius: 50%;
+        }
+
+        .autotune-btn, .autorhythm-btn {
+            padding: 3px 6px;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.5rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        .autotune-btn { background: linear-gradient(135deg, #fd79a8, #e84393); }
+        .autorhythm-btn { background: linear-gradient(135deg, #0984e3, #74b9ff); }
+        .autotune-btn.active, .autorhythm-btn.active { box-shadow: 0 0 8px currentColor; }
+
+        .curve-select {
+            padding: 2px 4px;
+            border: none;
+            border-radius: 3px;
+            font-size: 0.5rem;
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .empty-state {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+        }
+
+        .empty-state-icon { font-size: 2.5rem; margin-bottom: 8px; }
 
         .swipe-hint {
             position: fixed;
-            bottom: 35px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(255,255,255,0.6);
-            font-size: 0.7rem;
-            animation: fadeInOut 3s ease-in-out infinite;
-        }
-
-        @keyframes fadeInOut {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.7; }
-        }
-
-        .controls-row {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.5rem;
         }
     </style>
 </head>
 <body>
     <div class="app-container">
+        <div class="drumkit-container">
+            <button class="drum-btn drum-0" data-drum="0">🐱</button>
+            <button class="drum-btn drum-1" data-drum="1">🦊</button>
+            <button class="drum-btn drum-2" data-drum="2">🐸</button>
+            <button class="drum-btn drum-3" data-drum="3">🦋</button>
+            <button class="drum-btn drum-4" data-drum="4">🍄</button>
+            <button class="drum-btn drum-5" data-drum="5">🌸</button>
+            <button class="drum-btn drum-6" data-drum="6">🔮</button>
+            <button class="drum-btn drum-7" data-drum="7">🧁</button>
+            <button class="drum-btn drum-8" data-drum="8">🫧</button>
+            <button class="drum-btn drum-9" data-drum="9">✨</button>
+            <button class="ctrl-btn record-btn" id="recordBtn" title="Record">⏺</button>
+            <button class="ctrl-btn stop-btn" id="stopBtn" title="Stop">⏹</button>
+            <button class="ctrl-btn export-btn" id="exportBtn" title="Export">💾</button>
+            <button class="ctrl-btn autobeat-btn" id="autoBeatBtn" title="Auto-Lock Beat">🎯</button>
+            <button class="ctrl-btn autotune-btn-top" id="autoTuneBtn" title="Auto-Tune">🎵</button>
+        </div>
+
+        <div class="record-indicator" id="recordIndicator">● REC</div>
+
         <div class="scene-container" id="sceneContainer">
             <!-- Scene 1: Rainbow Meadow -->
             <div class="scene scene-1" data-scene="0">
-                <div class="floating-element" style="font-size: 2rem; top: 5%; left: 8%;">🦄</div>
-                <div class="floating-element" style="font-size: 1.8rem; top: 8%; right: 12%; animation-delay: 0.5s;">🐰</div>
-                <div class="floating-element" style="font-size: 1.5rem; top: 3%; right: 40%; animation-delay: 1s;">🌈</div>
+                <div class="floating-element" style="top: 1%; left: 8%;">🦄</div>
+                <div class="floating-element" style="top: 3%; right: 12%; animation-delay: 0.5s;">🐰</div>
                 
                 <div class="header">
                     <div class="scene-title">🌈 Rainbow Meadow 🌸</div>
-                    <div class="scene-subtitle">X: Tone Filter | Y: Pitch Control</div>
+                    <div class="scene-subtitle">X: Tone | Y: Pitch</div>
                 </div>
                 
-                <div class="controls-row">
-                    <div class="controls">
-                        <div class="mode-label">Beats (stackable)</div>
-                    </div>
-                    <div class="controls">
-                        <button class="mode-btn beat-btn" data-beat="0">Hop</button>
-                        <button class="mode-btn beat-btn" data-beat="1">Skip</button>
-                        <button class="mode-btn beat-btn" data-beat="2">Bounce</button>
-                        <button class="mode-btn beat-btn" data-beat="3">Flutter</button>
-                        <button class="mode-btn beat-btn" data-beat="4">Gallop</button>
-                    </div>
+                <div class="controls">
+                    <button class="mode-btn beat-btn" data-beat="0">Hop</button>
+                    <button class="mode-btn beat-btn" data-beat="1">Skip</button>
+                    <button class="mode-btn beat-btn" data-beat="2">Bounce</button>
+                    <button class="mode-btn beat-btn" data-beat="3">Flutter</button>
+                    <button class="mode-btn beat-btn" data-beat="4">Gallop</button>
                 </div>
-                
-                <div class="controls-row">
-                    <div class="controls">
-                        <div class="mode-label">Melodies (stackable)</div>
-                    </div>
-                    <div class="controls">
-                        <button class="mode-btn melody-btn" data-melody="0">Sparkle</button>
-                        <button class="mode-btn melody-btn" data-melody="1">Dream</button>
-                        <button class="mode-btn melody-btn" data-melody="2">Magic</button>
-                        <button class="mode-btn melody-btn" data-melody="3">Wish</button>
-                        <button class="mode-btn melody-btn" data-melody="4">Glow</button>
-                    </div>
+                <div class="controls">
+                    <button class="mode-btn melody-btn" data-melody="0">Sparkle</button>
+                    <button class="mode-btn melody-btn" data-melody="1">Dream</button>
+                    <button class="mode-btn melody-btn" data-melody="2">Magic</button>
+                    <button class="mode-btn melody-btn" data-melody="3">Wish</button>
+                    <button class="mode-btn melody-btn" data-melody="4">Glow</button>
                 </div>
                 
                 <div class="touch-pad" data-scene-index="0">
@@ -364,49 +574,37 @@
                 </div>
                 
                 <div class="layer-display">
-                    <div class="layer-indicator" style="background: #ff6b6b; color: #ff6b6b;">🎵</div>
-                    <div class="layer-indicator" style="background: #feca57; color: #feca57;">🎶</div>
-                    <div class="layer-indicator" style="background: #48dbfb; color: #48dbfb;">✨</div>
-                    <div class="layer-indicator" style="background: #ff9ff3; color: #ff9ff3;">💫</div>
-                    <div class="layer-indicator" style="background: #a55eea; color: #a55eea;">🌟</div>
+                    <div class="layer-indicator" style="background: #ff6b6b;">🎵</div>
+                    <div class="layer-indicator" style="background: #feca57;">🎶</div>
+                    <div class="layer-indicator" style="background: #48dbfb;">✨</div>
+                    <div class="layer-indicator" style="background: #ff9ff3;">💫</div>
+                    <div class="layer-indicator" style="background: #a55eea;">🌟</div>
                 </div>
             </div>
 
             <!-- Scene 2: Crystal Cave -->
             <div class="scene scene-2" data-scene="1">
-                <div class="floating-element" style="font-size: 2rem; top: 5%; left: 10%;">💎</div>
-                <div class="floating-element" style="font-size: 1.5rem; top: 8%; right: 15%; animation-delay: 0.7s;">🔮</div>
-                <div class="floating-element" style="font-size: 1.8rem; top: 3%; right: 45%; animation-delay: 1.2s;">✨</div>
+                <div class="floating-element" style="top: 1%; left: 10%;">💎</div>
+                <div class="floating-element" style="top: 3%; right: 15%; animation-delay: 0.7s;">🔮</div>
                 
                 <div class="header">
                     <div class="scene-title">💎 Crystal Cave 🔮</div>
                     <div class="scene-subtitle">X: Resonance | Y: Frequency</div>
                 </div>
                 
-                <div class="controls-row">
-                    <div class="controls">
-                        <div class="mode-label">Beats (stackable)</div>
-                    </div>
-                    <div class="controls">
-                        <button class="mode-btn beat-btn" data-beat="0">Echo</button>
-                        <button class="mode-btn beat-btn" data-beat="1">Pulse</button>
-                        <button class="mode-btn beat-btn" data-beat="2">Crystal</button>
-                        <button class="mode-btn beat-btn" data-beat="3">Cave</button>
-                        <button class="mode-btn beat-btn" data-beat="4">Deep</button>
-                    </div>
+                <div class="controls">
+                    <button class="mode-btn beat-btn" data-beat="0">Echo</button>
+                    <button class="mode-btn beat-btn" data-beat="1">Pulse</button>
+                    <button class="mode-btn beat-btn" data-beat="2">Crystal</button>
+                    <button class="mode-btn beat-btn" data-beat="3">Cave</button>
+                    <button class="mode-btn beat-btn" data-beat="4">Deep</button>
                 </div>
-                
-                <div class="controls-row">
-                    <div class="controls">
-                        <div class="mode-label">Melodies (stackable)</div>
-                    </div>
-                    <div class="controls">
-                        <button class="mode-btn melody-btn" data-melody="0">Mystic</button>
-                        <button class="mode-btn melody-btn" data-melody="1">Aura</button>
-                        <button class="mode-btn melody-btn" data-melody="2">Spirit</button>
-                        <button class="mode-btn melody-btn" data-melody="3">Ethereal</button>
-                        <button class="mode-btn melody-btn" data-melody="4">Cosmic</button>
-                    </div>
+                <div class="controls">
+                    <button class="mode-btn melody-btn" data-melody="0">Mystic</button>
+                    <button class="mode-btn melody-btn" data-melody="1">Aura</button>
+                    <button class="mode-btn melody-btn" data-melody="2">Spirit</button>
+                    <button class="mode-btn melody-btn" data-melody="3">Ethereal</button>
+                    <button class="mode-btn melody-btn" data-melody="4">Cosmic</button>
                 </div>
                 
                 <div class="touch-pad" data-scene-index="1">
@@ -418,49 +616,37 @@
                 </div>
                 
                 <div class="layer-display">
-                    <div class="layer-indicator" style="background: #a55eea; color: #a55eea;">🎹</div>
-                    <div class="layer-indicator" style="background: #5f27cd; color: #5f27cd;">🎸</div>
-                    <div class="layer-indicator" style="background: #341f97; color: #341f97;">🎺</div>
-                    <div class="layer-indicator" style="background: #48dbfb; color: #48dbfb;">🎻</div>
-                    <div class="layer-indicator" style="background: #0abde3; color: #0abde3;">🪈</div>
+                    <div class="layer-indicator" style="background: #a55eea;">🎹</div>
+                    <div class="layer-indicator" style="background: #5f27cd;">🎸</div>
+                    <div class="layer-indicator" style="background: #341f97;">🎺</div>
+                    <div class="layer-indicator" style="background: #48dbfb;">🎻</div>
+                    <div class="layer-indicator" style="background: #0abde3;">🪈</div>
                 </div>
             </div>
 
             <!-- Scene 3: Cloud Kingdom -->
             <div class="scene scene-3" data-scene="2">
-                <div class="floating-element" style="font-size: 2rem; top: 5%; left: 8%;">☁️</div>
-                <div class="floating-element" style="font-size: 1.5rem; top: 8%; right: 12%; animation-delay: 0.3s;">⭐</div>
-                <div class="floating-element" style="font-size: 1.8rem; top: 3%; right: 40%; animation-delay: 0.8s;">🌙</div>
+                <div class="floating-element" style="top: 1%; left: 8%;">☁️</div>
+                <div class="floating-element" style="top: 3%; right: 12%; animation-delay: 0.3s;">⭐</div>
                 
                 <div class="header">
                     <div class="scene-title">☁️ Cloud Kingdom 🌙</div>
                     <div class="scene-subtitle">X: Softness | Y: Dreaminess</div>
                 </div>
                 
-                <div class="controls-row">
-                    <div class="controls">
-                        <div class="mode-label">Beats (stackable)</div>
-                    </div>
-                    <div class="controls">
-                        <button class="mode-btn beat-btn" data-beat="0">Float</button>
-                        <button class="mode-btn beat-btn" data-beat="1">Drift</button>
-                        <button class="mode-btn beat-btn" data-beat="2">Breeze</button>
-                        <button class="mode-btn beat-btn" data-beat="3">Whisper</button>
-                        <button class="mode-btn beat-btn" data-beat="4">Lullaby</button>
-                    </div>
+                <div class="controls">
+                    <button class="mode-btn beat-btn" data-beat="0">Float</button>
+                    <button class="mode-btn beat-btn" data-beat="1">Drift</button>
+                    <button class="mode-btn beat-btn" data-beat="2">Breeze</button>
+                    <button class="mode-btn beat-btn" data-beat="3">Whisper</button>
+                    <button class="mode-btn beat-btn" data-beat="4">Lullaby</button>
                 </div>
-                
-                <div class="controls-row">
-                    <div class="controls">
-                        <div class="mode-label">Melodies (stackable)</div>
-                    </div>
-                    <div class="controls">
-                        <button class="mode-btn melody-btn" data-melody="0">Sleepy</button>
-                        <button class="mode-btn melody-btn" data-melody="1">Dreamy</button>
-                        <button class="mode-btn melody-btn" data-melody="2">Fluffy</button>
-                        <button class="mode-btn melody-btn" data-melody="3">Soft</button>
-                        <button class="mode-btn melody-btn" data-melody="4">Gentle</button>
-                    </div>
+                <div class="controls">
+                    <button class="mode-btn melody-btn" data-melody="0">Sleepy</button>
+                    <button class="mode-btn melody-btn" data-melody="1">Dreamy</button>
+                    <button class="mode-btn melody-btn" data-melody="2">Fluffy</button>
+                    <button class="mode-btn melody-btn" data-melody="3">Soft</button>
+                    <button class="mode-btn melody-btn" data-melody="4">Gentle</button>
                 </div>
                 
                 <div class="touch-pad" data-scene-index="2">
@@ -472,11 +658,36 @@
                 </div>
                 
                 <div class="layer-display">
-                    <div class="layer-indicator" style="background: #74b9ff; color: #74b9ff;">🌸</div>
-                    <div class="layer-indicator" style="background: #a29bfe; color: #a29bfe;">🦋</div>
-                    <div class="layer-indicator" style="background: #fd79a8; color: #fd79a8;">🌺</div>
-                    <div class="layer-indicator" style="background: #fdcb6e; color: #fdcb6e;">🌻</div>
-                    <div class="layer-indicator" style="background: #81ecec; color: #81ecec;">🍀</div>
+                    <div class="layer-indicator" style="background: #74b9ff;">🌸</div>
+                    <div class="layer-indicator" style="background: #a29bfe;">🦋</div>
+                    <div class="layer-indicator" style="background: #fd79a8;">🌺</div>
+                    <div class="layer-indicator" style="background: #fdcb6e;">🌻</div>
+                    <div class="layer-indicator" style="background: #81ecec;">🍀</div>
+                </div>
+            </div>
+
+            <!-- Scene 4: Mixer Studio -->
+            <div class="scene scene-4" data-scene="3">
+                <div class="header">
+                    <div class="scene-title">🎛️ Mixer Studio 🎚️</div>
+                    <div class="scene-subtitle">Import, Mix & Master</div>
+                </div>
+                
+                <div class="mixer-container">
+                    <div class="mixer-header">
+                        <button class="mixer-btn import-btn" id="importBtn">📥 Import</button>
+                        <button class="mixer-btn play-all-btn" id="playAllBtn">▶️ Play</button>
+                        <button class="mixer-btn stop-all-btn" id="stopAllBtn">⏹ Stop</button>
+                        <button class="mixer-btn clear-btn" id="clearAllBtn">🗑️ Clear</button>
+                    </div>
+                    
+                    <div class="tracks-container" id="tracksContainer">
+                        <div class="empty-state" id="emptyState">
+                            <div class="empty-state-icon">🎵</div>
+                            <div style="font-size: 0.7rem;">No tracks yet!</div>
+                            <div style="font-size: 0.55rem; margin-top: 4px;">Record or import JSON</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -485,28 +696,48 @@
             <div class="dot active" data-scene="0"></div>
             <div class="dot" data-scene="1"></div>
             <div class="dot" data-scene="2"></div>
+            <div class="dot" data-scene="3"></div>
         </div>
         
         <div class="swipe-hint">← Swipe to change scenes →</div>
     </div>
 
+    <input type="file" id="fileInput" accept=".json" multiple style="display:none;">
+
     <script>
+        // Configuration
+        const BPM = 120;
+        const STEP_DURATION = (60000 / BPM) / 4; // 1/16th note in ms
+        const STEPS_PER_BAR = 16;
+        const TOTAL_STEPS = 64; // 4 bars
+        
         // Audio Context
         let audioContext;
         let masterGain;
         
+        // Recording state
+        let isRecording = false;
+        let recordingStartTime = 0;
+        let autoBeatLock = false;
+        let autoTuneLock = false;
+        let currentRecording = null;
+        
+        // Playback state
+        let isPlaying = false;
+        let playbackTimeouts = [];
+        
+        // Mixer tracks
+        let mixerTracks = [];
+        
         // Scene management
         let currentScene = 0;
         
-        // Stackable mode settings per scene - now arrays for multi-select
+        // Stackable mode settings per scene
         const sceneSettings = [
             { beatModes: new Set(), melodyModes: new Set() },
             { beatModes: new Set(), melodyModes: new Set() },
             { beatModes: new Set(), melodyModes: new Set() }
         ];
-        
-        // Active oscillators per touch
-        const activeTouchSounds = new Map();
         
         // Beat loop management
         const beatLoops = [
@@ -515,16 +746,29 @@
             { intervals: [], active: false }
         ];
         
-        // Scales for each melody mode
-        const melodyScales = [
-            [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25], // C major - Sparkle/Mystic/Sleepy
-            [293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25, 587.33], // D dorian - Dream/Aura/Dreamy
-            [329.63, 369.99, 415.30, 466.16, 523.25, 587.33, 659.25, 739.99], // E phrygian - Magic/Spirit/Fluffy
-            [349.23, 392.00, 440.00, 466.16, 523.25, 587.33, 622.25, 698.46], // F lydian - Wish/Ethereal/Soft
-            [392.00, 440.00, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99]  // G mixolydian - Glow/Cosmic/Gentle
+        // Drum sounds config
+        const drumSounds = [
+            { emoji: '🐱', freq: 180, type: 'sine', decay: 0.3, pitch: 1.5 },
+            { emoji: '🦊', freq: 120, type: 'triangle', decay: 0.25, pitch: 0.8 },
+            { emoji: '🐸', freq: 80, type: 'square', decay: 0.15, pitch: 2 },
+            { emoji: '🦋', freq: 800, type: 'sine', decay: 0.5, pitch: 1.2 },
+            { emoji: '🍄', freq: 60, type: 'sawtooth', decay: 0.4, pitch: 0.5 },
+            { emoji: '🌸', freq: 600, type: 'sine', decay: 0.6, pitch: 1.8 },
+            { emoji: '🔮', freq: 400, type: 'triangle', decay: 0.7, pitch: 0.7 },
+            { emoji: '🧁', freq: 300, type: 'sine', decay: 0.2, pitch: 1.3 },
+            { emoji: '🫧', freq: 1200, type: 'sine', decay: 0.4, pitch: 2.5 },
+            { emoji: '✨', freq: 2000, type: 'sine', decay: 0.3, pitch: 3 }
         ];
         
-        // Beat patterns with different rhythms
+        // Scales for melodies
+        const melodyScales = [
+            [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25],
+            [293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25, 587.33],
+            [329.63, 369.99, 415.30, 466.16, 523.25, 587.33, 659.25, 739.99],
+            [349.23, 392.00, 440.00, 466.16, 523.25, 587.33, 622.25, 698.46],
+            [392.00, 440.00, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99]
+        ];
+        
         const beatPatterns = [
             { intervals: [250, 250, 250, 250], accents: [1, 0.5, 0.7, 0.5] },
             { intervals: [200, 400, 200, 400], accents: [1, 0.3, 0.8, 0.4] },
@@ -533,14 +777,12 @@
             { intervals: [400, 200, 200, 400, 200], accents: [1, 0.4, 0.6, 0.8, 0.3] }
         ];
         
-        // Layer colors for visual feedback
         const layerColors = [
             ['#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#a55eea'],
             ['#a55eea', '#5f27cd', '#341f97', '#48dbfb', '#0abde3'],
             ['#74b9ff', '#a29bfe', '#fd79a8', '#fdcb6e', '#81ecec']
         ];
         
-        // Synth types per scene
         const synthConfigs = [
             { types: ['sine', 'triangle', 'sine', 'triangle', 'sine'], filterBase: 2000 },
             { types: ['sawtooth', 'square', 'triangle', 'sine', 'sawtooth'], filterBase: 1500 },
@@ -559,6 +801,313 @@
             }
         }
 
+        function getRecordingTime() {
+            return Date.now() - recordingStartTime;
+        }
+
+        function timeToStep(time) {
+            return Math.round(time / STEP_DURATION);
+        }
+
+        function stepToTime(step) {
+            return step * STEP_DURATION;
+        }
+
+        function quantizeToStep(time) {
+            const step = timeToStep(time);
+            return stepToTime(step);
+        }
+
+        function quantizeToScale(freq, scaleIndex = 0) {
+            const scale = melodyScales[scaleIndex];
+            let closest = scale[0];
+            let minDiff = Math.abs(freq - closest);
+            
+            for (const note of scale) {
+                const diff = Math.abs(freq - note);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    closest = note;
+                }
+            }
+            return closest;
+        }
+
+        function createNewRecording() {
+            return {
+                version: "2.0",
+                name: `Recording ${new Date().toLocaleTimeString()}`,
+                bpm: BPM,
+                stepsPerBar: STEPS_PER_BAR,
+                totalSteps: TOTAL_STEPS,
+                duration: 0,
+                autoBeat: autoBeatLock,
+                autoTune: autoTuneLock,
+                drums: [], // { step, drumIndex }
+                pads: []   // { sceneIndex, fingerIndex, steps: [{ step, x, y, freq, filter }] }
+            };
+        }
+
+        function recordDrumHit(drumIndex) {
+            if (!isRecording || !currentRecording) return;
+            
+            let time = getRecordingTime();
+            let step = timeToStep(time);
+            
+            if (autoBeatLock) {
+                step = Math.round(step);
+                time = stepToTime(step);
+            }
+            
+            if (step < TOTAL_STEPS) {
+                currentRecording.drums.push({ step, drumIndex, time });
+            }
+        }
+
+        function startPadRecording(sceneIndex, fingerIndex, x, y, normX, normY) {
+            if (!isRecording || !currentRecording) return null;
+            
+            let time = getRecordingTime();
+            let step = timeToStep(time);
+            
+            if (autoBeatLock) {
+                step = Math.round(step);
+                time = stepToTime(step);
+            }
+            
+            const freq = calculateFrequency(sceneIndex, normY);
+            const filter = calculateFilter(sceneIndex, normX);
+            
+            const padData = {
+                sceneIndex,
+                fingerIndex,
+                startStep: step,
+                steps: [{ step, x: normX, y: normY, freq, filter }]
+            };
+            
+            currentRecording.pads.push(padData);
+            return currentRecording.pads.length - 1;
+        }
+
+        function updatePadRecording(padIndex, normX, normY, sceneIndex) {
+            if (!isRecording || !currentRecording || padIndex === null) return;
+            
+            const padData = currentRecording.pads[padIndex];
+            if (!padData) return;
+            
+            let time = getRecordingTime();
+            let step = timeToStep(time);
+            
+            if (autoBeatLock) {
+                step = Math.round(step);
+            }
+            
+            // Only record if we're on a new step
+            const lastStep = padData.steps[padData.steps.length - 1];
+            if (step > lastStep.step && step < TOTAL_STEPS) {
+                let freq = calculateFrequency(sceneIndex, normY);
+                if (autoTuneLock) {
+                    freq = quantizeToScale(freq, 0);
+                }
+                const filter = calculateFilter(sceneIndex, normX);
+                
+                padData.steps.push({ step, x: normX, y: normY, freq, filter });
+            }
+        }
+
+        function endPadRecording(padIndex) {
+            if (!isRecording || !currentRecording || padIndex === null) return;
+            
+            const padData = currentRecording.pads[padIndex];
+            if (!padData) return;
+            
+            let time = getRecordingTime();
+            let step = timeToStep(time);
+            
+            if (autoBeatLock) {
+                step = Math.round(step);
+            }
+            
+            padData.endStep = step;
+        }
+
+        function calculateFrequency(sceneIndex, normY) {
+            const settings = sceneSettings[sceneIndex];
+            const activeMelodies = Array.from(settings.melodyModes);
+            if (activeMelodies.length === 0) return 440;
+            
+            const scale = melodyScales[activeMelodies[0]];
+            const scaleIndex = Math.floor(normY * (scale.length - 1));
+            return scale[scaleIndex];
+        }
+
+        function calculateFilter(sceneIndex, normX) {
+            const config = synthConfigs[sceneIndex];
+            return config.filterBase + (normX * 4000);
+        }
+
+        function startRecording() {
+            isRecording = true;
+            recordingStartTime = Date.now();
+            currentRecording = createNewRecording();
+            document.getElementById('recordBtn').classList.add('recording');
+            document.getElementById('recordIndicator').classList.add('visible');
+            
+            // Auto-stop after 4 bars
+            setTimeout(() => {
+                if (isRecording) {
+                    stopRecording();
+                }
+            }, TOTAL_STEPS * STEP_DURATION);
+        }
+
+        function stopRecording() {
+            if (!isRecording) return;
+            
+            isRecording = false;
+            if (currentRecording) {
+                currentRecording.duration = getRecordingTime();
+                
+                // Add to mixer if there's content
+                if (currentRecording.drums.length > 0 || currentRecording.pads.length > 0) {
+                    mixerTracks.push(currentRecording);
+                    renderTracks();
+                }
+            }
+            
+            document.getElementById('recordBtn').classList.remove('recording');
+            document.getElementById('recordIndicator').classList.remove('visible');
+        }
+
+        function stopAllPlayback() {
+            playbackTimeouts.forEach(id => clearTimeout(id));
+            playbackTimeouts = [];
+            isPlaying = false;
+            
+            // Stop all beat loops
+            [0, 1, 2].forEach(i => stopBeatLoops(i));
+        }
+
+        function exportRecording() {
+            if (!currentRecording || (currentRecording.drums.length === 0 && currentRecording.pads.length === 0)) {
+                if (mixerTracks.length > 0) {
+                    // Export all mixer tracks
+                    const exportData = { version: "2.0", tracks: mixerTracks };
+                    const json = JSON.stringify(exportData, null, 2);
+                    downloadJson(json, 'fluffcore-mix');
+                } else {
+                    alert('Nothing to export!');
+                }
+                return;
+            }
+            
+            const json = JSON.stringify(currentRecording, null, 2);
+            downloadJson(json, 'fluffcore-track');
+        }
+
+        function downloadJson(json, prefix) {
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${prefix}-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Auto-beat button
+        document.getElementById('autoBeatBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            autoBeatLock = !autoBeatLock;
+            e.target.classList.toggle('active', autoBeatLock);
+        });
+
+        // Auto-tune button
+        document.getElementById('autoTuneBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            autoTuneLock = !autoTuneLock;
+            e.target.classList.toggle('active', autoTuneLock);
+        });
+
+        // Record button
+        document.getElementById('recordBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            initAudio();
+            
+            if (isRecording) {
+                stopRecording();
+            } else {
+                startRecording();
+            }
+        });
+
+        // Stop button
+        document.getElementById('stopBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            stopRecording();
+            stopAllPlayback();
+        });
+
+        // Export button
+        document.getElementById('exportBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            exportRecording();
+        });
+
+        // Drum sounds
+        function playDrumSound(drumIndex) {
+            if (!audioContext) return;
+            
+            const drum = drumSounds[drumIndex];
+            const now = audioContext.currentTime;
+            
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            const filter = audioContext.createBiquadFilter();
+            
+            osc.type = drum.type;
+            osc.frequency.setValueAtTime(drum.freq * drum.pitch, now);
+            osc.frequency.exponentialRampToValueAtTime(drum.freq * 0.3, now + drum.decay);
+            
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(3000, now);
+            filter.frequency.exponentialRampToValueAtTime(500, now + drum.decay);
+            
+            gain.gain.setValueAtTime(0.4, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + drum.decay);
+            
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(masterGain);
+            
+            osc.start(now);
+            osc.stop(now + drum.decay + 0.1);
+            
+            recordDrumHit(drumIndex);
+        }
+
+        document.querySelectorAll('.drum-btn').forEach(btn => {
+            function triggerDrum(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                initAudio();
+                
+                const drumIndex = parseInt(btn.dataset.drum);
+                playDrumSound(drumIndex);
+                
+                btn.classList.add('playing');
+                setTimeout(() => btn.classList.remove('playing'), 150);
+            }
+            
+            btn.addEventListener('touchstart', triggerDrum);
+            btn.addEventListener('mousedown', triggerDrum);
+        });
+
         function createContinuousTone(sceneIndex, layerIndex, x, y, padWidth, padHeight) {
             if (!audioContext) return null;
             
@@ -571,20 +1120,17 @@
             const gainNodes = [];
             const filters = [];
             
-            // Normalize x and y to 0-1 range
             const normX = Math.max(0, Math.min(1, x / padWidth));
-            const normY = Math.max(0, Math.min(1, 1 - (y / padHeight))); // Invert Y so top is high
+            const normY = Math.max(0, Math.min(1, 1 - (y / padHeight)));
             
-            // Create a sound for each active melody mode
-            activeMelodies.forEach((melodyMode, idx) => {
+            activeMelodies.forEach((melodyMode) => {
                 const scale = melodyScales[melodyMode];
-                
-                // Y controls pitch within the scale
                 const scaleIndex = Math.floor(normY * (scale.length - 1));
-                const baseFreq = scale[scaleIndex];
+                let freq = scale[scaleIndex] * (1 + (layerIndex * 0.01));
                 
-                // Add slight variation based on layer
-                const freq = baseFreq * (1 + (layerIndex * 0.01));
+                if (autoTuneLock) {
+                    freq = quantizeToScale(freq, melodyMode);
+                }
                 
                 const oscillator = audioContext.createOscillator();
                 const gainNode = audioContext.createGain();
@@ -592,20 +1138,16 @@
                 
                 oscillator.type = config.types[layerIndex % 5];
                 oscillator.frequency.value = freq;
-                oscillator.detune.value = (Math.random() - 0.5) * 15;
                 
-                // X controls filter (tone)
                 filter.type = 'lowpass';
                 filter.frequency.value = config.filterBase + (normX * 4000);
                 filter.Q.value = 2 + (normX * 8);
                 
-                const layerVolume = 0.15 / Math.max(1, activeMelodies.length);
-                gainNode.gain.value = layerVolume;
+                gainNode.gain.value = 0.15 / Math.max(1, activeMelodies.length);
                 
                 oscillator.connect(filter);
                 filter.connect(gainNode);
                 gainNode.connect(masterGain);
-                
                 oscillator.start();
                 
                 oscillators.push(oscillator);
@@ -617,7 +1159,7 @@
         }
 
         function updateTonePosition(soundData, x, y, padWidth, padHeight) {
-            if (!soundData || !soundData.oscillators) return;
+            if (!soundData) return;
             
             const settings = sceneSettings[soundData.sceneIndex];
             const activeMelodies = Array.from(settings.melodyModes);
@@ -631,34 +1173,29 @@
                 
                 const scale = melodyScales[melodyMode];
                 const scaleIndex = Math.floor(normY * (scale.length - 1));
-                const freq = scale[scaleIndex];
+                let freq = scale[scaleIndex];
+                
+                if (autoTuneLock) {
+                    freq = quantizeToScale(freq, melodyMode);
+                }
                 
                 osc.frequency.setTargetAtTime(freq, audioContext.currentTime, 0.05);
             });
             
             soundData.filters.forEach(filter => {
                 const config = synthConfigs[soundData.sceneIndex];
-                filter.frequency.setTargetAtTime(
-                    config.filterBase + (normX * 4000),
-                    audioContext.currentTime,
-                    0.05
-                );
+                filter.frequency.setTargetAtTime(config.filterBase + (normX * 4000), audioContext.currentTime, 0.05);
             });
         }
 
         function stopTone(soundData) {
             if (!soundData) return;
-            
-            const fadeTime = 0.1;
             soundData.gainNodes.forEach(gain => {
-                gain.gain.setTargetAtTime(0, audioContext.currentTime, fadeTime);
+                gain.gain.setTargetAtTime(0, audioContext.currentTime, 0.1);
             });
-            
             setTimeout(() => {
-                soundData.oscillators.forEach(osc => {
-                    try { osc.stop(); } catch(e) {}
-                });
-            }, fadeTime * 3 * 1000);
+                soundData.oscillators.forEach(osc => { try { osc.stop(); } catch(e) {} });
+            }, 300);
         }
 
         function createBeatSound(beatMode, sceneIndex, accent = 1) {
@@ -669,22 +1206,15 @@
             
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
-            const filter = audioContext.createBiquadFilter();
             
-            const types = ['sine', 'triangle', 'square', 'sawtooth', 'sine'];
-            oscillator.type = types[beatMode];
+            oscillator.type = ['sine', 'triangle', 'square', 'sawtooth', 'sine'][beatMode];
             oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
             oscillator.frequency.exponentialRampToValueAtTime(freq * 0.4, audioContext.currentTime + 0.15);
             
-            filter.type = 'lowpass';
-            filter.frequency.value = 200 + (beatMode * 100);
-            
-            const volume = 0.2 * accent;
-            gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+            gainNode.gain.setValueAtTime(0.2 * accent, audioContext.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.2);
             
-            oscillator.connect(filter);
-            filter.connect(gainNode);
+            oscillator.connect(gainNode);
             gainNode.connect(masterGain);
             
             oscillator.start(audioContext.currentTime);
@@ -703,7 +1233,6 @@
                 
                 function playStep() {
                     if (!beatLoops[sceneIndex].active) return;
-                    
                     createBeatSound(beatMode, sceneIndex, pattern.accents[stepIndex]);
                     
                     const interval = pattern.intervals[stepIndex];
@@ -726,8 +1255,7 @@
 
         function updateLayerIndicators(sceneIndex, count) {
             const scene = document.querySelectorAll('.scene')[sceneIndex];
-            const indicators = scene.querySelectorAll('.layer-indicator');
-            indicators.forEach((ind, i) => {
+            scene.querySelectorAll('.layer-indicator').forEach((ind, i) => {
                 ind.classList.toggle('active', i < count);
             });
         }
@@ -735,33 +1263,25 @@
         function updateActiveModeDisplay(sceneIndex) {
             const scene = document.querySelectorAll('.scene')[sceneIndex];
             const display = scene.querySelector('.active-modes-display');
-            const settings = sceneSettings[sceneIndex];
+            if (!display) return;
             
+            const settings = sceneSettings[sceneIndex];
             display.innerHTML = '';
             
-            const beatNames = [
-                ['Hop', 'Skip', 'Bounce', 'Flutter', 'Gallop'],
-                ['Echo', 'Pulse', 'Crystal', 'Cave', 'Deep'],
-                ['Float', 'Drift', 'Breeze', 'Whisper', 'Lullaby']
-            ];
-            
-            const melodyNames = [
-                ['Sparkle', 'Dream', 'Magic', 'Wish', 'Glow'],
-                ['Mystic', 'Aura', 'Spirit', 'Ethereal', 'Cosmic'],
-                ['Sleepy', 'Dreamy', 'Fluffy', 'Soft', 'Gentle']
-            ];
+            const beatNames = [['Hop', 'Skip', 'Bounce', 'Flutter', 'Gallop'], ['Echo', 'Pulse', 'Crystal', 'Cave', 'Deep'], ['Float', 'Drift', 'Breeze', 'Whisper', 'Lullaby']];
+            const melodyNames = [['Sparkle', 'Dream', 'Magic', 'Wish', 'Glow'], ['Mystic', 'Aura', 'Spirit', 'Ethereal', 'Cosmic'], ['Sleepy', 'Dreamy', 'Fluffy', 'Soft', 'Gentle']];
             
             settings.beatModes.forEach(mode => {
                 const tag = document.createElement('div');
                 tag.className = 'active-mode-tag';
-                tag.textContent = '🥁 ' + beatNames[sceneIndex][mode];
+                tag.textContent = '🥁' + beatNames[sceneIndex][mode];
                 display.appendChild(tag);
             });
             
             settings.melodyModes.forEach(mode => {
                 const tag = document.createElement('div');
                 tag.className = 'active-mode-tag';
-                tag.textContent = '🎵 ' + melodyNames[sceneIndex][mode];
+                tag.textContent = '🎵' + melodyNames[sceneIndex][mode];
                 display.appendChild(tag);
             });
         }
@@ -771,21 +1291,12 @@
             
             const indicator = document.createElement('div');
             indicator.className = 'touch-indicator';
-            indicator.style.left = x + 'px';
-            indicator.style.top = y + 'px';
-            indicator.style.width = '60px';
-            indicator.style.height = '60px';
-            indicator.style.background = `radial-gradient(circle, ${color} 0%, transparent 70%)`;
-            indicator.style.boxShadow = `0 0 25px ${color}`;
+            indicator.style.cssText = `left:${x}px;top:${y}px;width:35px;height:35px;background:radial-gradient(circle,${color} 0%,transparent 70%);box-shadow:0 0 12px ${color};`;
             touchPad.appendChild(indicator);
             
             const ring = document.createElement('div');
             ring.className = 'touch-ring';
-            ring.style.left = x + 'px';
-            ring.style.top = y + 'px';
-            ring.style.width = '60px';
-            ring.style.height = '60px';
-            ring.style.borderColor = color;
+            ring.style.cssText = `left:${x}px;top:${y}px;width:35px;height:35px;border-color:${color};`;
             touchPad.appendChild(ring);
             
             return { indicator, ring };
@@ -795,11 +1306,9 @@
             const colors = layerColors[sceneIndex];
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
-            sparkle.style.left = (x + (Math.random() - 0.5) * 40) + 'px';
-            sparkle.style.top = (y + (Math.random() - 0.5) * 40) + 'px';
-            sparkle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            sparkle.style.cssText = `left:${x + (Math.random()-0.5)*25}px;top:${y + (Math.random()-0.5)*25}px;background:${colors[Math.floor(Math.random()*colors.length)]};`;
             touchPad.appendChild(sparkle);
-            setTimeout(() => sparkle.remove(), 800);
+            setTimeout(() => sparkle.remove(), 500);
         }
 
         // Touch pad handling
@@ -824,10 +1333,11 @@
                         const visual = createTouchVisual(x, y, pad, layerIndex, sceneIndex);
                         const sound = createContinuousTone(sceneIndex, layerIndex, x, y, rect.width, rect.height);
                         
-                        padTouches.set(touch.identifier, {
-                            x, y, visual, sound, layerIndex
-                        });
+                        const normX = x / rect.width;
+                        const normY = 1 - (y / rect.height);
+                        const recordIndex = startPadRecording(sceneIndex, layerIndex, x, y, normX, normY);
                         
+                        padTouches.set(touch.identifier, { x, y, visual, sound, layerIndex, recordIndex, rect });
                         createSparkle(x, y, pad, sceneIndex);
                     }
                 }
@@ -842,31 +1352,30 @@
             
             function handleTouchMove(e) {
                 e.preventDefault();
-                const rect = pad.getBoundingClientRect();
                 
                 for (let touch of e.changedTouches) {
                     const data = padTouches.get(touch.identifier);
                     if (data) {
-                        const x = touch.clientX - rect.left;
-                        const y = touch.clientY - rect.top;
+                        const x = touch.clientX - data.rect.left;
+                        const y = touch.clientY - data.rect.top;
                         
                         data.x = x;
                         data.y = y;
                         
-                        if (data.visual) {
-                            data.visual.indicator.style.left = x + 'px';
-                            data.visual.indicator.style.top = y + 'px';
-                            data.visual.ring.style.left = x + 'px';
-                            data.visual.ring.style.top = y + 'px';
-                        }
+                        data.visual.indicator.style.left = x + 'px';
+                        data.visual.indicator.style.top = y + 'px';
+                        data.visual.ring.style.left = x + 'px';
+                        data.visual.ring.style.top = y + 'px';
                         
                         if (data.sound) {
-                            updateTonePosition(data.sound, x, y, rect.width, rect.height);
+                            updateTonePosition(data.sound, x, y, data.rect.width, data.rect.height);
                         }
                         
-                        if (Math.random() < 0.1) {
-                            createSparkle(x, y, pad, sceneIndex);
-                        }
+                        const normX = x / data.rect.width;
+                        const normY = 1 - (y / data.rect.height);
+                        updatePadRecording(data.recordIndex, normX, normY, sceneIndex);
+                        
+                        if (Math.random() < 0.08) createSparkle(x, y, pad, sceneIndex);
                     }
                 }
             }
@@ -877,26 +1386,19 @@
                 for (let touch of e.changedTouches) {
                     const data = padTouches.get(touch.identifier);
                     if (data) {
-                        if (data.visual) {
-                            data.visual.indicator.style.opacity = '0';
-                            data.visual.indicator.style.transform = 'translate(-50%, -50%) scale(2)';
-                            data.visual.indicator.style.transition = 'all 0.3s';
-                            data.visual.ring.remove();
-                            setTimeout(() => data.visual.indicator.remove(), 300);
-                        }
-                        if (data.sound) {
-                            stopTone(data.sound);
-                        }
+                        data.visual.indicator.style.opacity = '0';
+                        data.visual.ring.remove();
+                        setTimeout(() => data.visual.indicator.remove(), 300);
+                        
+                        if (data.sound) stopTone(data.sound);
+                        endPadRecording(data.recordIndex);
+                        
                         padTouches.delete(touch.identifier);
                     }
                 }
                 
-                const count = padTouches.size;
-                updateLayerIndicators(sceneIndex, count);
-                
-                if (count === 0) {
-                    stopBeatLoops(sceneIndex);
-                }
+                updateLayerIndicators(sceneIndex, padTouches.size);
+                if (padTouches.size === 0) stopBeatLoops(sceneIndex);
             }
             
             pad.addEventListener('touchstart', handleTouchStart);
@@ -918,7 +1420,11 @@
                 const visual = createTouchVisual(x, y, pad, 0, sceneIndex);
                 const sound = createContinuousTone(sceneIndex, 0, x, y, rect.width, rect.height);
                 
-                mouseData = { x, y, visual, sound };
+                const normX = x / rect.width;
+                const normY = 1 - (y / rect.height);
+                const recordIndex = startPadRecording(sceneIndex, 0, x, y, normX, normY);
+                
+                mouseData = { x, y, visual, sound, rect, recordIndex };
                 
                 updateLayerIndicators(sceneIndex, 1);
                 startBeatLoops(sceneIndex);
@@ -928,9 +1434,8 @@
             pad.addEventListener('mousemove', (e) => {
                 if (!mouseData) return;
                 
-                const rect = pad.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+                const x = e.clientX - mouseData.rect.left;
+                const y = e.clientY - mouseData.rect.top;
                 
                 mouseData.visual.indicator.style.left = x + 'px';
                 mouseData.visual.indicator.style.top = y + 'px';
@@ -938,12 +1443,14 @@
                 mouseData.visual.ring.style.top = y + 'px';
                 
                 if (mouseData.sound) {
-                    updateTonePosition(mouseData.sound, x, y, rect.width, rect.height);
+                    updateTonePosition(mouseData.sound, x, y, mouseData.rect.width, mouseData.rect.height);
                 }
                 
-                if (Math.random() < 0.1) {
-                    createSparkle(x, y, pad, sceneIndex);
-                }
+                const normX = x / mouseData.rect.width;
+                const normY = 1 - (y / mouseData.rect.height);
+                updatePadRecording(mouseData.recordIndex, normX, normY, sceneIndex);
+                
+                if (Math.random() < 0.08) createSparkle(x, y, pad, sceneIndex);
             });
             
             function endMouse() {
@@ -951,6 +1458,8 @@
                     mouseData.visual.indicator.remove();
                     mouseData.visual.ring.remove();
                     if (mouseData.sound) stopTone(mouseData.sound);
+                    endPadRecording(mouseData.recordIndex);
+                    
                     mouseData = null;
                     updateLayerIndicators(sceneIndex, 0);
                     stopBeatLoops(sceneIndex);
@@ -961,7 +1470,7 @@
             pad.addEventListener('mouseleave', endMouse);
         });
 
-        // Mode button handling - now stackable with toggle
+        // Mode buttons
         document.querySelectorAll('.mode-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -973,7 +1482,6 @@
                 
                 if (btn.classList.contains('beat-btn')) {
                     const beatMode = parseInt(btn.dataset.beat);
-                    
                     if (settings.beatModes.has(beatMode)) {
                         settings.beatModes.delete(beatMode);
                         btn.classList.remove('active');
@@ -982,42 +1490,282 @@
                         btn.classList.add('active');
                         createBeatSound(beatMode, sceneIndex, 1);
                     }
-                    
-                    // Restart beat loops if active
-                    if (beatLoops[sceneIndex].active) {
-                        startBeatLoops(sceneIndex);
-                    }
+                    if (beatLoops[sceneIndex].active) startBeatLoops(sceneIndex);
                 } else if (btn.classList.contains('melody-btn')) {
                     const melodyMode = parseInt(btn.dataset.melody);
-                    
                     if (settings.melodyModes.has(melodyMode)) {
                         settings.melodyModes.delete(melodyMode);
                         btn.classList.remove('active');
                     } else {
                         settings.melodyModes.add(melodyMode);
                         btn.classList.add('active');
-                        
-                        // Preview the melody
-                        const scale = melodyScales[melodyMode];
-                        const osc = audioContext.createOscillator();
-                        const gain = audioContext.createGain();
-                        osc.frequency.value = scale[4];
-                        osc.type = 'sine';
-                        gain.gain.setValueAtTime(0.1, audioContext.currentTime);
-                        gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3);
-                        osc.connect(gain);
-                        gain.connect(masterGain);
-                        osc.start();
-                        osc.stop(audioContext.currentTime + 0.3);
                     }
                 }
                 
                 updateActiveModeDisplay(sceneIndex);
             });
+        });
+
+        // Mixer functionality
+        const tracksContainer = document.getElementById('tracksContainer');
+        const emptyState = document.getElementById('emptyState');
+        const fileInput = document.getElementById('fileInput');
+
+        function createStepGrid(track) {
+            let html = '';
+            const stepEvents = new Set();
             
-            btn.addEventListener('touchstart', (e) => {
-                e.stopPropagation();
+            // Mark steps with drum events
+            track.drums.forEach(d => stepEvents.add(Math.floor(d.step)));
+            
+            // Mark steps with pad events
+            track.pads.forEach(p => {
+                p.steps.forEach(s => stepEvents.add(Math.floor(s.step)));
             });
+            
+            for (let i = 0; i < Math.min(TOTAL_STEPS, 32); i++) {
+                const hasEvent = stepEvents.has(i);
+                const isBeatMarker = i % 4 === 0;
+                html += `<div class="step-cell${hasEvent ? ' has-event' : ''}${isBeatMarker ? ' beat-marker' : ''}"></div>`;
+            }
+            
+            return html;
+        }
+
+        function createTrackElement(track, index) {
+            const trackEl = document.createElement('div');
+            trackEl.className = 'track-item';
+            
+            const drumCount = track.drums ? track.drums.length : 0;
+            const padCount = track.pads ? track.pads.length : 0;
+            
+            trackEl.innerHTML = `
+                <div class="track-header">
+                    <div>
+                        <span class="track-name">${track.name || 'Track ' + (index + 1)}</span>
+                        <div class="track-info">${drumCount} drums, ${padCount} pads</div>
+                    </div>
+                    <div class="track-controls">
+                        <button class="track-btn track-play" data-index="${index}">▶</button>
+                        <button class="track-btn track-delete" data-index="${index}">✕</button>
+                    </div>
+                </div>
+                <div class="step-grid">${createStepGrid(track)}</div>
+                <div class="trim-controls">
+                    <div class="stretch-control">
+                        <span class="stretch-label">L</span>
+                        <input type="range" class="stretch-slider" data-index="${index}" data-end="left" min="-2" max="2" step="0.1" value="0">
+                    </div>
+                    <div class="stretch-control">
+                        <span class="stretch-label">R</span>
+                        <input type="range" class="stretch-slider" data-index="${index}" data-end="right" min="-2" max="2" step="0.1" value="0">
+                    </div>
+                    <select class="curve-select" data-index="${index}">
+                        <option value="linear">Lin</option>
+                        <option value="log">Log</option>
+                        <option value="exp">Exp</option>
+                    </select>
+                    <button class="autotune-btn${track.autoTunePlayback ? ' active' : ''}" data-index="${index}">🎵</button>
+                    <button class="autorhythm-btn${track.autoRhythmPlayback ? ' active' : ''}" data-index="${index}">🥁</button>
+                </div>
+            `;
+            
+            return trackEl;
+        }
+
+        function renderTracks() {
+            tracksContainer.innerHTML = '';
+            if (mixerTracks.length === 0) {
+                tracksContainer.appendChild(emptyState);
+            } else {
+                mixerTracks.forEach((track, index) => {
+                    tracksContainer.appendChild(createTrackElement(track, index));
+                });
+            }
+            attachTrackListeners();
+        }
+
+        function attachTrackListeners() {
+            document.querySelectorAll('.track-play').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const index = parseInt(btn.dataset.index);
+                    playTrack(mixerTracks[index]);
+                });
+            });
+            
+            document.querySelectorAll('.track-delete').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const index = parseInt(btn.dataset.index);
+                    mixerTracks.splice(index, 1);
+                    renderTracks();
+                });
+            });
+            
+            document.querySelectorAll('.autotune-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const index = parseInt(btn.dataset.index);
+                    mixerTracks[index].autoTunePlayback = !mixerTracks[index].autoTunePlayback;
+                    btn.classList.toggle('active', mixerTracks[index].autoTunePlayback);
+                });
+            });
+            
+            document.querySelectorAll('.autorhythm-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const index = parseInt(btn.dataset.index);
+                    mixerTracks[index].autoRhythmPlayback = !mixerTracks[index].autoRhythmPlayback;
+                    btn.classList.toggle('active', mixerTracks[index].autoRhythmPlayback);
+                });
+            });
+            
+            document.querySelectorAll('.stretch-slider').forEach(slider => {
+                slider.addEventListener('input', () => {
+                    const index = parseInt(slider.dataset.index);
+                    const end = slider.dataset.end;
+                    if (!mixerTracks[index].stretch) mixerTracks[index].stretch = {};
+                    mixerTracks[index].stretch[end] = parseFloat(slider.value);
+                });
+            });
+            
+            document.querySelectorAll('.curve-select').forEach(select => {
+                select.addEventListener('change', () => {
+                    const index = parseInt(select.dataset.index);
+                    mixerTracks[index].stretchCurve = select.value;
+                });
+            });
+        }
+
+        function applyStretch(step, track, totalSteps) {
+            if (!track.stretch) return step;
+            
+            const leftStretch = track.stretch.left || 0;
+            const rightStretch = track.stretch.right || 0;
+            const curve = track.stretchCurve || 'linear';
+            
+            let t = step / totalSteps;
+            
+            if (curve === 'log') {
+                t = Math.log(1 + t * 9) / Math.log(10);
+            } else if (curve === 'exp') {
+                t = (Math.pow(10, t) - 1) / 9;
+            }
+            
+            const leftInfluence = 1 - t;
+            const rightInfluence = t;
+            const stretchFactor = 1 + (leftStretch * leftInfluence) + (rightStretch * rightInfluence);
+            
+            return step * Math.max(0.1, stretchFactor);
+        }
+
+        function playTrack(track) {
+            initAudio();
+            
+            const autoRhythm = track.autoRhythmPlayback;
+            const autoTune = track.autoTunePlayback;
+            const totalSteps = track.totalSteps || TOTAL_STEPS;
+            
+            // Play drums
+            if (track.drums) {
+                track.drums.forEach(drum => {
+                    let step = drum.step;
+                    
+                    if (autoRhythm) {
+                        step = Math.round(step);
+                    }
+                    
+                    step = applyStretch(step, track, totalSteps);
+                    
+                    const time = stepToTime(step);
+                    const id = setTimeout(() => playDrumSound(drum.drumIndex), time);
+                    playbackTimeouts.push(id);
+                });
+            }
+            
+            // Play pads
+            if (track.pads) {
+                track.pads.forEach(padData => {
+                    padData.steps.forEach((stepData, i) => {
+                        let step = stepData.step;
+                        
+                        if (autoRhythm) {
+                            step = Math.round(step);
+                        }
+                        
+                        step = applyStretch(step, track, totalSteps);
+                        
+                        const time = stepToTime(step);
+                        const id = setTimeout(() => {
+                            let freq = stepData.freq;
+                            if (autoTune) {
+                                freq = quantizeToScale(freq);
+                            }
+                            
+                            const osc = audioContext.createOscillator();
+                            const gain = audioContext.createGain();
+                            const filter = audioContext.createBiquadFilter();
+                            
+                            osc.frequency.value = freq;
+                            osc.type = 'sine';
+                            
+                            filter.type = 'lowpass';
+                            filter.frequency.value = stepData.filter || 2000;
+                            
+                            gain.gain.setValueAtTime(0.12, audioContext.currentTime);
+                            gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.15);
+                            
+                            osc.connect(filter);
+                            filter.connect(gain);
+                            gain.connect(masterGain);
+                            osc.start();
+                            osc.stop(audioContext.currentTime + 0.2);
+                        }, time);
+                        playbackTimeouts.push(id);
+                    });
+                });
+            }
+        }
+
+        document.getElementById('importBtn').addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', (e) => {
+            Array.from(e.target.files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const data = JSON.parse(event.target.result);
+                        
+                        // Handle multi-track export
+                        if (data.tracks) {
+                            data.tracks.forEach(t => {
+                                t.name = t.name || file.name.replace('.json', '');
+                                mixerTracks.push(t);
+                            });
+                        } else {
+                            data.name = data.name || file.name.replace('.json', '');
+                            mixerTracks.push(data);
+                        }
+                        
+                        renderTracks();
+                    } catch (err) {
+                        console.error('Invalid JSON:', err);
+                    }
+                };
+                reader.readAsText(file);
+            });
+            fileInput.value = '';
+        });
+
+        document.getElementById('playAllBtn').addEventListener('click', () => {
+            initAudio();
+            mixerTracks.forEach(track => playTrack(track));
+        });
+
+        document.getElementById('stopAllBtn').addEventListener('click', () => {
+            stopAllPlayback();
+        });
+
+        document.getElementById('clearAllBtn').addEventListener('click', () => {
+            mixerTracks = [];
+            renderTracks();
         });
 
         // Scene navigation
@@ -1025,29 +1773,27 @@
         const dots = document.querySelectorAll('.dot');
         
         function updateScene(index) {
-            currentScene = Math.max(0, Math.min(2, index));
-            sceneContainer.style.transform = `translateX(-${currentScene * 33.333}%)`;
+            currentScene = Math.max(0, Math.min(3, index));
+            sceneContainer.style.transform = `translateX(-${currentScene * 25}%)`;
             dots.forEach((dot, i) => dot.classList.toggle('active', i === currentScene));
         }
         
-        // Swipe detection
         let swipeStartX = 0;
         let isSwiping = false;
         
         document.querySelector('.app-container').addEventListener('touchstart', (e) => {
-            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn')) return;
+            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn') || e.target.closest('.drum-btn') || e.target.closest('.ctrl-btn') || e.target.closest('.mixer-container')) return;
             swipeStartX = e.touches[0].clientX;
             isSwiping = false;
         });
         
         document.querySelector('.app-container').addEventListener('touchmove', (e) => {
-            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn')) return;
-            const deltaX = e.touches[0].clientX - swipeStartX;
-            if (Math.abs(deltaX) > 30) isSwiping = true;
+            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn') || e.target.closest('.drum-btn') || e.target.closest('.ctrl-btn') || e.target.closest('.mixer-container')) return;
+            if (Math.abs(e.touches[0].clientX - swipeStartX) > 30) isSwiping = true;
         });
         
         document.querySelector('.app-container').addEventListener('touchend', (e) => {
-            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn')) return;
+            if (e.target.closest('.touch-pad') || e.target.closest('.mode-btn') || e.target.closest('.drum-btn') || e.target.closest('.ctrl-btn') || e.target.closest('.mixer-container')) return;
             if (isSwiping) {
                 const deltaX = e.changedTouches[0].clientX - swipeStartX;
                 if (deltaX > 50) updateScene(currentScene - 1);
@@ -1062,6 +1808,7 @@
         // Initialize
         updateScene(0);
         [0, 1, 2].forEach(i => updateActiveModeDisplay(i));
+        renderTracks();
     </script>
 </body>
 </html>
